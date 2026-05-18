@@ -1,5 +1,7 @@
-$articlesDir = ".\knowledge-base\articles"
-$indexPath = ".\knowledge-base\index.html"
+$repoRoot = Split-Path $PSScriptRoot -Parent
+
+$articlesDir = Join-Path $repoRoot "knowledge-base\articles"
+$indexPath = Join-Path $repoRoot "knowledge-base\index.html"
 
 function Get-ArticleTitle {
     param([string]$filePath)
