@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intune Migration with ProfWiz | Karuin KB</title>
+    <meta name="description" content="Step-by-step guide for migrating an existing Active Directory user profile to an Entra ID profile using ForensiT Profile Wizard and Microsoft Graph preparation scripts.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">← Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#summary">Summary</a>
+                <a href="#use-case">Use Case</a>
+                <a href="#prerequisites">Prerequisites</a>
+                <a href="#required-files">Required Files</a>
+                <a href="#migration-process">Migration Process</a>
+                <a href="#validation">Validation</a>
+                <a href="#known-notes">Known Notes</a>
+                <a href="#resources">Resources</a>
+            </aside>
+
+            <article class="article">
+                <span class="status">Production KB Article</span>
+
+                <h1>Intune Migration with ProfWiz</h1>
+
+                <p class="summary" id="summary">
+                    This article documents how to migrate an existing on-premises Active Directory user profile to an Entra ID user profile using ForensiT Profile Wizard. The goal is to preserve the user’s existing local profile data while transitioning the workstation to Entra ID.
+                </p>
+
+                <div class="meta">
+                    <span class="pill">Category: Intune & Endpoint</span>
+                    <span class="pill">Platform: Windows</span>
+                    <span class="pill">Identity: Entra ID</span>
+                    <span class="pill">Tool: ForensiT ProfWiz</span>
+                    <span class="pill">Estimated Read: 10–15 min</span>
+                </div>
+
+                <section id="use-case">
+                    <h2>Use Case</h2>
+                    <p>
+                        Use this process when a workstation has been removed from an on-premises Active Directory domain and joined to Entra ID, but the user’s existing local profile data must remain available under the new Entra ID sign-in.
+                    </p>
+
+                    <p>This process is intended to retain user profile data such as:</p>
+                    <ul>
+                        <li>Files</li>
+                        <li>Desktop, taskbar, Start Menu, and system tray shortcuts/settings</li>
+                        <li>Certain application settings stored in the user profile</li>
+                    </ul>
+
+                    <div class="callout">
+                        The best time to perform this migration is immediately after removing the PC from the on-premises domain and joining it to Entra ID, before the user signs in with the Entra ID account. This reduces the risk of overwriting or losing data in a newly created profile.
+                    </div>
+                </section>
+
+                <section id="prerequisites">
+                    <h2>Prerequisites</h2>
+                    <p>Before starting, confirm the workstation is in the following state:</p>
+                    <ul>
+                        <li>The PC has been disjoined from the on-premises domain.</li>
+                        <li>The PC has been joined to Entra ID.</li>
+                        <li>The target user has not yet signed in with their Entra ID UPN on this workstation.</li>
+                        <li>You are signed in using a local administrator account such as <code>IMPACTLOCAL</code>.</li>
+                        <li>You are not signed in using a domain or Entra ID account while running the migration.</li>
+                    </ul>
+
+                    <p>Example migration mapping:</p>
+                    <pre><code>Source profile: &lt;CLIENTDOMAIN&gt;\idomaintest
+Target account: &lt;username&gt;@&lt;clientdomain.com&gt;</code></pre>
+                </section>
+
+                <section id="required-files">
+                    <h2>Required Files</h2>
+                    <p>
+                        Download or stage the ProfWiz project archive before beginning the migration. In the source workflow, the archive is named <code>ProfWIZ.zip</code> and is stored in the GitHub documentation repository.
+                    </p>
+
+                    <ol>
+                        <li>Sign in as the local administrator account.</li>
+                        <li>Download the required <code>ProfWIZ.zip</code> archive.</li>
+                        <li>Create a new folder called <code>Impact</code> on the C drive.</li>
+                        <li>Extract the archive to <code>C:\Impact\ProfWIZ\</code>.</li>
+                    </ol>
+
+                    <pre><code>C:\Impact\ProfWIZ\</code></pre>
+
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/01-profwiz-archive-extracted.png" alt="ProfWIZ archive extracted to the C drive working folder">
+                </section>
+
+                <section id="migration-process">
+                    <h2>Migration Process</h2>
+
+                    <h3>Step 1 — Open PowerShell as Administrator</h3>
+                    <p>Open an elevated PowerShell session while signed in with the local administrator account.</p>
+
+                    <h3>Step 2 — Change to the ProfWiz Working Directory</h3>
+                    <p>Change to the ProfWiz working directory.</p>
+                    <pre><code>cd C:\Impact\ProfWIZ</code></pre>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/02-powershell-working-directory.png" alt="PowerShell opened in the C Impact ProfWIZ working directory">
+
+                    <h3>Step 3 — Set the PowerShell Execution Policy</h3>
+                    <p>Run the following command and press <code>Enter</code>:</p>
+                    <pre><code>Set-ExecutionPolicy RemoteSigned</code></pre>
+                    <p>If prompted, press <code>Y</code> and then <code>Enter</code>.</p>
+
+                    <h3>Step 4 — Run the Azure AD User Preparation Script</h3>
+                    <p>Run the preparation script from the working directory:</p>
+                    <pre><code>.\Save-AzureADUser.ps1</code></pre>
+                    <p>Press <code>Y</code> and <code>Enter</code> for prompts that appear during script execution.</p>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/03-save-azureaduser-script-prompts.png" alt="PowerShell running Save-AzureADUser.ps1 with confirmation prompts">
+
+                    <h3>Step 5 — Sign In with the Target Microsoft 365 Account</h3>
+                    <p>When prompted, sign in using the Microsoft 365 account that the profile is being migrated to.</p>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/04-microsoft-365-sign-in.png" alt="Microsoft 365 sign-in prompt for the target account">
+
+                    <h3>Step 6 — Approve Microsoft Graph Consent if Prompted</h3>
+                    <p>If prompted for Microsoft Graph consent, check the consent box and select <strong>Accept</strong>.</p>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/05-microsoft-graph-consent.png" alt="Microsoft Graph consent prompt requiring acceptance">
+
+                    <h3>Step 7 — Verify the ForensiT Azure ID XML File</h3>
+                    <p>Confirm the following file was created after the script completes successfully:</p>
+                    <pre><code>C:\Impact\ProfWIZ\ForensiTAzureID.xml</code></pre>
+                    <div class="callout">
+                        If the file is not visible, enable file name extensions in File Explorer and confirm the script completed without errors.
+                    </div>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/06-forensit-azureid-xml-created.png" alt="ForensiTAzureID.xml file created in the ProfWIZ folder">
+
+                    <h3>Step 8 — Run the Profile Wizard Installer</h3>
+                    <p>Run <code>ProfWiz.msi</code>. If prompted to run as administrator, select <strong>Yes</strong>.</p>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/07-profwiz-msi-launch.png" alt="ProfWiz MSI installer selected for launch">
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/08-profwiz-admin-prompt.png" alt="Windows administrator prompt for launching ProfWiz">
+
+                    <h3>Step 9 — Start the Profile Wizard</h3>
+                    <p>In the Profile Wizard interface, click <strong>Next</strong>.</p>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/09-profwiz-welcome-next.png" alt="Profile Wizard welcome screen with Next button">
+
+                    <h3>Step 10 — Select the Source Profile</h3>
+                    <p>Select the source account profile that should be migrated. This is usually the user’s old domain profile.</p>
+                    <div class="callout">
+                        The source account may display as a SID or generic identifier instead of the original domain username because the workstation has already been disjoined from the domain. Use the profile path to identify the correct user profile folder.
+                    </div>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/10-select-source-profile.png" alt="Profile Wizard source profile selection screen showing profile paths">
+
+                    <h3>Step 11 — Enter the Target Entra ID UPN</h3>
+                    <p>Confirm the domain and Azure AD/Entra ID options are selected as required by the tool. Enter the target user’s email address/UPN and click <strong>Next</strong>.</p>
+                    <pre><code>&lt;username&gt;@&lt;clientdomain.com&gt;</code></pre>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/11-enter-target-entra-upn.png" alt="Profile Wizard target account screen with Entra ID UPN field">
+
+                    <h3>Step 12 — Run the Migration</h3>
+                    <p>
+                        Profile Wizard will begin linking the existing profile to the target Entra ID account. This should usually complete quickly because profile data is not being physically copied to a new profile.
+                    </p>
+                    <p>When the process completes, click <strong>Next</strong>, then click <strong>Finish</strong>.</p>
+                    <div class="callout">
+                        The workstation will restart after clicking Finish. Confirm there are no open files, active installs, or unsaved work before completing this step.
+                    </div>
+                    <img class="article-image" src="/knowledge-base/assets/images/profwiz/12-profile-migration-process.png" alt="Profile Wizard migration process screen">
+
+                    <h3>Step 13 — Sign In with the Entra ID User Account</h3>
+                    <p>After the workstation restarts, sign in using the user’s Entra ID UPN. The existing profile data should now be retained under the Entra ID account context.</p>
+                </section>
+
+                <section id="validation">
+                    <h2>Validation</h2>
+                    <ol>
+                        <li>Log out of the current account.</li>
+                        <li>Sign in with the new user account using the user’s Entra ID UPN.</li>
+                        <li>Validate that profile data was retained.</li>
+                        <li>Confirm expected files, desktop items, shortcuts, and application settings are present.</li>
+                        <li>If data is missing, review the old profile path and manually copy required items as needed.</li>
+                    </ol>
+
+                    <p>After validation is complete, proceed to the next workstation scheduled for migration.</p>
+                </section>
+
+                <section id="known-notes">
+                    <h2>Known Notes</h2>
+                    <ul>
+                        <li>The old domain profile may appear as a SID or orphaned identifier after the domain disconnect.</li>
+                        <li>The profile path is the most reliable indicator when selecting the source profile.</li>
+                        <li>This migration should be performed before the user signs in and starts working in the new Entra ID profile.</li>
+                        <li>The workstation restarts after the Profile Wizard process is completed.</li>
+                    </ul>
+                </section>
+
+                <section id="resources">
+                    <h2>Resources</h2>
+                    <div class="related">
+                        <a href="https://www.forensit.com/Downloads/User%20Profile%20Wizard%20Professional%20User%20Guide.pdf">ForensiT User Profile Wizard Professional User Guide</a>
+                        <a href="/knowledge-base/articles/kb-article-standard.html">KB Article Standard</a>
+                    </div>
+                </section>
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base · This article is maintained as part of the Karuin technical documentation platform.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>
