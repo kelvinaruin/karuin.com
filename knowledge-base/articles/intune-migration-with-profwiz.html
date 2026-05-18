@@ -1,29 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>intune-migration-with-profwiz | Karuin KB</title>
-
-    <style>
-        body{
-            background:#07090d;
-            color:white;
-            font-family:Arial;
-            padding:60px;
-        }
-
-        a{
-            color:#66e3ff;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intune Migration with ProfWiz | Karuin KB</title>
+    <meta name="description" content="Knowledge base article template for Intune migration workflows using ForensiT Profile Wizard and Microsoft Intune.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
 </head>
-
 <body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">← Back to Knowledge Base</a>
 
-<a href="/knowledge-base/">? Back to Knowledge Base</a>
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#summary">Summary</a>
+                <a href="#prerequisites">Prerequisites</a>
+                <a href="#scope">Scope</a>
+                <a href="#steps">Implementation Steps</a>
+                <a href="#validation">Validation</a>
+                <a href="#rollback">Rollback</a>
+                <a href="#troubleshooting">Troubleshooting</a>
+                <a href="#related">Related</a>
+            </aside>
 
-<h1>intune-migration-with-profwiz</h1>
+            <article class="article">
+                <span class="status">Article Template v1</span>
 
-<p>This article is currently in development.</p>
+                <h1>Intune Migration with ProfWiz</h1>
 
+                <p class="summary" id="summary">
+                    This article is the production article template for Karuin KB. It will be used to document endpoint migration workflows involving Microsoft Intune and ForensiT Profile Wizard.
+                </p>
+
+                <div class="meta">
+                    <span class="pill">Category: Intune & Endpoint</span>
+                    <span class="pill">Status: In Development</span>
+                    <span class="pill">Last Updated: 2026</span>
+                    <span class="pill">Estimated Read: 10 min</span>
+                </div>
+
+                <section id="prerequisites">
+                    <h2>Prerequisites</h2>
+                    <ul>
+                        <li>Microsoft Intune administrative access</li>
+                        <li>Target device enrollment plan</li>
+                        <li>ForensiT Profile Wizard installation media or deployment package</li>
+                        <li>Validated backup or rollback path</li>
+                    </ul>
+                </section>
+
+                <section id="scope">
+                    <h2>Scope</h2>
+                    <p>
+                        This guide is intended for endpoint migration scenarios where user profile preservation, domain transition, or Entra/Intune onboarding is required.
+                    </p>
+
+                    <div class="callout">
+                        This page is currently a structured placeholder. The final article will include screenshots, commands, validation checks, and rollback notes.
+                    </div>
+                </section>
+
+                <section id="steps">
+                    <h2>Implementation Steps</h2>
+
+                    <h3>Step 1 — Prepare the device</h3>
+                    <p>
+                        Confirm device health, backup requirements, user profile state, and enrollment readiness.
+                    </p>
+
+                    <h3>Step 2 — Stage required files</h3>
+                    <p>
+                        Place all migration tools, configuration files, and supporting scripts in the correct working directory.
+                    </p>
+
+                    <pre><code>Example command or script block goes here.</code></pre>
+
+                    <h3>Step 3 — Execute migration workflow</h3>
+                    <p>
+                        Run the migration process according to the approved implementation plan.
+                    </p>
+                </section>
+
+                <section id="validation">
+                    <h2>Validation</h2>
+                    <ul>
+                        <li>User can sign in successfully</li>
+                        <li>Profile data is available</li>
+                        <li>Device appears in Intune</li>
+                        <li>Required policies apply successfully</li>
+                        <li>Applications and mapped resources function as expected</li>
+                    </ul>
+                </section>
+
+                <section id="rollback">
+                    <h2>Rollback</h2>
+                    <p>
+                        Rollback steps should document how to return the device or user profile to the pre-migration state when practical.
+                    </p>
+                </section>
+
+                <section id="troubleshooting">
+                    <h2>Troubleshooting</h2>
+                    <p>
+                        Common issues, known errors, remediation commands, and validation failures will be documented here.
+                    </p>
+                </section>
+
+                <section id="related">
+                    <h2>Related Articles</h2>
+                    <div class="related">
+                        <a href="/knowledge-base/articles/powershell-automation-template.html">PowerShell Automation Article Template</a>
+                        <a href="/knowledge-base/articles/kb-article-standard.html">KB Article Standard</a>
+                    </div>
+                </section>
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base · This article is maintained as part of the Karuin technical documentation platform.
+                </p>
+            </article>
+        </div>
+    </main>
 </body>
 </html>

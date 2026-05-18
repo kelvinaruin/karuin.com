@@ -1,0 +1,247 @@
+:root {
+    --bg: #07090d;
+    --panel: rgba(255,255,255,0.055);
+    --panel-2: rgba(255,255,255,0.035);
+    --border: rgba(255,255,255,0.11);
+    --text: #f5f7fb;
+    --muted: #a5adba;
+    --muted-2: #737d8c;
+    --accent: #66e3ff;
+    --code: #0b1220;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at top left, rgba(102,227,255,0.12), transparent 34rem),
+        linear-gradient(180deg, #06080c, #090d13);
+    color: var(--text);
+    font-family: Inter, Arial, sans-serif;
+    line-height: 1.7;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.wrapper {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 42px 0 80px;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 28px;
+    color: var(--accent);
+}
+
+.article-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+.sidebar {
+    position: sticky;
+    top: 24px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    border-radius: 22px;
+}
+
+.sidebar h3 {
+    margin: 0 0 12px;
+    font-size: 0.9rem;
+    color: var(--muted-2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.sidebar a {
+    display: block;
+    padding: 8px 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.sidebar a:hover {
+    color: var(--text);
+}
+
+.article {
+    padding: 42px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 28px;
+}
+
+.status {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: rgba(102,227,255,0.1);
+    border: 1px solid rgba(102,227,255,0.22);
+    color: #bff4ff;
+    font-size: 0.82rem;
+}
+
+h1 {
+    margin: 0 0 18px;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 0.95;
+    letter-spacing: -0.07em;
+}
+
+.summary {
+    color: var(--muted);
+    font-size: 1.12rem;
+    max-width: 760px;
+}
+
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 28px 0;
+}
+
+.pill {
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.055);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+section {
+    margin-top: 42px;
+}
+
+h2 {
+    margin: 0 0 14px;
+    font-size: 1.8rem;
+    letter-spacing: -0.04em;
+}
+
+h3 {
+    margin-top: 28px;
+}
+
+p, li {
+    color: var(--muted);
+}
+
+.callout {
+    padding: 18px;
+    border-left: 4px solid var(--accent);
+    background: rgba(102,227,255,0.075);
+    border-radius: 14px;
+    color: var(--muted);
+}
+
+pre {
+    position: relative;
+    overflow-x: auto;
+    padding: 18px;
+    border-radius: 16px;
+    background: var(--code);
+    border: 1px solid rgba(255,255,255,0.09);
+}
+
+code {
+    font-family: Consolas, "Courier New", monospace;
+    color: #d9f7ff;
+}
+
+.article-image {
+    width: 100%;
+    margin: 22px 0;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+}
+
+.related {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.related a {
+    padding: 16px;
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    border-radius: 16px;
+    color: var(--text);
+}
+
+.footer-note {
+    margin-top: 48px;
+    color: var(--muted-2);
+    font-size: 0.9rem;
+}
+
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    body::before {
+        content: "Karuin.com Knowledge Base";
+        position: fixed;
+        top: 45%;
+        left: 10%;
+        font-size: 52px;
+        color: rgba(0,0,0,0.08);
+        transform: rotate(-28deg);
+        z-index: 9999;
+        pointer-events: none;
+    }
+
+    .sidebar,
+    .back {
+        display: none;
+    }
+
+    .article-layout {
+        display: block;
+    }
+
+    .article {
+        border: none;
+        padding: 0;
+    }
+
+    a::after {
+        content: " (" attr(href) ")";
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 900px) {
+    .article-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+    }
+
+    .article {
+        padding: 28px;
+    }
+
+    .related {
+        grid-template-columns: 1fr;
+    }
+}
