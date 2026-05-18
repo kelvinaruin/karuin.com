@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Karuin Knowledge Base: infrastructure engineering guides, deployment notes, automation references, lab documentation, and troubleshooting articles." />
+  <title>Knowledge Base | Karuin</title>
+
+  <style>
+    :root {
+      --bg: #07090d;
+      --bg-soft: #0d1118;
+      --card: rgba(255, 255, 255, 0.055);
+      --card-hover: rgba(255, 255, 255, 0.082);
+      --card-border: rgba(255, 255, 255, 0.11);
+      --text: #f5f7fb;
+      --muted: #a5adba;
+      --muted-2: #737d8c;
+      --accent: #66e3ff;
+      --accent-2: #8b5cf6;
+      --radius: 22px;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(102, 227, 255, 0.12), transparent 34rem),
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.14), transparent 34rem),
+        linear-gradient(180deg, #06080c 0%, #090d13 52%, #07090d 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.032) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.72), transparent 78%);
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 9, 13, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 760;
+      letter-spacing: -0.03em;
+      font-size: 1.1rem;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(102,227,255,0.95), rgba(139,92,246,0.9));
+      box-shadow: 0 0 34px rgba(102, 227, 255, 0.32);
+      position: relative;
+    }
+
+    .mark::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(7, 9, 13, 0.85);
+      border-radius: 7px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      padding: 10px 15px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 999px;
+      color: var(--text) !important;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .hero {
+      padding: 76px 0 36px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.045);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 20px var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 5.9rem);
+      line-height: 0.92;
+      letter-spacing: -0.075em;
+      max-width: 900px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #f8fbff, #66e3ff 50%, #b69cff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.04rem, 2vw, 1.22rem);
+      line-height: 1.65;
+      max-width: 760px;
+    }
+
+    .toolbar {
+      margin: 36px 0 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-wrap span {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted-2);
+      font-size: 1rem;
+    }
+
+    .search {
+      width: 100%;
+      min-height: 54px;
+      padding: 0 18px 0 46px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.055);
+      color: var(--text);
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .search:focus {
+      border-color: rgba(102, 227, 255, 0.54);
+      box-shadow: 0 0 0 4px rgba(102, 227, 255, 0.08);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      font-weight: 720;
+      font-size: 0.95rem;
+      background: linear-gradient(135deg, #66e3ff, #b4f2ff);
+      color: #031018;
+      white-space: nowrap;
+    }
+
+    .section {
+      padding: 42px 0;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1;
+      letter-spacing: -0.055em;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .category {
+      min-height: 150px;
+      padding: 20px;
+      border: 1px solid var(--card-border);
+      background: var(--card);
+      border-radius: var(--radius);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      cursor: pointer;
+    }
+
+    .category:hover,
+    .category.active {
+      transform: translateY(-3px);
+      border-color: rgba(102, 227, 255, 0.35);
+      background: var(--card-hover);
+    }
+
+    .category .icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: rgba(102,227,255,0.1);
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-size: 1.15rem;
+    }
+
+    .category h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+      letter-spacing: -0.025em;
+    }
+
+    .category p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.93rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.046);
+      padding: 14px;
+    }
+
+    .sidebar-title {
+      color: var(--muted-2);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin: 4px 8px 10px;
+    }
+
+    .filter-button {
+      width: 100%;
+      text-align: left;
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      border-radius: 13px;
+      padding: 11px 12px;
+      cursor: pointer;
+      font: inherit;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .filter-button:hover,
+    .filter-button.active {
+      color: var(--text);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .filter-button small {
+      color: var(--muted-2);
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .article-card {
+      padding: 22px;
+      border: 1px solid var(--card-border);
+      background: var(--card);
+      border-radius: var(--radius);
+      min-height: 220px;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.16);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .article-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(102, 227, 255, 0.32);
+      background: var(--card-hover);
+    }
+
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.11);
+      background: rgba(255,255,255,0.045);
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .pill.accent {
+      color: #bdf4ff;
+      border-color: rgba(102,227,255,0.24);
+      background: rgba(102,227,255,0.08);
+    }
+
+    .article-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+    }
+
+    .article-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .article-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      color: var(--muted-2);
+      font-size: 0.87rem;
+    }
+
+    .empty {
+      display: none;
+      padding: 28px;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.046);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 34px 0;
+      color: var(--muted-2);
+      font-size: 0.92rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .article-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      .nav-links { display: none; }
+      .hero { padding: 56px 0 24px; }
+      .toolbar { grid-template-columns: 1fr; }
+      .category-grid { grid-template-columns: 1fr; }
+      .section-heading { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="shell nav-inner">
+      <a class="brand" href="/" aria-label="Karuin home">
+        <span class="mark" aria-hidden="true"></span>
+        <span>Karuin</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/knowledge-base/">Knowledge Base</a>
+        <a href="/videos/">Videos</a>
+        <a href="/labs/">Labs</a>
+        <a class="nav-cta" href="#articles">Browse Articles</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell">
+        <div class="eyebrow"><span class="pulse"></span> Technical documentation library</div>
+        <h1>Knowledge Base for <span class="gradient-text">infrastructure operations.</span></h1>
+        <p class="hero-copy">
+          Searchable deployment guides, lab notes, automation references, troubleshooting articles, and repeatable implementation procedures.
+        </p>
+
+        <div class="toolbar">
+          <div class="search-wrap">
+            <span>⌕</span>
+            <input id="searchInput" class="search" type="search" placeholder="Search articles, platforms, tools, tags..." autocomplete="off" />
+          </div>
+          <a class="button" href="#articles">View Articles</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-heading">
+          <h2>Categories</h2>
+          <p>Initial KB categories. These can expand later into a full documentation taxonomy with tags, article templates, and generated indexes.</p>
+        </div>
+
+        <div class="category-grid" aria-label="Knowledge base categories">
+          <div class="category active" data-filter="all"><div class="icon">▦</div><h3>All Articles</h3><p>View the full technical library.</p></div>
+          <div class="category" data-filter="intune"><div class="icon">◇</div><h3>Intune & Endpoint</h3><p>Device deployment, remediation, packaging, Autopilot, and endpoint operations.</p></div>
+          <div class="category" data-filter="infrastructure"><div class="icon">⌬</div><h3>Infrastructure</h3><p>AD, DNS, DHCP, virtualization, servers, clusters, and network services.</p></div>
+          <div class="category" data-filter="automation"><div class="icon">{ }</div><h3>Automation</h3><p>PowerShell, Bash, scripts, templates, reporting, and repeatable tooling.</p></div>
+          <div class="category" data-filter="cloud"><div class="icon">☁</div><h3>Cloud & Identity</h3><p>Microsoft 365, Entra ID, Exchange Online, hybrid, and security workflows.</p></div>
+          <div class="category" data-filter="labs"><div class="icon">◎</div><h3>Labs</h3><p>Proxmox, local DNS, cluster builds, lab networks, and documentation from builds.</p></div>
+          <div class="category" data-filter="video"><div class="icon">▶</div><h3>Video Support</h3><p>Companion notes for YouTube walkthroughs and technical demos.</p></div>
+          <div class="category" data-filter="template"><div class="icon">□</div><h3>Templates</h3><p>Reusable article, SOP, validation, rollback, and deployment structures.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="articles">
+      <div class="shell layout">
+        <aside class="sidebar" aria-label="Article filters">
+          <div class="sidebar-title">Filter Library</div>
+          <button class="filter-button active" data-filter="all">All <small>8</small></button>
+          <button class="filter-button" data-filter="intune">Intune & Endpoint <small>1</small></button>
+          <button class="filter-button" data-filter="infrastructure">Infrastructure <small>2</small></button>
+          <button class="filter-button" data-filter="automation">Automation <small>1</small></button>
+          <button class="filter-button" data-filter="cloud">Cloud & Identity <small>1</small></button>
+          <button class="filter-button" data-filter="labs">Labs <small>1</small></button>
+          <button class="filter-button" data-filter="video">Video Support <small>1</small></button>
+          <button class="filter-button" data-filter="template">Templates <small>1</small></button>
+        </aside>
+
+        <div>
+          <div class="article-grid" id="articleGrid">
+            <a class="article-card" href="/knowledge-base/articles/intune-migration-with-profwiz.html" data-category="intune" data-search="intune migration profwiz profile wizard endpoint migration user profile autopilot">
+              <div class="article-meta"><span class="pill accent">Intune</span><span class="pill">Migration</span><span class="pill">Draft Link</span></div>
+              <h3>Intune Migration with ProfWiz</h3>
+              <p>Structured guide for endpoint/user profile migration workflows using ForensiT Profile Wizard and Intune-based deployment planning.</p>
+              <div class="article-footer"><span>8–12 min read</span><span>Open →</span></div>
+            </a>
+
+            <a class="article-card" href="/knowledge-base/articles/proxmox-cluster-build.html" data-category="labs infrastructure video" data-search="proxmox cluster build nodes quorum storage zfs networking youtube lab">
+              <div class="article-meta"><span class="pill accent">Labs</span><span class="pill">Proxmox</span><span class="pill">Video Companion</span></div>
+              <h3>Proxmox Cluster Build Notes</h3>
+              <p>Placeholder companion page for future YouTube cluster build walkthroughs, topology diagrams, commands, and validation steps.</p>
+              <div class="article-footer"><span>Coming soon</span><span>Open →</span></div>
+            </a>
+
+            <a class="article-card" href="/knowledge-base/articles/local-dns-server.html" data-category="infrastructure labs" data-search="local dns server ubuntu bind dnsmasq proxmox resolver domain lab">
+              <div class="article-meta"><span class="pill accent">Infrastructure</span><span class="pill">DNS</span><span class="pill">Lab</span></div>
+              <h3>Linux Local DNS Server Build</h3>
+              <p>Planned documentation for building a local DNS server in a Proxmox-hosted Linux VM with validation and client testing.</p>
+              <div class="article-footer"><span>Coming soon</span><span>Open →</span></div>
+            </a>
+
+            <a class="article-card" href="/knowledge-base/articles/powershell-automation-template.html" data-category="automation template" data-search="powershell automation template remediation reporting script reusable standard">
+              <div class="article-meta"><span class="pill accent">Automation</span><span class="pill">PowerShell</span><span class="pill">Template</span></div>
+              <h3>PowerShell Automation Article Template</h3>
+              <p>Reusable layout for documenting PowerShell scripts, including purpose, prerequisites, parameters, execution, validation, and rollback.</p>
+              <div class="article-footer"><span>Template</span><span>Open →</span></div>
+            </a>
+
+            <a class="article-card" href="/knowledge-base/articles/exchange-online-hybrid-notes.html" data-category="cloud infrastructure" data-search="exchange online hybrid entra microsoft 365 mail flow connectors aliases migration">
+              <div class="article-meta"><span class="pill accent">Cloud</span><span class="pill">Exchange</span><span class="pill">Hybrid</span></div>
+              <h3>Exchange Online Hybrid Notes</h3>
+              <p>Placeholder for hybrid Exchange, mail flow, connector, alias management, and Microsoft 365 operational notes.</p>
+              <div class="article-footer"><span>Coming soon</span><span>Open →</span></div>
+            </a>
+
+            <a class="article-card" href="/knowledge-base/articles/ad-dns-cleanup.html" data-category="infrastructure automation" data-search="active directory dns cleanup domain controller demotion records stale powershell">
+              <div class="article-meta"><span class="pill accent">Infrastructure</span><span class="pill">AD/DNS</span><span class="pill">Cleanup</span></div>
+              <h3>AD/DNS Cleanup After Server Changes</h3>
+              <p>Planned guide for identifying stale DNS records, validating domain controller references, and documenting post-migration cleanup.</p>
+              <div class="article-footer"><span>Coming soon</span><span>Open →</span></div>
+            </a>
+
+            <a class="article-card" href="/knowledge-base/articles/youtube-guide-template.html" data-category="video template" data-search="youtube guide companion article video commands transcript diagrams lab walkthrough">
+              <div class="article-meta"><span class="pill accent">Video</span><span class="pill">Template</span><span class="pill">YouTube</span></div>
+              <h3>YouTube Companion Guide Template</h3>
+              <p>Standard structure for pairing YouTube videos with commands, diagrams, links, downloadable files, and correction notes.</p>
+              <div class="article-footer"><span>Template</span><span>Open →</span></div>
+            </a>
+
+            <a class="article-card" href="/knowledge-base/articles/kb-article-standard.html" data-category="template" data-search="knowledge base article standard sop prerequisites validation rollback print metadata">
+              <div class="article-meta"><span class="pill accent">Template</span><span class="pill">KB Standard</span><span class="pill">SOP</span></div>
+              <h3>KB Article Standard</h3>
+              <p>The baseline article format for Karuin: summary, scope, prerequisites, implementation, validation, rollback, and references.</p>
+              <div class="article-footer"><span>Template</span><span>Open →</span></div>
+            </a>
+          </div>
+
+          <div class="empty" id="emptyState">
+            No matching articles found. Try a broader keyword or select a different category.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <span>© 2026 Karuin Knowledge Base.</span>
+      <span>Infrastructure · Automation · Labs · Documentation</span>
+    </div>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const cards = Array.from(document.querySelectorAll('.article-card'));
+    const filters = Array.from(document.querySelectorAll('[data-filter]')).filter(el => el.classList.contains('filter-button') || el.classList.contains('category'));
+    const emptyState = document.getElementById('emptyState');
+    let activeFilter = 'all';
+
+    function normalize(value) {
+      return value.toLowerCase().trim();
+    }
+
+    function applyFilters() {
+      const query = normalize(searchInput.value || '');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const categories = normalize(card.dataset.category || '');
+        const searchable = normalize(`${card.innerText} ${card.dataset.search || ''}`);
+        const matchesCategory = activeFilter === 'all' || categories.includes(activeFilter);
+        const matchesSearch = !query || searchable.includes(query);
+        const visible = matchesCategory && matchesSearch;
+
+        card.style.display = visible ? '' : 'none';
+        if (visible) visibleCount++;
+      });
+
+      emptyState.style.display = visibleCount ? 'none' : 'block';
+    }
+
+    function setActiveFilter(filter) {
+      activeFilter = filter;
+      filters.forEach(item => {
+        item.classList.toggle('active', item.dataset.filter === filter);
+      });
+      applyFilters();
+    }
+
+    filters.forEach(item => {
+      item.addEventListener('click', () => setActiveFilter(item.dataset.filter));
+    });
+
+    searchInput.addEventListener('input', applyFilters);
+  </script>
+</body>
+</html>
