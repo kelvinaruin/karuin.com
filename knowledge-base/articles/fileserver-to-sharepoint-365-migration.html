@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileServer to SharePoint 365 Migration | Karuin KB</title>
+    <meta name="description" content="FileServer to SharePoint 365 Migration knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>FileServer to SharePoint 365 Migration</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 13</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Pre-Requisites</h2>
+<p>Client subscription with SharePoint 365 licensing.</p>
+<p>Fileserver credentials with full access to all client data.</p>
+<p>A server or workstation located on-premises to be used as a SharePoint migration agent.</p>
+<section><h2>SharePoint Configuration</h2>
+<p>Login to the client Microsoft SharePoint 365 Administrator portal.</p>
+<p>Navigate to Sites &gt; Active Sites.</p>
+<p>Press the Create button.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-01.png" alt="FileServer to SharePoint 365 Migration screenshot 1">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 1</figcaption>
+</figure>
+<p>At the Create a site prompt, select Team site.</p>
+<p>Fill in the Site name, and select a site Primary administrator.</p>
+<p>Enter an account you would like to use in the Group owner field.</p>
+<p>Expand Advanced settings and select the proper time zone.</p>
+<p>Enter any pertinent information into the Site description field, then press the Next button.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-02.png" alt="FileServer to SharePoint 365 Migration screenshot 2">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 2</figcaption>
+</figure>
+<p>Enter this SharePoint site users or groups on the Add site owners and members page.</p>
+<p>Press Finish.</p>
+<p>Your site is now being built; It may take 10-15 minutes for the site to be completed.</p>
+<p>Once the site is created, record its URL from the Active sites pane (it will be needed later).</p>
+<section><h2>SharePoint Site Share Prep</h2>
+<p>Login to the client Microsoft SharePoint 365 Administrator portal.</p>
+<p>Navigate to Sites &gt; Active sites.</p>
+<p>Find the new SharePoint site created in the Active sites list and select it.</p>
+<p>In the popup to the right, click on the URL link.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-03.png" alt="FileServer to SharePoint 365 Migration screenshot 3">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 3</figcaption>
+</figure>
+<p>You should now be looking at your newly created SharePoint site.</p>
+<p>Click on the New button and select Document library from the drop-down</p>
+<p>You will want to create a new Document library for each share you will be migrating to SharePoint.</p>
+<p>You can house all shares inside one document library, however, separate libraries have worked better for our clients.</p>
+<p>Enter a name that matches your share in the Create document library popup to the right.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-04.png" alt="FileServer to SharePoint 365 Migration screenshot 4">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 4</figcaption>
+</figure>
+<p>Make sure the Show in the site navigation box is checked, then press the Create button.</p>
+<p>Once the share is created and is now visible on the SharePoint site homepage, click on the Home button at the top left-hand side of the screen.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-05.png" alt="FileServer to SharePoint 365 Migration screenshot 5">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 5</figcaption>
+</figure>
+<p>Execute steps 5 through 9 for all shares you will be migrating to SharePoint.</p>
+<p>There are many customizations that can be applied to SharePoint sites; however, we are focusing on the migration aspect in this document only</p>
+<p>Once finished, you are now ready to continue to the next section.</p>
+<section><h2>Migration Agent Installation</h2>
+<p>Login to the client Microsoft SharePoint 365 Administrator portal</p>
+<p>Navigate to Migration.</p>
+<p>Click on View tasks under File shares.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-06.png" alt="FileServer to SharePoint 365 Migration screenshot 6">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 6</figcaption>
+</figure>
+<p>On the file share migration page, select the Agents header and click on the Add button.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-07.png" alt="FileServer to SharePoint 365 Migration screenshot 7">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 7</figcaption>
+</figure>
+<p>An Add agent box will pop-up, click the Download agent setup file.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-08.png" alt="FileServer to SharePoint 365 Migration screenshot 8">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 8</figcaption>
+</figure>
+<p>An agentsetup.exe file will download.</p>
+<p>Run the agentsetup.exe installation application on a designated machine.</p>
+<p>The machine will be listed as an agent if the installation was successful.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-09.png" alt="FileServer to SharePoint 365 Migration screenshot 9">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 9</figcaption>
+</figure>
+<h3>Migration Agent storage location adjustment if needed:</h3>
+<p>Special Note: After the agent has been installed on the computer, you may want to change the working directory. The default is in the user AppData folder on the C: drive. If the agent fills this drive with logs and caching information for the transfer, the workstation or server can slow down significantly or even crash during migration!</p>
+<p>Create a working directory on an alternate drive location with plenty of empty space.</p>
+<p>On the SPMT host computer, start SERVICES.MSC.</p>
+<p>Look for the program &#226;€œSharePoint Migration Service&#226;€ and stop the service.</p>
+<p>In file explorer, go to this folder: &#226;€œC:\Users\username\AppData\Roaming\Microsoft\SPMigration\Configs&#226;€</p>
+<p>Fill in username with the user name you used to register the migration tool.</p>
+<p>In this folder look for the &#226;€œAGENT.CONFIG&#226;€ file and open the file in a text editor.</p>
+<p>Find this line: &quot;WorkingFolder&quot;: &quot;E:\\MigrationLogs&quot;,</p>
+<p>Replace the working folder name with the folder you created in step 1.</p>
+<p>Remember to use the \\ between folder levels not a single \ or the change will not work!</p>
+<p>Start the &#226;€œSharePoint Migration Service&#226;€ again.</p>
+<section><h2>Setup File Share Migration Job(s)</h2>
+<p>In the SharePoint admin center, navigate to Migration &gt; Migrations.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-10.png" alt="FileServer to SharePoint 365 Migration screenshot 10">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 10</figcaption>
+</figure>
+<p>Click on the Add Task button.</p>
+<p>Select Single source and destination and press Next.</p>
+<p>Enter the file share path into the Source field in the correct format.</p>
+<p>\\serverFQDN\fileshare</p>
+<p>Click Next.</p>
+<p>Select SharePoint on the Select a Destination screen.</p>
+<p>Press Next.</p>
+<p>On the Select a SharePoint site destination screen, type in the URL saved during site creation.</p>
+<p>Select the location you want to copy your content selection will then appear right below.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-11.png" alt="FileServer to SharePoint 365 Migration screenshot 11">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 11</figcaption>
+</figure>
+<p>Press Next.</p>
+<p>Give your task a Task name.</p>
+<p>Select Run now or Run later in the Task schedule.</p>
+<p>Select a specific agent in the Agent group assignment drop-down or leave the default.</p>
+<p>Your first pass should be a scan-only pass, so check the Perform scan-only box.</p>
+<p>The following settings should be selected for any migration task you assign to the migration project.</p>
+<p>Checked boxes for the initial pass.</p>
+<p>Perform scan only.</p>
+<p>Preserve file share permissions.</p>
+<p>Migrate hidden files.</p>
+<p>Replace invalid file name character with (use _).</p>
+<p>Azure Active Directory lookup.</p>
+<p>Checked boxes for a migration pass.</p>
+<p>Preserve file share permissions.</p>
+<p>Migrate hidden files.</p>
+<p>Replace the invalid file name character with (use _).</p>
+<p>Azure Active Directory lookup.</p>
+<p>Click the Run button, once ready to proceed.</p>
+<p>Your newly created task will now appear in the Migrations list.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-12.png" alt="FileServer to SharePoint 365 Migration screenshot 12">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 12</figcaption>
+</figure>
+<p>Repeat steps 1 through 17 for each share you will be migrating to SharePoint.</p>
+<p>Once an initial Perform scan-only task has been successfully completed, you will want to select your task in the Migrations task list.</p>
+<p>In the task Details callout to the right, click on the Settings link and uncheck the Perform scan only box.</p>
+<p>This task is now ready to copy data to the SharePoint cloud.</p>
+<p>All tasks can be executed from the Migration &gt; Migrations list by selecting the task(s) and clicking either the Run or Schedule buttons.</p>
+<p>Your jobs/tasks progress will be easily tracked in the Migrations list as well.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/fileserver-to-sharepoint-365-migration/image-13.png" alt="FileServer to SharePoint 365 Migration screenshot 13">
+    <figcaption>FileServer to SharePoint 365 Migration screenshot 13</figcaption>
+</figure>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

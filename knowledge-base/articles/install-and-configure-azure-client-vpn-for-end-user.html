@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install and Configure Azure Client VPN for End User | Karuin KB</title>
+    <meta name="description" content="Install and Configure Azure Client VPN for End User knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Install and Configure Azure Client VPN for End User</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 9</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Technical Project Team</h2>
+<section><h2>Azure Client VPN Configuration</h2>
+<section><h2>SOP</h2>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin – Senior Technical Project Engineer</p>
+<p>Download and install the Azure VPN client from the Microsoft Store</p>
+<p>Direct Link: https://apps.microsoft.com/store/detail/azure-vpn-client/9NP355QT2SQB?hl=en-np&amp;gl=NP</p>
+<p>In the Azure Portal, under the User VPN configurations tab, select the Client VPN deployment and click Download virtual WAN user VPN profile</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/install-and-configure-azure-client-vpn-for-end-user/image-01.png" alt="Install and Configure Azure Client VPN for End User screenshot 1">
+    <figcaption>Install and Configure Azure Client VPN for End User screenshot 1</figcaption>
+</figure>
+<p>Select the only Authentication type option EAPTLS</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/install-and-configure-azure-client-vpn-for-end-user/image-02.png" alt="Install and Configure Azure Client VPN for End User screenshot 2">
+    <figcaption>Install and Configure Azure Client VPN for End User screenshot 2</figcaption>
+</figure>
+<p>Click Generate and Download profile</p>
+<p>The downloaded archive needs to be extracted to a folder</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/install-and-configure-azure-client-vpn-for-end-user/image-03.png" alt="Install and Configure Azure Client VPN for End User screenshot 3">
+    <figcaption>Install and Configure Azure Client VPN for End User screenshot 3</figcaption>
+</figure>
+<p>Open the Azure VPN Client and click the + button, then select Import</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/install-and-configure-azure-client-vpn-for-end-user/image-04.png" alt="Install and Configure Azure Client VPN for End User screenshot 4">
+    <figcaption>Install and Configure Azure Client VPN for End User screenshot 4</figcaption>
+</figure>
+<p>Browse to the directory that contains the extracted archive folder, and browse into the AzureVPN folder inside</p>
+<p>Select the XML file called azurevpnconfig.xml then press Open</p>
+<p>The XML file will auto-populate all of the necessary connection information fields, and attach the certificate, therefore there is no need to change any of the fields except the Connection Name, then press Save</p>
+<p>The newly created connection will now appear in the left side bar, under VPN Connections</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/install-and-configure-azure-client-vpn-for-end-user/image-05.png" alt="Install and Configure Azure Client VPN for End User screenshot 5">
+    <figcaption>Install and Configure Azure Client VPN for End User screenshot 5</figcaption>
+</figure>
+<p>Select the VPN Connection then press Connect</p>
+<p>When connecting for the first time you will be prompted to authenticate, select &#39;Use a different account&#39; and then &#39;Work or school account&#39; and press continue</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/install-and-configure-azure-client-vpn-for-end-user/image-06.png" alt="Install and Configure Azure Client VPN for End User screenshot 6">
+    <figcaption>Install and Configure Azure Client VPN for End User screenshot 6</figcaption>
+</figure>
+<p>Enter your O365 username/email address on the next screen</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/install-and-configure-azure-client-vpn-for-end-user/image-07.png" alt="Install and Configure Azure Client VPN for End User screenshot 7">
+    <figcaption>Install and Configure Azure Client VPN for End User screenshot 7</figcaption>
+</figure>
+<p>Press Next</p>
+<p>Enter the account password</p>
+<p>Press Sign in</p>
+<p>Press OK or No, sign into this app only on the following screen</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/install-and-configure-azure-client-vpn-for-end-user/image-08.png" alt="Install and Configure Azure Client VPN for End User screenshot 8">
+    <figcaption>Install and Configure Azure Client VPN for End User screenshot 8</figcaption>
+</figure>
+<p>The VPN client will then try to connect</p>
+<p>When connected you will see a &#39;Connected&#39; status under the connection name on the left side bar in the Azure VPN Client</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/install-and-configure-azure-client-vpn-for-end-user/image-09.png" alt="Install and Configure Azure Client VPN for End User screenshot 9">
+    <figcaption>Install and Configure Azure Client VPN for End User screenshot 9</figcaption>
+</figure>
+<p>You are now connected to the Azure VPN</p>
+<p>When finished, press the Disconnect button in the Azure VPN Client to disconnect</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

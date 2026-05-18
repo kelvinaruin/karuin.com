@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enabling Shadow Copies on Windows File Servers | Karuin KB</title>
+    <meta name="description" content="Enabling Shadow Copies on Windows File Servers knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Enabling Shadow Copies on Windows File Servers</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 9</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <h3>Summary</h3>
+<p>Shadow copies are a feature built into Windows Server operating systems that allow simple file recovery. It enabled users or IT teams to quickly restore a mistakenly deleted or overwritten file without having to restore it from the backup solution.&#194;</p>
+<h3>A few things to consider before enabling&#194;</h3>
+<p>Shadow copies are enabled per drive. We want to enable this on drives where file shares reside.&#194;&#160;&#194;</p>
+<p>Consider the client&#226;€™s work schedule. The default schedule after enabling shadow copies is two shadow copies every weekday at 7:00 AM and 12:00 PM. This is sufficient for most businesses. However, If the client has numerous employees starting at 6:00 AM, consider moving the first time to 5:00 AM.&#194;&#160; If they work on weekends, you may want to include Saturday and Sunday in the schedule. You can increase the amount of shadow copies per day if desired.&#194;&#160;&#194;</p>
+<p>Shadow copies use disk space. By default, it will use 10% of the total disk size. This can be adjusted higher or lower if needed. Be aware of how much free disk space you have and if the used space fluctuates or is expected to grow. Do not set the size to maximum size to &#226;€œNo Limit&#226;€.&#194;&#160;&#194;</p>
+<p>By default, shadow copies are stored on the same drive where they&#226;€™re enabled. For nearly all clients, this is fine. If the drive has a heavy I/O load around the clock, consider storing them on a separate disk. If you are unsure, consult with your LFNE, TPT, or Ops.&#194;&#160;&#194;</p>
+<p>There is a hard maximum of 64 shadow copies. Consider this number when setting the frequency of your schedule. If you run the default of two shadow copies per day, you will retain 32 days of shadow copies. If you have eight shadow copies running per day, you will retain eight days of restore points (assuming allocated storage is sufficient for all those recovery points).&#194;&#160;&#194;</p>
+<ul><li>&#194;</li></ul>
+<h3>To enable Shadow Copies on a drive</h3>
+<p>Open disk management on your file server:&#194;</p>
+<ul><li>&#194;</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/enabling-shadow-copies-on-windows-file-servers/image-01.png" alt="Enabling Shadow Copies on Windows File Servers screenshot 1">
+    <figcaption>Enabling Shadow Copies on Windows File Servers screenshot 1</figcaption>
+</figure>
+<ul><li>&#194;&#160;&#194;</li></ul>
+<p>In disk management, right click the desired drive, and select properties.&#194;</p>
+<ul><li>&#194;</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/enabling-shadow-copies-on-windows-file-servers/image-02.png" alt="Enabling Shadow Copies on Windows File Servers screenshot 2">
+    <figcaption>Enabling Shadow Copies on Windows File Servers screenshot 2</figcaption>
+</figure>
+<p>In the Disk properties, find the Shadow Copies tab and select it&#194;</p>
+<ul><li>&#194;</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/enabling-shadow-copies-on-windows-file-servers/image-03.png" alt="Enabling Shadow Copies on Windows File Servers screenshot 3">
+    <figcaption>Enabling Shadow Copies on Windows File Servers screenshot 3</figcaption>
+</figure>
+<p>Select the volume where you want to enable Shadow copies. In this example, we are using the E: drive. When the disk is selected, click the settings button. You can change the following here:&#194;</p>
+<p>Where the shadow copies are stored for this volume&#194;</p>
+<p>The maximum size limit (do not set to no limit)&#194;</p>
+<p>The schedule&#194;</p>
+<p>The below screenshots show an example of a 50 GB limit on this disk, and the default schedule of 7 AM and 12 PM every weekday. Click OK after you are finished configuring your size limit and schedule.&#194;&#160;&#194;</p>
+<ul><li>&#194;</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/enabling-shadow-copies-on-windows-file-servers/image-04.png" alt="Enabling Shadow Copies on Windows File Servers screenshot 4">
+    <figcaption>Enabling Shadow Copies on Windows File Servers screenshot 4</figcaption>
+</figure>
+<ul><li>&#194;</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/enabling-shadow-copies-on-windows-file-servers/image-05.png" alt="Enabling Shadow Copies on Windows File Servers screenshot 5">
+    <figcaption>Enabling Shadow Copies on Windows File Servers screenshot 5</figcaption>
+</figure>
+<p>Click the enable button to enable the shadow copies. You will receive a warning that the first shadow copy will take place immediately, click Yes. When complete, the date and time will show in the Shadow Copies of the selected volume section.&#194;&#160;&#194;&#160;&#194;</p>
+<ul><li>&#194;</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/enabling-shadow-copies-on-windows-file-servers/image-06.png" alt="Enabling Shadow Copies on Windows File Servers screenshot 6">
+    <figcaption>Enabling Shadow Copies on Windows File Servers screenshot 6</figcaption>
+</figure>
+<ul><li>&#194;</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/enabling-shadow-copies-on-windows-file-servers/image-07.png" alt="Enabling Shadow Copies on Windows File Servers screenshot 7">
+    <figcaption>Enabling Shadow Copies on Windows File Servers screenshot 7</figcaption>
+</figure>
+<ul><li>&#194;</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/enabling-shadow-copies-on-windows-file-servers/image-08.png" alt="Enabling Shadow Copies on Windows File Servers screenshot 8">
+    <figcaption>Enabling Shadow Copies on Windows File Servers screenshot 8</figcaption>
+</figure>
+<p>To verify, find a folder on the drive. Right click that folder and select the Previous Versions tab. You will see the time and date of the shadow copy.&#194;</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/enabling-shadow-copies-on-windows-file-servers/image-09.png" alt="Enabling Shadow Copies on Windows File Servers screenshot 9">
+    <figcaption>Enabling Shadow Copies on Windows File Servers screenshot 9</figcaption>
+</figure>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

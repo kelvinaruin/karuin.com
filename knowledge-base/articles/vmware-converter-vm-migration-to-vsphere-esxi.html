@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMWare Converter VM migration to vSphere(ESXI) | Karuin KB</title>
+    <meta name="description" content="VMWare Converter VM migration to vSphere(ESXI) knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>VMWare Converter VM migration to vSphere(ESXI)</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 5</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Technical Project Team</h2>
+<section><h2>VMWare &#226;€“ Utilize VMWare Converter for VM Migrations to vSphere</h2>
+<section><h2>SOP</h2>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin &#226;€“ Senior Technical Project Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Pre-Requisites3</p>
+<p>Create a Provisioning Package4</p>
+<section><h2>User VMWare Converter to migrate a server (physical or virtual) to vCenter or vSphere</h2>
+<p>Utilize INC / Take control and log on to the machine that is to be migrated.</p>
+<p>Download and install the VMWare Converter 6.2.0 executable.</p>
+<p>Use the default options during the installation, such as local installation as shown below:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-converter-vm-migration-to-vsphere-esxi/image-01.png" alt="VMWare Converter VM migration to vSphere(ESXI) screenshot 1">
+    <figcaption>VMWare Converter VM migration to vSphere(ESXI) screenshot 1</figcaption>
+</figure>
+<p>Restart the server.</p>
+<p>Turn off any services that may interfere with the migration (SQL, etc.)</p>
+<p>Turn off Windows firewall, User Access Control (UAC), and Anti-Virus, if possible.</p>
+<p>Create a maintenance window for this server in INC.</p>
+<p>Make sure you have a good and current backup of your server.</p>
+<p>Create a checkpoint or snapshot of your server, if possible.</p>
+<p>Log into the Datto Portal and pause Datto backups (cloud and local) for this server.</p>
+<p>Send an email to the client/parties involved informing them of the migration start.</p>
+<p>Launch the VMWare converter.</p>
+<p>In the Administration menu, click on Data Connections Per Task and set it to Maximum.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-converter-vm-migration-to-vsphere-esxi/image-02.png" alt="VMWare Converter VM migration to vSphere(ESXI) screenshot 2">
+    <figcaption>VMWare Converter VM migration to vSphere(ESXI) screenshot 2</figcaption>
+</figure>
+<p>Click on &#226;€˜Convert Machine&#226;€™ and then select &#226;€˜Powered on&#226;€™ and &#226;€˜This local machine&#226;€™.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-converter-vm-migration-to-vsphere-esxi/image-03.png" alt="VMWare Converter VM migration to vSphere(ESXI) screenshot 3">
+    <figcaption>VMWare Converter VM migration to vSphere(ESXI) screenshot 3</figcaption>
+</figure>
+<p>Press &#226;€˜Next&#226;€™, then fill out the Vcenter server information (IP, username, and password).</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-converter-vm-migration-to-vsphere-esxi/image-04.png" alt="VMWare Converter VM migration to vSphere(ESXI) screenshot 4">
+    <figcaption>VMWare Converter VM migration to vSphere(ESXI) screenshot 4</figcaption>
+</figure>
+<p>IF a certificate alert pops up, press the &#226;€˜Ignore&#226;€™ button.</p>
+<p>Press &#226;€˜Convert&#226;€™.</p>
+<p>You should see the job start and the task field populate with some information regarding ETA and percentage completed as the job should have started:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-converter-vm-migration-to-vsphere-esxi/image-05.png" alt="VMWare Converter VM migration to vSphere(ESXI) screenshot 5">
+    <figcaption>VMWare Converter VM migration to vSphere(ESXI) screenshot 5</figcaption>
+</figure>
+<p>Once the machine is done converting, before starting on the Vcenter side make sure you disable the NIC on the source server.</p>
+<p>Copy the source server MAC address and assign it to the NIC on the destination server.</p>
+<p>Turn off the source server and turn on the destination server.</p>
+<p>Check to make sure the correct IP has been applied to the copy, if not you will have to set it manually.</p>
+<p>Make sure services that are set to auto or auto delayed are all running.</p>
+<p>Resume backups</p>
+<p>Send out an email to the client and any parties involved, informing them of migration completion.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

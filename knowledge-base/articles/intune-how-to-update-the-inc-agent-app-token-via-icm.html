@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intune - How to Update the INC Agent App Token via ICM | Karuin KB</title>
+    <meta name="description" content="Intune - How to Update the INC Agent App Token via ICM knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Intune - How to Update the INC Agent App Token via ICM</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 12</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>CLIENT NAME HERE</h2>
+<p>Intune &#226;€“ How to Update the INC Agent App Registration Token</p>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin &#226;€“ Senior Technical Project Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Get a New Registration Token from INC3</p>
+<p>Update the APP via ICM5</p>
+<section><h2>Get a New Registration Token from INC</h2>
+<p>Log in to the appropriate INC instance for your client. (See IT glue for that information if not sure).</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-01.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 1">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 1</figcaption>
+</figure>
+<p>Navigate to your client in INC.</p>
+<p>Expand the Actions menu on the left hand side and click on &#226;€˜Download Agent/Probe&#226;€™</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-02.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 2">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 2</figcaption>
+</figure>
+<p>At the top, click on &#226;€˜Get Registration Token&#226;€™:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-03.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 3">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 3</figcaption>
+</figure>
+<p>On the registration token screen, take note of the new token expiration date:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-04.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 4">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 4</figcaption>
+</figure>
+<p>You will need this date to update the INC App package</p>
+<p>Next, click &#226;€œCopy Token&#226;€ as you need this value for the Intune package.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-05.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 5">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 5</figcaption>
+</figure>
+<p>Save this value as it will be needed for the next step.</p>
+<section><h2>Update the INC AGENT APP via ICM</h2>
+<p>Login to ICM via https://icm.impactnetworking.com</p>
+<p>Enter the client&#226;€™s name under accounts:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-06.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 6">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 6</figcaption>
+</figure>
+<p>Click on the client name in the list:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-07.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 7">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 7</figcaption>
+</figure>
+<p>On the left-hand side navigation menu, click on Intune and then on Apps:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-08.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 8">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 8</figcaption>
+</figure>
+<p>Locate the INC installation in the list and click on the Name of the application:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-09.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 9">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 9</figcaption>
+</figure>
+<p>You will see the Edit App properties window open.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-10.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 10">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 10</figcaption>
+</figure>
+<p>You will now want to update the &#226;€œExpires&#226;€&#166;&#226;€ date in the Name field. You would have obtained that information in INC.</p>
+<p>Next, replace the REGISTRATION_TOKEN=&#226;€&#226;€ value with the new value you obtained in INC within the &#226;€˜Command-line Arguments&#226;€™ box:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-11.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 11">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 11</figcaption>
+</figure>
+<p>Once the &#226;€œNAME&#226;€ and the &#226;€œCOMMAND-LINE ARGUMENTS&#226;€ fields have been updated with the new values, simply click on the &#226;€œSave&#226;€ button on the bottom right:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-how-to-update-the-inc-agent-app-token-via-icm/image-12.png" alt="Intune - How to Update the INC Agent App Token via ICM screenshot 12">
+    <figcaption>Intune - How to Update the INC Agent App Token via ICM screenshot 12</figcaption>
+</figure>
+<p>You&#226;€™re all set!</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

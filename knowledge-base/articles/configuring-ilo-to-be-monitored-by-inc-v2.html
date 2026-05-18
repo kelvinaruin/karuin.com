@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuring iLO to be monitored by INC v2 | Karuin KB</title>
+    <meta name="description" content="Configuring iLO to be monitored by INC v2 knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Configuring iLO to be monitored by INC v2</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 16</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <h3>Scope</h3>
+<p>This document is to assist in getting ILO configured on the server and then configured for monitoring correctly in INC.</p>
+<h3>Initial INC Configuration</h3>
+<p>Verify the ILO templates are loaded to perform the monitoring</p>
+<p>Log into INC</p>
+<p>Log into the client</p>
+<p>Expand Configuration</p>
+<p>Expand Monitoring</p>
+<p>Click on Service Templates</p>
+<p>Verify the template HP Servers is listed</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-01.png" alt="Configuring iLO to be monitored by INC v2 screenshot 1">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 1</figcaption>
+</figure>
+<p>HP Server Configuration</p>
+<p>Log into ILO for the server</p>
+<p>Select Security in the left hand menu</p>
+<p>Under the Access Settings menu item click the pencil next to Server</p>
+<p>Enter a Server name</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-02.png" alt="Configuring iLO to be monitored by INC v2 screenshot 2">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 2</figcaption>
+</figure>
+<p>Click OK</p>
+<p>Click the Pencil next to Account Service</p>
+<p>Enable Password Complexity</p>
+<p>Set Password length to 16</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-03.png" alt="Configuring iLO to be monitored by INC v2 screenshot 3">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 3</figcaption>
+</figure>
+<p>Click OK</p>
+<p>Select Administration</p>
+<p>Click User Administration</p>
+<p>Scroll to the bottom and click New</p>
+<p>Ensure Configure User is selected and click Next</p>
+<p>Click Enable User</p>
+<p>For Login Name enter Impact</p>
+<p>For User Name enter Impact</p>
+<p>For the passwords enter a complex password</p>
+<p>Under User Privileges click &#226;€œselect all&#226;€</p>
+<p>Click Add user</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-04.png" alt="Configuring iLO to be monitored by INC v2 screenshot 4">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 4</figcaption>
+</figure>
+<p>Log out</p>
+<p>Log in using the Impact account</p>
+<p>Select Administration</p>
+<p>Click User Administration</p>
+<p>Click the checkbox for the Administrator user</p>
+<p>Scroll down and click Edit</p>
+<p>Click Change Password</p>
+<p>Enter a complex password</p>
+<p>Scroll down and click Update User</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-05.png" alt="Configuring iLO to be monitored by INC v2 screenshot 5">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 5</figcaption>
+</figure>
+<p>***Enter both passwords into IT GLUE</p>
+<p>Click Management in the left hand side menu</p>
+<p>Enter a system location (I.e. Corp Office - Rack 2)</p>
+<p>Under Read Community 1 enter impact</p>
+<p>Scroll down and click Apply (right under the SNMP Port box)</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-06.png" alt="Configuring iLO to be monitored by INC v2 screenshot 6">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 6</figcaption>
+</figure>
+<p>Logout of ILO</p>
+<h3>Enable monitoring in INC</h3>
+<p>Log into INC</p>
+<p>Log into the client</p>
+<p>Expand Configuration</p>
+<p>Expand Asset Discovery</p>
+<p>Click on Discovery Jobs</p>
+<p>Click Add</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-07.png" alt="Configuring iLO to be monitored by INC v2 screenshot 7">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 7</figcaption>
+</figure>
+<p>Click on the SNMP Settings tab</p>
+<p>Click Add SNMP Credential and Select SNMP v1</p>
+<p>Set the SNMP V2C Profile Name to Impact</p>
+<p>Set the Community String to impact</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-08.png" alt="Configuring iLO to be monitored by INC v2 screenshot 8">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 8</figcaption>
+</figure>
+<p>Click Finish</p>
+<p>In INC go to Discovered Assets</p>
+<p>Locate the new devices.  If the Device Class is Other perform the following</p>
+<p>Select the ILO device(s)</p>
+<p>Click Set Device Class/OS</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-09.png" alt="Configuring iLO to be monitored by INC v2 screenshot 9">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 9</figcaption>
+</figure>
+<p>Change to Servers &#226;€“ Management Interface</p>
+<p>Set the OS to Other Operating System</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-10.png" alt="Configuring iLO to be monitored by INC v2 screenshot 10">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 10</figcaption>
+</figure>
+<p>Click OK</p>
+<p>With the systems still highlighted, click Set License Mode</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-11.png" alt="Configuring iLO to be monitored by INC v2 screenshot 11">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 11</figcaption>
+</figure>
+<p>Click Professional</p>
+<p>Click Import</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-12.png" alt="Configuring iLO to be monitored by INC v2 screenshot 12">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 12</figcaption>
+</figure>
+<p>Click on Views and All Devices</p>
+<p>Click on the device to enter the Details</p>
+<p>Click the Settings tab</p>
+<p>Click the Monitoring Options tab</p>
+<p>Place a check in Use SNMP:</p>
+<p>Set SNMP version to v2c</p>
+<p>Set Community String to impact</p>
+<p>Click Save</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-13.png" alt="Configuring iLO to be monitored by INC v2 screenshot 13">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 13</figcaption>
+</figure>
+<p>Click Add</p>
+<p>Select the following:</p>
+<p>Fan Status (HP) &#226;€“ Add 1</p>
+<p>Physical Drive (HP) - Add 1 for each drive installed in the server</p>
+<p>Power Supply (HP) - Add 1</p>
+<p>RAID Status (HP) &#226;€“ Add 1</p>
+<p>Server Temp (HP) - Add 1</p>
+<p>The Services will show in Monitoring. Services that had more than one added will be duplicated. For instance, if there are 2 Hard drives, then both will currently be listed as Physical Drive (HP) &#226;€“ 0.0</p>
+<p>The following will be for changing the second Physical Drive service to point to the second Drive</p>
+<p>Click on the second Physical Drive (HP) &#226;€“ 0.0</p>
+<p>Click the Service Details tab</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-14.png" alt="Configuring iLO to be monitored by INC v2 screenshot 14">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 14</figcaption>
+</figure>
+<p>Under Physical Drive Index click the drop down for Select Discovered</p>
+<p>Select 0.1</p>
+<p>Click OK</p>
+<p>The change should now be reflected in the monitoring section.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-15.png" alt="Configuring iLO to be monitored by INC v2 screenshot 15">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 15</figcaption>
+</figure>
+<p>Perform any changes on all remaining drives. Drive locations are shown in the screenshot below. The red arrows are the drive numbers. 1 needs to be subtracted from each drive to have it match what is responded to by SNMP.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-ilo-to-be-monitored-by-inc-v2/image-16.png" alt="Configuring iLO to be monitored by INC v2 screenshot 16">
+    <figcaption>Configuring iLO to be monitored by INC v2 screenshot 16</figcaption>
+</figure>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

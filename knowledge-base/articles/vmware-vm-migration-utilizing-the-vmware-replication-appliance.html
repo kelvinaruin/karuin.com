@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMware VM Migration Utilizing the VMWare Replication Appliance | Karuin KB</title>
+    <meta name="description" content="VMware VM Migration Utilizing the VMWare Replication Appliance knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>VMware VM Migration Utilizing the VMWare Replication Appliance</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 0</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <p>VMWare VM Migration Utilizing the VMWare Replication Appliance</p>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin &#226;€“ Senior Implementation Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Pre-requisites3</p>
+<p>Phase 1: VMware Tools Updates to the Source Environment4</p>
+<p>Phase 2: VMRA Deployment to the Source Environment4</p>
+<p>Phase 3: VMRA Deployment to the Destination Environment5</p>
+<p>Phase 4: Connect VMRA to both vCenter Instances5</p>
+<p>Phase 5: VMRA Configuration Testing Cycle6</p>
+<p>Phase 6: VMRA Configuration and Testing Validation7</p>
+<p>Phase 7: Begin Replication8</p>
+<p>Phase 8: Migrate Non-Essential Servers (Pilot Group)8</p>
+<p>Phase 9: Migrate All Production Servers9</p>
+<p>Final Phase: Project Completion Expectations11</p>
+<section><h2>Pre-requisites</h2>
+<p>The following requirements must be met and completed before the start of this project.</p>
+<p>VMware Essentials Plus license is required for the VMware Replication Appliance</p>
+<p>All licensing is purchased and documented for the source and destination environments</p>
+<p>All required digital media is downloaded from the VMware portal to an accessible share</p>
+<p>Source and destination environments can communicate with each other.</p>
+<p>All virtual guests that are being migrated have a validated and current backup at the time of cutover.</p>
+<p>All SQL Servers are configured with paravirtual adapters as per VMware best practice documentation:</p>
+<p>https://www.vmware.com/content/dam/digitalmarketing/vmware/en/pdf/solutions/sql-server-on-vmware-best-practices-guide.pdf.</p>
+<p>A current vCenter backup has been completed before the start of every phase.</p>
+<p>All virtual guests must be updated to the latest VMware Tools version before migration.</p>
+<section><h2>Phase 1: VMware Tools Updates to the Source Environment</h2>
+<p>A critical requirement of the VMware Replication Appliance is that all virtual guests have a current version of the VMware Tools application. In this phase, reports are run to identify out-of-date instances and then any out-of-date instances are updated with client scheduling input.</p>
+<p>Login to the source vCenter environment and run a VMware tools compliance report.</p>
+<p>Identify all virtual guests with an out-of-date VMware Tools instance.</p>
+<p>Communicate the out-of-date guest list to the client.</p>
+<p>Schedule a maintenance window for all out-of-date virtual guests with the client as a restart is required for VMware Tools updates.</p>
+<p>Perform updates to the VMware Tools instances on any virtual guest that is not running the current version.</p>
+<p>Run a post-upgrade VMware Tools compliance report and identify any out-of-date VMware Tools instances.</p>
+<p>Continue the above steps until all virtual guests in the source environment have current VMware Tools versions.</p>
+<section><h2>Phase 2: VMRA Deployment to the Source Environment</h2>
+<p>The VMware Replication Appliance is installed and configured in the source cluster.</p>
+<p>Login to the VMWare vCenter, then locate VMRA 8.7 ISO or OVA image, extract, and/or mount.</p>
+<p>Install the VMware replication appliance utilizing the OVA provided by VMware.</p>
+<p>Assign VMRA license obtained from the VMware customer portal.</p>
+<p>Configure FQDN, set the hostname VMRA_SRC.domain.com and set a static IP on the management VLAN.</p>
+<p>Document VMRA login and network information into the Impact Networking IT Glue repository.</p>
+<p>Update the VMRA appliance to the latest security patches from VMware.</p>
+<p>Outline all VMware networking components needed to safely migrate virtual machines to the destination environment.</p>
+<p>Virtual Networks</p>
+<p>Distributed Switches</p>
+<p>Virtual Switches</p>
+<p>VLANs</p>
+<section><h2>Phase 3: VMRA Deployment to the Destination Environment</h2>
+<p>Login to the VMWare vCenter, then locate VMRA 8.7 ISO or OVA image, extract, and/or mount.</p>
+<p>Install the VMware replication appliance utilizing the OVA provided by VMware.</p>
+<p>Assign VMRA license obtained from the VMware customer portal.</p>
+<p>Configure FQDN, set the hostname VMRA_VX.domain.com, and set a static IP on the management VLAN.</p>
+<p>Document VMRA login and network information into the Impact Networking IT Glue repository.</p>
+<p>Update the VMRA appliance to the latest security patches from VMware.</p>
+<p>Deploy all VMware networking components identified in Phase 1 to the destination VCenter:</p>
+<p>Virtual Networks</p>
+<p>Distributed Switches</p>
+<p>Virtual Switches</p>
+<p>VLANs</p>
+<section><h2>Phase 4: Connect VMRA to both vCenter Instances</h2>
+<p>Both VMware Replication Appliances are connected to the source and destination vCenter instances. This is a critical step that is required to be able to perform the tasks needed to complete this cutover.</p>
+<p>Hourly Budget: 2 hours</p>
+<p>Login to the source with the hostname of VMRA_SRC</p>
+<p>Create a &#226;€œNew Site Pair&#226;€ and connect it to the source vCenter appliance via FQDN.</p>
+<p>Create a &#226;€œNew Site Pair&#226;€ and connect it to the destination vCenter appliance FQDN.</p>
+<p>Validate that source and remote sites appear under the Site Recovery user interface.</p>
+<p>Login to the destination with the hostname of VMRA_VX</p>
+<p>Create a &#226;€œNew Site Pair&#226;€ and connect it to the source vCenter appliance via FQDN.</p>
+<p>Create a &#226;€œNew Site Pair&#226;€ and connect it to the destination vCenter appliance FQDN.</p>
+<p>Validate that source and remote sites appear under the Site Recovery user interface.</p>
+<p>Configure the Recovery Point Objective (RPO) and set it to 15 minutes.</p>
+<p>Set the retention policy on both VMR appliances to a maximum of 20 recovery points.</p>
+<p>More information about RPO and Retention Policies: https://docs.vmware.com/en/vSphere-Replication/8.7/com.vmware.vsphere.replication-admin.doc/GUID-84FAF645-1C65-413D-A89B-70DBA0990631.html#GUID-84FAF645-1C65-413D-A89B-70DBA0990631</p>
+<p>Validate that each VMRA lists &#226;€œconnected&#226;€ as the status for each of the two sites.</p>
+<p>Export and archive the VMRA configuration for both appliances to a client network share.</p>
+<section><h2>Phase 5: VMRA Configuration Testing Cycle</h2>
+<p>The VMware Replication Appliance environment is fully tested by deploying a non-production virtual server and then set to replicate to the new VCenter environment so it can be used to validate the configuration and test the cutover process at a later phase.</p>
+<p>Login to the source vCenter.</p>
+<p>Deploy a Microsoft Windows Server virtual machine to the source environment.</p>
+<p>Name the virtual machine VMRA_TEST.</p>
+<p>This VM will be used to validate all of the functionality and configuration of VMRA.</p>
+<p>The VM must utilize the production SAN for storage.</p>
+<p>The VM will need to be configured with 1 or more virtual networks that production uses.</p>
+<p>The VM should have multiple disks configured.</p>
+<p>Validate the test virtual machine by connecting to it, checking that it is on the correct VLAN, has an IP address, and can interact with the production environment</p>
+<p>Document the VM settings, including the MAC address and IP.</p>
+<p>Login to the VMRA on the source(old) environment.</p>
+<p>Configure replication for the test virtual machine:</p>
+<p>On the home page, click &#226;€œSite Recovery&#226;€ and then click &#226;€œOpen Site Recovery&#226;€.</p>
+<p>Click &#226;€œReplications&#226;€ and select &#226;€œOutgoing&#226;€, then click Create new replication icon.</p>
+<p>Accept the automatic assignment of the vSphere Replication server.</p>
+<p>Open the Configure Replication Wizard and select the VMRA_TEST virtual machine.</p>
+<p>Click &#226;€œNext&#226;€ to proceed to the &#226;€œTarget datastore&#226;€ page.</p>
+<p>Select the primary production datastore in the destination environment.</p>
+<p>Click &#226;€œNext&#226;€.</p>
+<p>On the &#226;€œSelect seed&#226;€ page, review the suggested replication seeds and change them if needed.</p>
+<p>Select the &#226;€œThe selected seeds are correct&#226;€ check box and click &#226;€œNext&#226;€.</p>
+<p>On the &#226;€œReplication settings&#226;€ use the RPO settings configured in the previous section</p>
+<p>On the &#226;€œReady to Complete&#226;€ page, click &#226;€œFinish&#226;€.</p>
+<p>Validate that the test virtual machine was able to fully replicate the new cluster.</p>
+<p>Analyze the time it took to replicate the VM and check the bandwidth used for seeding.</p>
+<p>Complete a full cutover of the TEST_VMRA VM to the new environment.</p>
+<p>Test the virtual machine power-up and stability.</p>
+<p>Validate the virtual machine network IP and MAC address as it should match the ones documented previously.</p>
+<p>Test and validate the network connectivity of the test VM.</p>
+<p>Confirm that the VM is fully functional after the cutover and matches all the settings documented.</p>
+<p>Complete the same steps used in the &#226;€œConfigure replication for the test virtual machine&#226;€ and begin seeding the VM to the source environment.</p>
+<p>Confirm the test VM is fully replicated to the source VMRA.</p>
+<p>Complete a full cutover of the TEST_VMRA VM back to the source environment.</p>
+<p>Test the virtual machine power-up and stability.</p>
+<p>Validate the virtual machine network IP and MAC address as it should match the ones documented previously.</p>
+<p>Test and validate the network connectivity of the test VM.</p>
+<p>Confirm that the VM is fully functional after the cutover and matches all the settings documented.</p>
+<section><h2>Phase 6: VMRA Configuration and Testing Validation</h2>
+<p>A test virtual server is purposely built to validate the VMware Replication Appliance configuration at the source and destination environments.  This temporarily built virtual machine is used to perform a full shake-down test of the cutover and fallback processes. This server is migrated to the new environment, then stood up and tested to make sure it is operating as expected.  Next, the server is migrated back to the source environment, to test the fallback policy that is rarely used but is needed as a rollback feature.  This is done before adding any production servers to the environment.</p>
+<p>Hourly Budget: 2 hours</p>
+<p>Replication and migration to the destination vCenter Test:</p>
+<p>The replicated virtual machine TEST_VMRA was fully functional after the cutover to the destination environment and retained all critical server settings.</p>
+<p>Replication and migration back to the source vCenter Test:</p>
+<p>The replicated virtual machine was fully tested after the fallback process and all the settings were retained.</p>
+<p>* Note: If at any point, any of the above steps are not validated, the process will need to be adjusted and the test VM replication, cutover, and fallback processes will need to be performed again until a positive result is netted.</p>
+<p>Validation is completed once both migrations are completed successfully and pass all the tests.</p>
+<section><h2>Phase 7: Begin Replication</h2>
+<p>Validate the list of virtual servers that need to be migrated to the new environment</p>
+<p>Identify servers that have dependencies on other virtual machines in the environment</p>
+<p>When the servers are cut over during a later phase, servers with dependencies may need to be cut over in groups. An example is a database server and a front-end server that function as a pair.</p>
+<p>Log in to the VMRA on the source(old) environment:</p>
+<p>Add each virtual server to the VMRA environment and set up replication to the new destination environment.</p>
+<p>On the home page, click &#226;€œSite Recovery&#226;€ and then click &#226;€œOpen Site Recovery&#226;€.</p>
+<p>Click &#226;€œReplications&#226;€ and select &#226;€œOutgoing&#226;€, then click Create new replication icon.</p>
+<p>Accept the automatic assignment of the vSphere Replication server.</p>
+<p>Open the Configure Replication Wizard and select all virtual machines validated in step 1.</p>
+<p>Click &#226;€œNext&#226;€ to proceed to the &#226;€œTarget datastore&#226;€ page.</p>
+<p>Select the primary production datastore in the destination environment and click &#226;€œNext&#226;€.</p>
+<p>On the &#226;€œSelect seed&#226;€ page, review the suggested replication seeds and change them if needed.</p>
+<p>Select the &#226;€œThe selected seeds are correct&#226;€ check box and click &#226;€œNext&#226;€.</p>
+<p>On the &#226;€œReplication settings&#226;€ use the RPO settings configured in the previous section</p>
+<p>On the &#226;€œReady to Complete&#226;€ page, click &#226;€œFinish&#226;€.</p>
+<p>Monitor the replication progress, sync completion times, and bandwidth utilization.</p>
+<p>Confirm that all virtual servers are fully replicated to the destination environment and are ready for cutover.</p>
+<p>Send out a communication to the client and Impact client team, advising that all VMs are now seeded.</p>
+<section><h2>Phase 8: Migrate Non-Essential Servers (Pilot Group)</h2>
+<p>During the first migration phase, a pre-approved number of non-essential production virtual machines are migrated to the new environment. This allows the client to fully validate the new environment with live production servers.</p>
+<p>Work with key staff to outline a list of non-essential production servers that can be migrated in the pilot group of servers to the new environment. This group is used to perform a final validation of the migration process by utilizing actual production servers.</p>
+<p>Login to VMRA and confirm that all members of the Pilot Group have replicated fully.</p>
+<p>The Pilot Group servers should be fully seeded after Phase 6.</p>
+<p>Schedule a maintenance window with staff that will be used to perform the Pilot Group cutover.</p>
+<p>Login to the VMRA on the source(old) environment during the pre-scheduled maintenance window.</p>
+<p>Migrate all the Pilot Group virtual servers to the new vCenter environment.</p>
+<p>The following process is repeated for each server in the Pilot Group:</p>
+<p>Power off the server in the source environment.</p>
+<p>Initiate the cutover in the VMRA interface.</p>
+<p>Monitor the migration in the VMRA dashboard.</p>
+<p>Login to the target site vCenter and validate the Virtual Machine in the destination environment.</p>
+<p>Check power status. VM should be powered on.</p>
+<p>Check network interface MAC and IP Address.  MAC and IP should match the source.</p>
+<p>Check network connectivity.</p>
+<p>Check Impact RMM and confirm the server is reporting online and communication is possible.</p>
+<p>Repeat the process for each server that is part of the Pilot Group.</p>
+<p>Validate that all Pilot Group servers have been successfully cut over to the destination vCenter.</p>
+<p>If any issues arise during this migration phase, utilize the fallback process if necessary.</p>
+<p>Send out a communication to the Impact client team and advise of phase completion.</p>
+<p>Send out a communication to the client staff and advise of migration completion.</p>
+<p>Ask the client staff to validate the Pilot Group VMs and approve the cutover.</p>
+<p>A fallback to the originating cluster is possible if any issues are found after the cutover.</p>
+<section><h2>Phase 9: Migrate All Production Servers</h2>
+<p>This is the main migration and cutover phase. All production virtual guests, excluding the non-essential production servers that were migrated as part of the pilot group cutover, are migrated to the new destination environment. It is possible to break up this phase into multiple stages.</p>
+<p>Hourly Budget: 40 hours</p>
+<p>Work with client key staff to confirm a list of production servers that can be migrated.</p>
+<p>Login to VMRA and confirm that all approved servers have been fully replicated.</p>
+<p>All servers should be fully seeded after Phase 7.</p>
+<p>Schedule a maintenance window with the client that will be used to perform the production cutover.</p>
+<p>Login to the VMRA on the source(old) environment during the pre-scheduled maintenance window.</p>
+<p>Migrate all the production virtual servers to the new destination vCenter environment.</p>
+<p>The following process is repeated for each server:</p>
+<p>Power off the server in the source environment.</p>
+<p>Initiate the cutover in the VMRA interface.</p>
+<p>Monitor the migration in the VMRA dashboard.</p>
+<p>Login to the target site vCenter and validate the Virtual Machine in the destination environment.</p>
+<p>Check power status. VM should be powered on.</p>
+<p>Check network interface MAC and IP Address.  MAC and IP should match the source.</p>
+<p>Check network connectivity.</p>
+<p>Check Impact RMM and confirm the server is reporting online and communication is possible.</p>
+<p>Repeat the process for each server that is part of the Pilot Group.</p>
+<p>Validate that all servers have been successfully cut over to the destination vCenter.</p>
+<p>If any issues arise during this migration phase, utilize the fallback process if necessary.</p>
+<p>Send out a communication to the Impact client team and advise of phase completion.</p>
+<p>Send out communication to client staff and advise of migration completion.</p>
+<p>Ask the client staff to validate the migrated servers and approve the cutover.</p>
+<section><h2>Final Phase: Project Completion Expectations</h2>
+<p>This is the final phase of the cutover project.</p>
+<p>All production servers from the source vCenter environment now reside in the new destination VCenter instance.</p>
+<p>No production servers that were migrated are live in the source environment.</p>
+<p>All servers have been validated and tested by the client team.</p>
+<p>No performance issues should exist at project completion.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

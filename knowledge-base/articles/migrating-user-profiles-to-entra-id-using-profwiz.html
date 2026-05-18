@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migrating User Profiles to Entra ID using ProfWiz | Karuin KB</title>
+    <meta name="description" content="Migrating User Profiles to Entra ID using ProfWiz knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Migrating User Profiles to Entra ID using ProfWiz</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 9</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <p>Migrating an AD User Profile to Entra ID using ProfWiz</p>
+<p>PREPARED BY</p>
+<p>Capri Burns - Project Engineer</p>
+<p>Introduction</p>
+<p>When migrating a user from an AD domain profile to an Entra ID profile normally, all data will be lost and the system will act as if the new profile is an entirely new one, since the system will generate a new profile folder.</p>
+<p>A good way to resolve this issue is to use a tool called Profile Wizard&#194;&#160;to modify the new profile so it points to the old profile&#39;s folder. This allows the following things to carry over seamlessly from the previously-used profile:</p>
+<p>Files</p>
+<p>Desktop/Taskbar/Start Menu/System Tray&#194;&#160;Shortcuts and settings</p>
+<p>Certain application settings</p>
+<p>Usage of this tool can ensure&#194;&#160;a smooth transition from Active Directory to Entra ID.</p>
+<p>Prerequisites and Additional Information</p>
+<p>To start, you must have a PC that&#39;s in the following state:</p>
+<p>Not joined to an Active Directory Domain</p>
+<p>Joined to Entra ID but prior to the first login of the account that joined Entra ID</p>
+<p>Logged into a local administrator account (NOT a domain or Entra ID account)</p>
+<p>Profwiz.MSI &lt;Included in the zip folder that was proved with this document&gt;</p>
+<p>Save-AzureADUser.ps1 &lt;Included in the zip folder that was proved with this document&gt;</p>
+<p>The best time to run this would be after removing the PC from the on-prem domain and directly after linking it to Entra ID. This ensures no data in the new profile is lost.</p>
+<p>In this example, I will be migrating the profile of account&#194;&#160;&lt;CLIENTDOMAIN&gt;\idomaintest&#194;&#160;(Active Directory user account) to M365 account &lt;username&gt;@&lt;clientdomain.com&gt;&#194;&#160;(Entra ID user account).&#194;</p>
+<p>The Migration Process, Step-by-step</p>
+<p>Transfer &#226;€œSave-AzureADUser.ps1&#226;€ to&#194;&#160;the desktop folder on the PC, then run it as admin (right click on PowerShell, click Run as Administrator, then navigate to and run the script).If you get a prompt like below, type Y and hit enter!</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/migrating-user-profiles-to-entra-id-using-profwiz/image-01.png" alt="Migrating User Profiles to Entra ID using ProfWiz screenshot 1">
+    <figcaption>Migrating User Profiles to Entra ID using ProfWiz screenshot 1</figcaption>
+</figure>
+<p>Sign in with the&#194;&#160;M365 account that you are migrating to.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/migrating-user-profiles-to-entra-id-using-profwiz/image-02.png" alt="Migrating User Profiles to Entra ID using ProfWiz screenshot 2">
+    <figcaption>Migrating User Profiles to Entra ID using ProfWiz screenshot 2</figcaption>
+</figure>
+<p>Once the script finishes (it won&#39;t output any message saying so, the window will just close unless you run it via the PowerShell command line), check to make sure there is a&#194;&#160;ForensiTAzureID.xml&#194;&#160;file in the same folder as the script.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/migrating-user-profiles-to-entra-id-using-profwiz/image-03.png" alt="Migrating User Profiles to Entra ID using ProfWiz screenshot 3">
+    <figcaption>Migrating User Profiles to Entra ID using ProfWiz screenshot 3</figcaption>
+</figure>
+<p>Transfer Profwiz.msi&#194;&#160;to the PC and put it in the Desktop folder (it needs to be in the same place as ForensiTAzureID.xml), then run it. If you get a prompt to run it as Administrator, click &quot;Yes&quot;</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/migrating-user-profiles-to-entra-id-using-profwiz/image-04.png" alt="Migrating User Profiles to Entra ID using ProfWiz screenshot 4">
+    <figcaption>Migrating User Profiles to Entra ID using ProfWiz screenshot 4</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/migrating-user-profiles-to-entra-id-using-profwiz/image-05.png" alt="Migrating User Profiles to Entra ID using ProfWiz screenshot 5">
+    <figcaption>Migrating User Profiles to Entra ID using ProfWiz screenshot 5</figcaption>
+</figure>
+<p>Click&#194;&#160;Next.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/migrating-user-profiles-to-entra-id-using-profwiz/image-06.png" alt="Migrating User Profiles to Entra ID using ProfWiz screenshot 6">
+    <figcaption>Migrating User Profiles to Entra ID using ProfWiz screenshot 6</figcaption>
+</figure>
+<p>Select the SOURCE account (i.e. your user&#39;s domain account) that you would like to use for the migration, then click&#194;&#160;Next.Note:&#194;&#160;The name might just show an ID instead of the actual account name due to the account being orphaned by the domain disconnect. Go by the Profile Path, which should show the user&#39;s AD username as the name of the folder.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/migrating-user-profiles-to-entra-id-using-profwiz/image-07.png" alt="Migrating User Profiles to Entra ID using ProfWiz screenshot 7">
+    <figcaption>Migrating User Profiles to Entra ID using ProfWiz screenshot 7</figcaption>
+</figure>
+<p>Ensure that the first part looks like below (domain and Azure AD box), then enter the email address/UPN of the account you want to migrate to, then click&#194;&#160;Next.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/migrating-user-profiles-to-entra-id-using-profwiz/image-08.png" alt="Migrating User Profiles to Entra ID using ProfWiz screenshot 8">
+    <figcaption>Migrating User Profiles to Entra ID using ProfWiz screenshot 8</figcaption>
+</figure>
+<p>The process of migrating the profile should begin. This shouldn&#39;t take more than 5 minutes, as no files should be moved over. Once it is finished, click&#194;&#160;Next, then&#194;&#160;Finish.NOTE: The system will RESTART once you click Finish.&#194;&#160;Make sure you don&#39;t have anything important running before clicking it.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/migrating-user-profiles-to-entra-id-using-profwiz/image-09.png" alt="Migrating User Profiles to Entra ID using ProfWiz screenshot 9">
+    <figcaption>Migrating User Profiles to Entra ID using ProfWiz screenshot 9</figcaption>
+</figure>
+<p>Once the machine reboots, you should now be able to log into the computer on the user&#39;s Entra ID account and all data should be retained in the profile!</p>
+<p>Additional Resources:</p>
+<p>ForensiT Official Guide (PDF)&#194;&#160;(External)</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

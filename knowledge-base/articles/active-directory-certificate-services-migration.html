@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Directory Certificate Services Migration | Karuin KB</title>
+    <meta name="description" content="Active Directory Certificate Services Migration knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Active Directory Certificate Services Migration</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 18</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <p>Overview:</p>
+<p>This document serves as a guide for migrating the Active Directory Certificate Services (AD CS) from a Source Server (Current CA host) running Windows Server OS 2008 R2 - 2022 to a Destination Server (New CA host) running Windows Server 2016 &#226;€“ 2022. The process involves several critical steps to ensure a seamless migration while preserving the integrity of the certificate authority (CA) database, configuration, and certificate templates. These steps include backing up the CA database and registry settings, documenting and manually reconfiguring certificate templates, uninstalling the CA service on the old server, installing and configuring AD CS on the new server, restoring the CA database and registry, and reissuing the certificate templates. Proper execution of each step ensures minimal disruption and a smooth transition to the new server.</p>
+<p>Step 1: Document Current Certificate Templates</p>
+<p>Log in to the Source Server (Current CA host) as a member of the local administrator group.</p>
+<p>Review Existing Certificate Templates:</p>
+<p>Start &gt; Administrative Tools &gt; Certificate Authority on the Source Server (Current CA host).</p>
+<p>In the Certification Authority window, expand the server node, and click on the Certificate Templates folder to view all the templates currently configured.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-01.png" alt="Active Directory Certificate Services Migration screenshot 1">
+    <figcaption>Active Directory Certificate Services Migration screenshot 1</figcaption>
+</figure>
+<p>Document Template Settings:</p>
+<p>Carefully note all certificate templates listed in the Certificate Templates folder.</p>
+<p>Record any customized settings for each template, including template properties, validity periods, enrollment settings, and issuance requirements.</p>
+<p>Important: Once the migration to the Destination Server (New CA host) is complete, you will need to manually configure the same set of certificate templates that were used on the Source Server (Current CA host) to maintain consistency in certificate issuance and management.</p>
+<p>Step 2: Backup the Source Server (Current CA host) Certificate Authority Database and Configuration</p>
+<p>Create a new folder CA2 in the root of C:\ drive - C:\CA2</p>
+<p>Navigate to Certificate Authority:</p>
+<p>Start &gt; Administrative Tools &gt; Certificate Authority.</p>
+<p>Initiate Backup:</p>
+<p>Right-click on the Server Node and select All Tasks &gt; Backup CA to start the Certification Authority Backup Wizard</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-02.png" alt="Active Directory Certificate Services Migration screenshot 2">
+    <figcaption>Active Directory Certificate Services Migration screenshot 2</figcaption>
+</figure>
+<p>Ensure both checkboxes are selected to back up both the CA database and configuration.</p>
+<p>Choose a backup destination path C:\CA2 to store the backup file.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-03.png" alt="Active Directory Certificate Services Migration screenshot 3">
+    <figcaption>Active Directory Certificate Services Migration screenshot 3</figcaption>
+</figure>
+<p>Click Next and provide a password to protect the private key and CA certificate file.</p>
+<p>Click Finish to complete the backup process.</p>
+<p>Step 3: Backup CA Registry Settings</p>
+<p>Access Registry Editor:</p>
+<p>Start &gt; Run, type regedit, and click OK.</p>
+<p>Export Registry Settings:</p>
+<p>Navigate to HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CertSvc.</p>
+<p>Right-click on the Configuration key and select Export.</p>
+<p>Save the file with a unique name and store it in C:\CA2.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-04.png" alt="Active Directory Certificate Services Migration screenshot 4">
+    <figcaption>Active Directory Certificate Services Migration screenshot 4</figcaption>
+</figure>
+<p>Step 4: Transfer Certificate Authority Database, Configuration, and Registry Settings</p>
+<p>Copy your Certificate Authority Database, Configuration, and Registry Settings Folder C:\CA2 from your Source Server to your Destination Server \\&lt;insert server hostname&gt;\C$</p>
+<p>Step 5: Uninstall the CA Service from Source Server (Current CA host)</p>
+<p>Open Server Manager and select Remove Roles under Roles Summary.</p>
+<p>Launch the Remove Roles Wizard:</p>
+<p>Uncheck the Active Directory Certificate Services checkbox.</p>
+<p>Click Next, then Remove Features.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-05.png" alt="Active Directory Certificate Services Migration screenshot 5">
+    <figcaption>Active Directory Certificate Services Migration screenshot 5</figcaption>
+</figure>
+<p>If prompted to stop Internet Information Services (IIS), click OK.</p>
+<p>Complete the Uninstallation</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-06.png" alt="Active Directory Certificate Services Migration screenshot 6">
+    <figcaption>Active Directory Certificate Services Migration screenshot 6</figcaption>
+</figure>
+<p>Restart the server to finalize the uninstallation of the CA service.</p>
+<p>Step 6: Install Certificate Services on the Destination Server (New CA host)</p>
+<p>Log in to the Destination Server (New CA host) as a Domain Administrator or a member of the local administrator group.</p>
+<p>Open Server Manager and select &gt; Add Roles and Features</p>
+<p>Launch the Add Roles and Features Wizard:</p>
+<p>Select Active Directory Certificate Services and click Next.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-07.png" alt="Active Directory Certificate Services Migration screenshot 7">
+    <figcaption>Active Directory Certificate Services Migration screenshot 7</figcaption>
+</figure>
+<p>Select any required features and click Next.</p>
+<p>Select Role Services:</p>
+<p>Select Certification Authority and click Next.</p>
+<p>Click Install to begin the process.</p>
+<p>Once installation is complete, click Close.</p>
+<p>Step 7: Configure Active Directory Certificate Services</p>
+<p>Navigate to AD CS Configuration Server Manager &gt; AD CS.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-08.png" alt="Active Directory Certificate Services Migration screenshot 8">
+    <figcaption>Active Directory Certificate Services Migration screenshot 8</figcaption>
+</figure>
+<p>Start the Configuration Wizard</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-09.png" alt="Active Directory Certificate Services Migration screenshot 9">
+    <figcaption>Active Directory Certificate Services Migration screenshot 9</figcaption>
+</figure>
+<p>Configure Active Directory Certificate Services</p>
+<p>Ensure the Enterprise Administrator credentials are displayed, then click Next.</p>
+<p>Select Certification Authority and click Next.</p>
+<p>Choose CA Type:</p>
+<p>Ensure Enterprise CA is selected, then click Next.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-10.png" alt="Active Directory Certificate Services Migration screenshot 10">
+    <figcaption>Active Directory Certificate Services Migration screenshot 10</figcaption>
+</figure>
+<p>Select Root CA as the CA type, then click Next.</p>
+<p>Use Existing Private Key:</p>
+<p>Select Use existing private key and import the previously backed-up certificate and private key and click Next.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-11.png" alt="Active Directory Certificate Services Migration screenshot 11">
+    <figcaption>Active Directory Certificate Services Migration screenshot 11</figcaption>
+</figure>
+<p>Import Existing Certificate</p>
+<p>Click Import, browse to the backup location from source server C:\CA2, select the private key file, and enter the password used for protection during backup.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-12.png" alt="Active Directory Certificate Services Migration screenshot 12">
+    <figcaption>Active Directory Certificate Services Migration screenshot 12</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-13.png" alt="Active Directory Certificate Services Migration screenshot 13">
+    <figcaption>Active Directory Certificate Services Migration screenshot 13</figcaption>
+</figure>
+<p>Complete the Configuration:</p>
+<p>Select the imported certificate, click Next, and leave the default certificate database path.</p>
+<p>Click Configure to complete the configuration.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-14.png" alt="Active Directory Certificate Services Migration screenshot 14">
+    <figcaption>Active Directory Certificate Services Migration screenshot 14</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-15.png" alt="Active Directory Certificate Services Migration screenshot 15">
+    <figcaption>Active Directory Certificate Services Migration screenshot 15</figcaption>
+</figure>
+<p>Stop Certificate Services:</p>
+<p>Open an Administrator Command Prompt and run the following command to stop Certificate Services: net stop certsvc.</p>
+<p>Modify the Registry:</p>
+<p>Open the previously exported registry file in Notepad.</p>
+<p>Change the CAServerName value to match the name of the Destination Server (New CA host).</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-16.png" alt="Active Directory Certificate Services Migration screenshot 16">
+    <figcaption>Active Directory Certificate Services Migration screenshot 16</figcaption>
+</figure>
+<p>Save the changes.</p>
+<p>Step 8: Restore CA Backup</p>
+<p>Navigate to Certification Authority:</p>
+<p>Server Manager &gt; Tools &gt; Certification Authority.</p>
+<p>Start the Certification Authority Restore Wizard:</p>
+<p>Right-click on the server node &gt; All Tasks &gt; Restore CA.</p>
+<p>Confirm the stop of Active Directory Certificate Services.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-17.png" alt="Active Directory Certificate Services Migration screenshot 17">
+    <figcaption>Active Directory Certificate Services Migration screenshot 17</figcaption>
+</figure>
+<p>Restore the Backup:</p>
+<p>Click Next to start the Certification Authority Restore Wizard.</p>
+<p>Select both checkboxes to restore the database and configuration, and provide the backup file path.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-certificate-services-migration/image-18.png" alt="Active Directory Certificate Services Migration screenshot 18">
+    <figcaption>Active Directory Certificate Services Migration screenshot 18</figcaption>
+</figure>
+<p>Enter the password used to protect the private key and click Next.</p>
+<p>Click Finish to complete the restore process.</p>
+<p>Click Yes to restart the Active Directory Certificate Services.</p>
+<p>Step 9: Restore the Registry Information</p>
+<p>Restore the Registry Key:</p>
+<p>Navigate to the location of the modified registry backup file and double-click to run the restore.</p>
+<p>Confirm the registry restore by clicking Yes and then OK.</p>
+<p>Step 10: Reissue Certificate Templates</p>
+<p>Reissue Certificate Templates:</p>
+<p>Server Manager &gt; Tools &gt; Certification Authority.</p>
+<p>Right-click on the Certificate Templates Folder &gt; New &gt; Certificate Template to Reissue.</p>
+<p>From the list of available certificate templates, select the appropriate ones that you recorded from Step 1 of this document and click OK.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

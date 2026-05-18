@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) | Karuin KB</title>
+    <meta name="description" content="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy)</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 11</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>CLIENT NAME HERE</h2>
+<p>Intune - Using the Intune Autodeploy Method to Provision Machines</p>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin &#226;€“ Senior Technical Project Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Pre-Requisites3</p>
+<p>Initiate the Out of Box Experience on the Device4</p>
+<section><h2>Pre-Requisites</h2>
+<p>Devices must be running Windows 11/10 build 1607 or later</p>
+<p>Devices must be running Windows Pro, Enterprise, Pro Education, or Pro Enterprise</p>
+<p>The device must have more than 30GB of free space</p>
+<p>Valid local and domain system credentials are needed to log on to the machine</p>
+<section><h2>Initiate the Out of Box Experience on the Device</h2>
+<p>Power on the device</p>
+<p>Log on to the device with the local administrator credentials you gathered before starting this process</p>
+<p>Press the Windows Key + R together to open the Run box:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-01.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 1">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 1</figcaption>
+</figure>
+<p>Type the following command into the Run box:</p>
+<ul><li>&#226;€œC:\Windows\System32\Sysprep\Sysprep.exe /oobe /reboot&#226;€</li></ul>
+<p>Once the command is entered into the Open: field in the Run box, press the &#226;€˜OK&#226;€™ button</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-02.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 2">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 2</figcaption>
+</figure>
+<p>The system will now reboot</p>
+<p>Initiate Provisioning via Autopilot</p>
+<p>Connect the device to power</p>
+<p>Connect the device to an ethernet switch, wireless is not sufficient</p>
+<p>Power on the device</p>
+<p>Once the device boots up, you will be presented with the following prompt:</p>
+<p>Select the middle option &#226;€œPre-provision with Windows Autopilot&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-03.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 3">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 3</figcaption>
+</figure>
+<p>The device should now begin configuration, and you will see the following:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-04.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 4">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 4</figcaption>
+</figure>
+<p>Once the Device setup and the device process completes, the Windows Autopilot self-deploying deployment is complete, and the Windows sign-on screen appears</p>
+<p>Final Entra ID Join and User Configuration</p>
+<p>Sign in with the pre-provisioned ImpactLocal account on the device (the account password should be in IT Glue under Passwords)</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-05.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 5">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 5</figcaption>
+</figure>
+<p>Once logged in, open Settings, then Accounts, then Access work or school</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-06.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 6">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 6</figcaption>
+</figure>
+<p>Press the blue Connect button at the top of the screen:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-07.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 7">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 7</figcaption>
+</figure>
+<p>On the next screen, make sure you don&#226;€™t fill out the field but instead click on the &#226;€œJoin this device to Microsoft Entra ID&#226;€ link at the bottom of the page:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-08.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 8">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 8</figcaption>
+</figure>
+<p>Login with the user O365 account (You can use the impact account as well, but the user account is preferred).</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-09.jpeg" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 9">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 9</figcaption>
+</figure>
+<p>If you did everything correctly, you will be prompted with this final screen:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-10.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 10">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 10</figcaption>
+</figure>
+<p>Press the join button</p>
+<p>You should see the following screen when the process is completed:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-using-the-intune-autodeploy-method-to-provision-machines-fne-copy/image-11.png" alt="Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 11">
+    <figcaption>Intune - Using the Intune Autodeploy Method to Provision Machines (FNE Copy) screenshot 11</figcaption>
+</figure>
+<p>Sign out of the local admin account</p>
+<p>The user can now log in with their O365 account</p>
+<p>Note: Intune will be deploying settings and applications now, so the device may restart and need time to be fully operational (about 30 minutes usually).</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

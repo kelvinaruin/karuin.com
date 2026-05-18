@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Workstation to Domain and Migrate Roaming Profile | Karuin KB</title>
+    <meta name="description" content="Join Workstation to Domain and Migrate Roaming Profile knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Join Workstation to Domain and Migrate Roaming Profile</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 9</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Technical Project Team</h2>
+<section><h2>Join Workstations to Domain and Migrate User Roaming Profile to OneDrive</h2>
+<p>Standard Operating Procedure</p>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin &#226;€“ Senior Technical Project Engineer</p>
+<p>Preparation &#226;€“ Locate Info on Domain Controller</p>
+<p>Log in to the Primary Domain Controller and open Active Directory Users and Computers.</p>
+<p>Locate the user account you will be migrating to and open the user account properties, then select the Profile tab.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/join-workstation-to-domain-and-migrate-roaming-profile/image-01.png" alt="Join Workstation to Domain and Migrate Roaming Profile screenshot 1">
+    <figcaption>Join Workstation to Domain and Migrate Roaming Profile screenshot 1</figcaption>
+</figure>
+<p>Locate the &#226;€œProfile path&#226;€ field and copy the URL to notepad or OneNote to be used later.</p>
+<p>Prepare Workstation</p>
+<p>Log in to user workstation as a local administrator</p>
+<p>Create a new temporary directory such as C:\TEMP\UserProfileTemp\</p>
+<p>Open the run box by pressing the Windows key + R key together.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/join-workstation-to-domain-and-migrate-roaming-profile/image-02.png" alt="Join Workstation to Domain and Migrate Roaming Profile screenshot 2">
+    <figcaption>Join Workstation to Domain and Migrate Roaming Profile screenshot 2</figcaption>
+</figure>
+<p>Paste the path into the run box omit the username and press the OK button.</p>
+<p>If the path is \\servername\userprofiles\JOHNDOEUSER\, you will want to use only the \\servername\userprofiles\ part of the directory string and paste it into the Run box.</p>
+<p>Locate the JOHNDOEUSER directory in the Windows Explorer window that opens and copy the directory to the workstation C:\TEMP\UserProfileTemp\ directory.</p>
+<p>The roaming profile is now saved locally on this workstation and should be located inside the C:\TEMP\UserProfileTemp\JOHNDOEUSER\ directory.</p>
+<p>Join Workstation to Domain</p>
+<p>Log in to the workstation as a local administrator.</p>
+<p>Press the Windows key + R key together to open the Run box.</p>
+<p>Type sysdm.cpl into the run box and press OK.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/join-workstation-to-domain-and-migrate-roaming-profile/image-03.png" alt="Join Workstation to Domain and Migrate Roaming Profile screenshot 3">
+    <figcaption>Join Workstation to Domain and Migrate Roaming Profile screenshot 3</figcaption>
+</figure>
+<p>The System Properties box will open.</p>
+<p>Under System Properties, select the Computer Name tab and click Change.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/join-workstation-to-domain-and-migrate-roaming-profile/image-04.png" alt="Join Workstation to Domain and Migrate Roaming Profile screenshot 4">
+    <figcaption>Join Workstation to Domain and Migrate Roaming Profile screenshot 4</figcaption>
+</figure>
+<p>In the Computer Name/Domain Changes dialog box, choose Domain under the Member of option and enter the domain name of your AD Domain and click OK.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/join-workstation-to-domain-and-migrate-roaming-profile/image-05.png" alt="Join Workstation to Domain and Migrate Roaming Profile screenshot 5">
+    <figcaption>Join Workstation to Domain and Migrate Roaming Profile screenshot 5</figcaption>
+</figure>
+<p>Restart the workstation as prompted.</p>
+<p>The workstation should now be in the domain.</p>
+<p>Remove the Roaming Profile from User Account</p>
+<p>Log back onto the domain controller.</p>
+<p>Open Active Directory Users and Computers.</p>
+<p>Locate the user account in Active Directory.</p>
+<p>Open the user account properties and remove the path from the Profile path field under the User profile heading.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/join-workstation-to-domain-and-migrate-roaming-profile/image-06.png" alt="Join Workstation to Domain and Migrate Roaming Profile screenshot 6">
+    <figcaption>Join Workstation to Domain and Migrate Roaming Profile screenshot 6</figcaption>
+</figure>
+<p>Press Apply.</p>
+<p>Press OK.</p>
+<p>Setup Domain User on Domain-Joined Workstation</p>
+<p>Log in to the workstation with the user domain user account (DOMAIN\JOHNDOEUSER is what we used as an example in this document).</p>
+<p>Once you are logged in with the above user account, log off.</p>
+<p>Now log back in with the domain administrator account.</p>
+<p>Open Windows Explorer and browse to the C:\Users\JOHNDOEUSER.DOMAIN\ directory and leave it open. This directory was created when you first logged into the domain with the domain account.</p>
+<p>Open another Windows Explorer window and browse to the C:\TEMP\UserProfileTemp\JOHNDOEUSER\ directory.</p>
+<p>Select all files and folders in the user backup directory and paste them over all the files and folders in the C:\Users\JOHNDOEUSER.DOMAIN\ directory.  Answer yes or allow any prompts that come up.</p>
+<p>Alternatively, you may use robocopy to copy the data by utilizing the following string in the command prompt:</p>
+<p>Syntax: Robocopy &#226;€œSOURCE&#226;€ &#226;€œDESTINATION&#226;€  /MIR /MT:16 /Z /W:5 /V</p>
+<p>Example: robocopy &#226;€œC:\TEMP\UserProfileTemp\JOHNDOEUSER\&#226;€ &#226;€œC:\Users\JOHNDOEUSER.DOMAIN\&#226;€ /MIR /MT:16 /Z /W:5 /V</p>
+<p>Restart the workstation.</p>
+<p>Login with the JOHNDOEUSER domain account.</p>
+<p>All user roaming profile settings should now be stored on the local machine rather than on a remote server share.</p>
+<p>Setup OneDrive on Domain User Profile</p>
+<p>Open OneDrive from the link in the Start Menu.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/join-workstation-to-domain-and-migrate-roaming-profile/image-07.png" alt="Join Workstation to Domain and Migrate Roaming Profile screenshot 7">
+    <figcaption>Join Workstation to Domain and Migrate Roaming Profile screenshot 7</figcaption>
+</figure>
+<p>Set up OneDrive on the workstation utilizing the user O365 credentials and make sure that the user profile directory is synced to OneDrive, then press Sign In.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/join-workstation-to-domain-and-migrate-roaming-profile/image-08.png" alt="Join Workstation to Domain and Migrate Roaming Profile screenshot 8">
+    <figcaption>Join Workstation to Domain and Migrate Roaming Profile screenshot 8</figcaption>
+</figure>
+<p>If prompted to select Personal or Work or School, click on Work or school.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/join-workstation-to-domain-and-migrate-roaming-profile/image-09.png" alt="Join Workstation to Domain and Migrate Roaming Profile screenshot 9">
+    <figcaption>Join Workstation to Domain and Migrate Roaming Profile screenshot 9</figcaption>
+</figure>
+<p>Follow the prompts and make sure the C:\Users\JOHNDOEUSER.DOMAIN\ directory is included in the OneDrive sync.</p>
+<p>That&#226;€™s all folks!</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

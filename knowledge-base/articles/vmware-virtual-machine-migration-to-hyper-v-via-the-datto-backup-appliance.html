@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance | Karuin KB</title>
+    <meta name="description" content="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 20</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Technical Project Team</h2>
+<section><h2>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance</h2>
+<section><h2>SOP</h2>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin &#226;€“ Senior Technical Project Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Pre-Requisites3</p>
+<p>Login to the Client Datto Dashboard Page4</p>
+<p>Migrating the Virtual Machine to Hyper-V7</p>
+<section><h2>Pre-Requisites</h2>
+<p>The physical Hyper-V host is patched with the latest firmware</p>
+<p>The physical host is running a licensed version of Windows Server and has the Hyper-V role installed</p>
+<p>Customer VMWare virtual machines are backed up via a Datto appliance</p>
+<section><h2>Login to the Client Datto Dashboard Page</h2>
+<p>Login to the Datto dashboard via https://myapps.microsoft.com or https://auth.datto.com/login</p>
+<p>At the login screen, select &#226;€˜Login With KaseyaOne&#226;€™</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-01.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 1">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 1</figcaption>
+</figure>
+<p>Enter your Impact email address in the Username field and enter Impact Networking into the Company Name field:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-02.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 2">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 2</figcaption>
+</figure>
+<p>Press &#226;€˜Next&#226;€™</p>
+<p>On the next page, click on &#226;€˜Login with Single Sign-On&#226;€™ instead of entering a password:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-03.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 3">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 3</figcaption>
+</figure>
+<p>If you entered all of the information correctly, you should now be looking at the KaseyaOne dashboard</p>
+<p>Click on &#226;€˜Datto BCDR Backup&#226;€™ Manage:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-04.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 4">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 4</figcaption>
+</figure>
+<p>On the &#226;€˜Backup Status&#226;€™ page, under the Datto device name under the client click on the arrow under &#226;€˜Device Web&#226;€™:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-05.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 5">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 5</figcaption>
+</figure>
+<p>A new tab will open</p>
+<p>Click Restore</p>
+<p>On the &#226;€˜Restore from a Backup&#226;€™ page, select your server under Chose a System:</p>
+<p>Then select &#226;€˜Export Image&#226;€™ under &#226;€˜Choose a Recovery Type&#226;€™</p>
+<p>Then select the latest recovery point:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-06.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 6">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 6</figcaption>
+</figure>
+<p>Click &#226;€˜Start Restore&#226;€™</p>
+<p>On the next page, leave &#226;€˜Network Share&#226;€™ as the destination, change the format to &#226;€˜VHDX&#226;€™, and select &#226;€˜UEFI&#226;€™ under boot type:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-07.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 7">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 7</figcaption>
+</figure>
+<p>Click &#226;€˜Export&#226;€™</p>
+<p>You will now see a list of Mounted Restore Options</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-08.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 8">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 8</figcaption>
+</figure>
+<p>Copy the first path under CIFS/Samba VHDX Share</p>
+<p>On the Hyper-V host, map a new drive and paste the path into the folder field</p>
+<p>Make sure to check the &#226;€˜Connect using different credentials&#226;€™ checkbox</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-09.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 9">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 9</figcaption>
+</figure>
+<p>When the credentials box pops up, enter the DattoAdmin credentials from  IT Glue.</p>
+<p>Make sure to select &#226;€˜remember credentials&#226;€™ and press the &#226;€˜OK&#226;€™ button:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-10.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 10">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 10</figcaption>
+</figure>
+<p>You can now browse to the mapped drive and copy the disks to the Hyper-V virtual machine disk directory of your choice via Windows Explorer:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-11.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 11">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 11</figcaption>
+</figure>
+<p>Once you are done with the restore, make sure to go back to the Datto webpage and press &#226;€˜Unmount&#226;€™ on the Export Image page:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-12.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 12">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 12</figcaption>
+</figure>
+<section><h2>Migrating the Virtual Machine to Hyper-V</h2>
+<p>Once the VHDX disk(s) for your migration has been downloaded to the Hyper-V server, you will need to open the Hyper-V Manager console. You can do this by opening &#226;€˜Server Manager&#226;€™ and selecting &#226;€˜Hyper-V Manager&#226;€™ from the menu:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-13.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 13">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 13</figcaption>
+</figure>
+<p>Right-click on the server&#226;€™s name and select New, then Virtual Machine&#226;€&#166;</p>
+<p>Skip the &#226;€˜Before You Begin&#226;€™ page by pressing &#226;€˜Next&#226;€™</p>
+<p>Name your virtual machine on the next screen and press &#226;€˜Next&#226;€™</p>
+<p>Create a Generation 2 virtual machine with CPU and RAM settings matching the VMWare virtual machine you are migrating.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-14.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 14">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 14</figcaption>
+</figure>
+<p>Enter the amount of RAM in megabytes and press &#226;€˜Next&#226;€™</p>
+<p>Select the network vSwitch on the next page and press &#226;€˜Next&#226;€™</p>
+<p>Select &#226;€œAttach a virtual hard disk later&#226;€ and press &#226;€˜Next&#226;€™</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-15.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 15">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 15</figcaption>
+</figure>
+<p>Verify your settings on the last page, and press &#226;€˜Finish&#226;€™</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-16.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 16">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 16</figcaption>
+</figure>
+<p>To attach the VHDX disks you exported from the Datto appliance, locate the virtual machine in the virtual machine list in Hyper-V Manager, right-click, and select &#226;€˜Settings&#226;€™</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-17.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 17">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 17</figcaption>
+</figure>
+<p>Select SCSI Controller on the left and press the &#226;€˜Add&#226;€™ Hard Drive button on the right:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-18.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 18">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 18</figcaption>
+</figure>
+<p>To add your C drive, click the &#226;€˜Browse&#226;€™ button and navigate to the location of your exported VHDX disk(s) via windows explorer, then press &#226;€˜Open&#226;€™</p>
+<p>Repeat the above step for any additional hard disks and press the &#226;€˜Ok&#226;€™ button to save the changes</p>
+<p>Right-click on the virtual machine name and select settings again</p>
+<p>Select the &#226;€˜Firmware&#226;€™ section and make sure to move the C drive to the top in the startup order:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-19.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 19">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 19</figcaption>
+</figure>
+<p>Note: Once the machine boots and restarts, the EFI file will be added as shown in the screenshot above.</p>
+<p>If you followed all the above instructions, you should be able to start your newly migrated server via the Hyper-V console and the migration will be complete</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/vmware-virtual-machine-migration-to-hyper-v-via-the-datto-backup-appliance/image-20.png" alt="VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 20">
+    <figcaption>VMWare Virtual Machine Migration to Hyper-V via the Datto Backup Appliance screenshot 20</figcaption>
+</figure>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

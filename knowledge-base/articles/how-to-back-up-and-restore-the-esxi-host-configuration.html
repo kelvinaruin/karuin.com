@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to back up and restore the ESXi host configuration | Karuin KB</title>
+    <meta name="description" content="How to back up and restore the ESXi host configuration knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>How to back up and restore the ESXi host configuration</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 3</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Backup and Restore ESXI Configurations</h2>
+<p>The destination build number of the host matches the build from which the backup was taken.</p>
+<p>The UUID of the host remains the same.</p>
+<p>p the ESXi host configuration data</p>
+<p>To synchronize the configuration changed with persistent storage: run this command:</p>
+<p>vim-cmd hostsvc/firmware/sync_config</p>
+<p>To backup the configuration data for the ESXi host, run this command:</p>
+<p>vim-cmd hostsvc/firmware/backup_config</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/how-to-back-up-and-restore-the-esxi-host-configuration/image-01.png" alt="How to back up and restore the ESXi host configuration screenshot 1">
+    <figcaption>How to back up and restore the ESXi host configuration screenshot 1</figcaption>
+</figure>
+<p>As a result, you will receive a link to download the&#194;&#160;configBundle.tgz&#194;&#160;archive from the ESXi host. You should replace the asterisk with the IP address of your ESXi host.</p>
+<p>Note:&#194;&#160;The command will output a URL (http://&lt;host_fqdn_orIP&gt;/downloads/123456/configBundle-xx.xx.xx.xx.tgz) from where you can download the backup file, either by opening it in a web browser or using other means like wget.</p>
+<p>The IP address of your ESXi host can be checked in the ESXi direct console interface or using the following command:</p>
+<p>esxcli network ip interface ipv4 get</p>
+<p>From a web browser navigate to&#194;&#160;http://&lt;host_fqdn_orIP&gt;/downloads/123456/configBundle-xx.xx.xx.xx.tgz</p>
+<p>In this example, the&#194;&#160;IP address of the host is&#194;&#160;192.168.0.8</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/how-to-back-up-and-restore-the-esxi-host-configuration/image-02.png" alt="How to back up and restore the ESXi host configuration screenshot 2">
+    <figcaption>How to back up and restore the ESXi host configuration screenshot 2</figcaption>
+</figure>
+<p>The backup file will be in the /downloads directory (default to browser or choose to download to a specific directory) as&#194;&#160;configBundle-HostFQDN.tgz</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/how-to-back-up-and-restore-the-esxi-host-configuration/image-03.png" alt="How to back up and restore the ESXi host configuration screenshot 3">
+    <figcaption>How to back up and restore the ESXi host configuration screenshot 3</figcaption>
+</figure>
+<p>Note:&#194;&#160;The destination ESXi host must be the same build as the ESXi host configuration data to restore the configuration. The host build can be obtained using the command&#194;&#160;vmware -vl.</p>
+<section><h2>Restoring the ESXi host configuration data</h2>
+<p>The&#194;&#160;configBundle-HostFQDN.tgz&#194;&#160;should be renamed as&#194;&#160;configBundle.tgz&#194;&#160;before initiating the restore command.</p>
+<p>Put the host into maintenance mode by running this&#194;&#160;command.&#194;</p>
+<p>vim-cmd hostsvc/maintenance_mode_enter</p>
+<p>Copy the backup configuration file to the ESXi host or an available datastore.</p>
+<p>Reboot the host. This step is required; otherwise, the restore workflow might not finish completely.</p>
+<p>Once ESXi has rebooted, move the config bundle file to&#194;&#160;/tmp/configBundle.tgz.</p>
+<p>Then run this command to restore the ESXi host configuration:</p>
+<p>vim-cmd hostsvc/firmware/restore_config 0</p>
+<p>Note: Add a&#194;&#160;1&#194;&#160;to&#194;&#160;force an override of the UUID mismatch.For example:&#194;&#160;# vim-cmd hostsvc/firmware/restore_config 1</p>
+<p>Executing this command will initiate an automatic reboot of the host after command completion.</p>
+<p>However, starting from vSphere 7.0 U2, the configuration could be encrypted using TPMs, in which case, the -force option will not work if the host got changed. We need the same TPM that was used on the host during the backup to restore. In other words,&#194;&#160;from vSphere 7.0U2, the override will not work if the host has TPM enabled.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

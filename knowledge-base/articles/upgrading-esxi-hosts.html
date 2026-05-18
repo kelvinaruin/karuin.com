@@ -1,0 +1,407 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrading ESXi Hosts | Karuin KB</title>
+    <meta name="description" content="Upgrading ESXi Hosts knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Upgrading ESXi Hosts</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 32</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Technical Project Team</h2>
+<section><h2>Upgrading ESXi Hosts</h2>
+<section><h2>Standard Operating Procedure</h2>
+<p>PREPARED BY: Greg McCullough</p>
+<p>Revised: March 31st, 2023</p>
+<p>Senior Technical Project Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Scope3</p>
+<p>Pre-Requisites4</p>
+<p>ESXi Upgrade Requirements4</p>
+<p>Licensing4</p>
+<p>Preparation5</p>
+<p>Inventory environment5</p>
+<p>Verify Hardware Compatibility5</p>
+<p>Verify Backups5</p>
+<p>Schedule Downtime (4-6 hours minimum for up to 3 hosts)5</p>
+<p>Installation Media6</p>
+<p>ESXi Upgrade Methods7</p>
+<p>Choose one of the listed upgrade paths.7</p>
+<p>ESXi Upgrade by using the CLI.8</p>
+<p>Offline method for ESXi upgrade via ESXCLI.10</p>
+<p>Post Upgrade Tasks13</p>
+<p>Online method for ESXi upgrade via ESXCLI.14</p>
+<p>Post Upgrade Tasks16</p>
+<p>ESXi Host Upgrade in vCenter VCSA17</p>
+<p>Post Upgrade Tasks28</p>
+<p>Conclusion28</p>
+<section><h2>Scope</h2>
+<p>Provide steps on upgrading ESXi 6.5 or ESXi 6.7 to 7.x and/or ESXi 7.x to ESXi 8.x</p>
+<section><h2>Pre-Requisites</h2>
+<p>vCenter Server Appliance must be upgraded and or hosts migrated to new vCenter Server Appliance at same or higher revision than the version of ESXi on the host it is managing.</p>
+<p>You can’t manage ESXi 7 hosts from earlier versions but you can manage ESXi hosts if VCSA is 7 or higher.</p>
+<section><h2>ESXi Upgrade Requirements</h2>
+<p>The Hardware of the Server running ESXi 6.7 must be compatible with ESXi 7.0. If an unsupported device is present, such as an unsupported CPU or disk controller, the ESXi upgrade will not be applied to the Server. See&#160;VMware Hardware Compatibility Guide for verification.</p>
+<p>No VMs on an ESXi host must be running when you start the ESXi upgrade process.</p>
+<p>There must be enough free storage space for the ESXi upgrade.</p>
+<p>If an ESXi host is managed by vCenter Server, the vCenter version must be the same as the target version of ESXi after the upgrade or higher. VMware vCenter 7.0 can manage ESXi 7.0, ESXi 6.7, and ESXi 6.5, but vCenter 6.7 cannot manage ESXi 7.0 hosts.</p>
+<p>NOTE: You must upgrade vCenter server first or build a new vCenter server and migrate your hosts.</p>
+<p>If any VMware add-ons or plugins are installed, check their compatibility using the&#160;VMware Compatibility Matrix.</p>
+<p>Determine and verify if standard VMWare image can be used or if a custom OEM image is installed.</p>
+<p>For earlier versions 5.x or 6.0; you must upgrade to a supported upgraded version (i.e., 6.5 or 6.7 first) before proceeding to 7.x</p>
+<p>Ensure how DNS is configured in your environment to verify that powering off any DNS servers on the server you’re upgrading does not take internet access down for the site you’re upgrading.</p>
+<p>NOTE: If you have more than one DNS server, ensure that you are only powering off one at a time, or be sure to perform this work onsite to avoid losing access to your host.</p>
+<section><h2>Licensing</h2>
+<p>Obtain ESXi licenses for version 7.x / 8.x</p>
+<p>CAN NOT USE EXISTING 6.x license for 7.x or 8.x upgrades.</p>
+<p>How to create a downgrade/upgrade license</p>
+<section><h2>Preparation</h2>
+<h3>Inventory environment</h3>
+<p>Verify Hardware Compatibility</p>
+<p>Is the hardware you’re working with compatible with the version you wish to upgrade to. Check the hardware compatibility guide to verify:</p>
+<p>VMware Compatibility Guide - System Search</p>
+<p>Verify Backups</p>
+<p>Verify VMs hosted on the node have successful backups.</p>
+<p>Backup of the ESXi node, SOP can be found on MITKB</p>
+<p>Schedule Downtime (4-6 hours minimum for up to 3 hosts)</p>
+<p>Open the device in INC.</p>
+<p>Select Settings</p>
+<p>Select Monitoring Options</p>
+<p>Click on unscheduled downtime for timeframe and save the settings.</p>
+<h3>Installation Media</h3>
+<p>Obtain Client VMware information found in IT Glue</p>
+<p>Log in with the Client’s account to https://my.vmware.com</p>
+<p>Download the ISO image or offline Bundle, depending on the upgrade option.</p>
+<p>Some OEM vendors have custom ISO or offline Bundles, including hardware drivers and VMWare Installation Bundles (vibs).</p>
+<section><h2>ESXi Upgrade Methods</h2>
+<p>This SOP covers two main methods for a VMware ESXi upgrade. Although there is a third, when you could boot off the ISO via iLO/iDRAC, and instead of installing ESXi, you choose to upgrade. Third method is not covered in this document.</p>
+<p>Upgrade by using ESXCLI, the command line interface. This method can be used for VMware ESXi 6.7 to 7.0 upgrade for standalone ESXi hosts and ESXi hosts managed by vCenter.</p>
+<p>NOTE: You must use this if your vCenter server lives on the host you’re upgrading.</p>
+<p>Upgrade by using Lifecycle Manager. This method is applicable only for ESXi hosts managed by vCenter VCSA. VMware Lifecycle Manager for VMware vSphere 7.0 is a modified VMware Update Manager that was used in vSphere 6.7. This is the preferred method for upgrading ESXi hosts managed by vCenter and allows you to upgrade multiple ESXi hosts at once by using the same image.</p>
+<p>If the ESXi nodes are managed by vSphere VCSA and are within the same cluster with the ability to vmotion, you can limit downtime and impact to the Client as you upgrade each node. Otherwise, you must schedule downtime for the VMs running on the node.</p>
+<p>NOTE: vMotion is not included with Essentials licensing and is an additional license.</p>
+<p>The workflow of upgrading ESXi 6.7 to ESXi 7.0, ESXi 7.0 Update 1, ESXi 7.0 Update 3, and other versions/builds of ESXi 7 is similar. This approach is also proper for upgrading ESXi 7.0 to ESXi 7.0 Update 3, ESXi 7.0 Update 3l, etc. Remember that the names of installation files and update profiles differ in this case.</p>
+<section><h2>Choose one of the listed upgrade paths.</h2>
+<p>For Standalone ESXi, use the CLI upgrade method.</p>
+<p>There is an offline method and an online method.</p>
+<p>For ESXi managed by VCSA, it might be easier to create a baseline and attach it to the designated node(s) or cluster(s).</p>
+<p>NOTE: You can’t do this on a host that is running VCSA.  VCSA would need to be migrated to another host in the same cluster where the existing subnet exists for the IP to be reachable.</p>
+<p>Choose based on your deployment needs.</p>
+<p>You may need to use both if VCSA lives on a single host and the subnet range is different on the other hosts/datacenters.</p>
+<h3>ESXi Upgrade by using the CLI.</h3>
+<p>Upgrading ESXi 6.7 to ESXi 7.0 Update 3 using ESXCLI is straightforward, but you should still have an ESXi backup before upgrading. You can roll back to the last version using the backup if anything goes wrong. Please verify you have successful backups for the VMs managed by the host.</p>
+<p>Enable ESXi Shell and SSH to access the command line interface on the ESXi host. You can do this by using one of two methods:</p>
+<p>In the ESXi direct console (DCUI), open&#160;System customization, and in&#160;Troubleshooting options, hit&#160;Enable ESXi Shell&#160;and&#160;Enable SSH. This configuration enables SSH and ESXi Shell permanently until you manually disable them.</p>
+<p>Enter the IP address of your ESXi host in a web browser. Log in to the VMware Host Client by using your ESXi root credentials. In the web interface of the VMware Host Client, go to&#160;Manage &gt; Services.</p>
+<p>Start these services.</p>
+<p>TSM</p>
+<p>TSM-SSH</p>
+<p>These services will be enabled until ESXi reboot if you started the services in VMware Host Client</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-01.png" alt="Upgrading ESXi Hosts screenshot 1">
+    <figcaption>Upgrading ESXi Hosts screenshot 1</figcaption>
+</figure>
+<p>After enabling SSH you may login using a SSH Client, i.e., Putty, or latest version of PowerShell has SSH tools built in.</p>
+<p>Check the current version of ESXi in the ESXi Direct Console by logging into the VMware Host directly and going to&#160;Help &gt; About.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-02.png" alt="Upgrading ESXi Hosts screenshot 2">
+    <figcaption>Upgrading ESXi Hosts screenshot 2</figcaption>
+</figure>
+<p>ESXi Shell by using the&#160;vmware -v&#160;command:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-03.png" alt="Upgrading ESXi Hosts screenshot 3">
+    <figcaption>Upgrading ESXi Hosts screenshot 3</figcaption>
+</figure>
+<p>If the Client has multiple host(s), and a vMotion license, use VMotion to migrate all VMs off of the host being updated.</p>
+<p>If the Client does not have a vMotion license and multiple hosts, gracefully shut down each VM.</p>
+<p>Put the host in maintenance mode by right-clicking on the host and selecting maintenance mode.</p>
+<p>ESXi upgrade by using ESXCLI is divided into two types:</p>
+<p>Offline method: manually download either the full ISO or the offline Bundle from the VMware website, upload the file to the ESXi datastore, and use this Bundle for the ESXi upgrade.</p>
+<p>Online method: you should use VMware online repositories to download and install new packages for an ESXi profile update.</p>
+<h3>Offline method for ESXi upgrade via ESXCLI.</h3>
+<p>Download needed files.</p>
+<p>Each Client has a logon to my https://my.vmware.com in IT GLUE (If this doesn’t exists, then you  need to create it or gain access to it before you proceed)</p>
+<p>Login to the Clients VMWare account</p>
+<p>Click Products and Accounts</p>
+<p>Click My Products</p>
+<p>Under vSphere 7 Essentials click Download</p>
+<p>Impact’s standard is to use traditional VMWare ISOs, however, inherited clients may use Custom OEM ISO for which you would need to download the custom ISO that matches the host make, i.e., Cisco, HPE, Lenovo, etc.</p>
+<p>As of the time of this writing, 7.0U3l is the latest revision aka Update 3:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-04.png" alt="Upgrading ESXi Hosts screenshot 4">
+    <figcaption>Upgrading ESXi Hosts screenshot 4</figcaption>
+</figure>
+<p>For Standard image:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-05.png" alt="Upgrading ESXi Hosts screenshot 5">
+    <figcaption>Upgrading ESXi Hosts screenshot 5</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-06.png" alt="Upgrading ESXi Hosts screenshot 6">
+    <figcaption>Upgrading ESXi Hosts screenshot 6</figcaption>
+</figure>
+<p>For Custom Hardware Image:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-07.png" alt="Upgrading ESXi Hosts screenshot 7">
+    <figcaption>Upgrading ESXi Hosts screenshot 7</figcaption>
+</figure>
+<p>NOTE: If you have HP Hardware, for example, HP DL380 Gen9 or 10, use the HPE custom image: It has all the proper VIBs, and device drivers for the host hardware:</p>
+<p>Download the appropriate ESXi 7.0 Update 3 offline bundle from the VMware website. The zip archive of the offline Bundle is available along with the ESXi ISO installation image.</p>
+<p>Standard:</p>
+<p>VMware-ESXi-7.0U3k-21313628-depot.zip</p>
+<p>HPE Custom:</p>
+<p>VMware-ESXi-7.0.3-20842708-HPE-703.0.0.11.2.0.9-Jan2023-depot.zip</p>
+<p>Log onto a Windows Server with access to the Virtual Environment at the client site.</p>
+<p>Browse to the ESXi UI in the web browser.</p>
+<p>Upload the downloaded ZIP or ISO file to the ESXi datastore.</p>
+<p>Go to&#160;Storage &gt; Datastores, select the datastore (datastore1&#160;in this example), and click&#160;Datastore Browser.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-08.png" alt="Upgrading ESXi Hosts screenshot 8">
+    <figcaption>Upgrading ESXi Hosts screenshot 8</figcaption>
+</figure>
+<p>Create or select an existing directory to store bundle files in the datastore browser. We created the&#160;ESXi7-bundle&#160;directory to store the&#160;offline Bundle previously downloaded. Click&#160;Upload&#160;to browse locally on server for the ISO/ZIP bundle file to complete the upload.</p>
+<p>Verify there are no VMs in the running state on this ESXi host before starting the ESXi upgrade process.</p>
+<p>If the Client has multiple host(s) and a vMotion license, use VMotion to migrate all VMs off the host being updated.</p>
+<p>If the Client does not have a vMotion license and multiple hosts, gracefully shut down each VM.</p>
+<p>Place the host in maintenance mode by right-clicking on the host and selecting maintenance mode.</p>
+<p>Alternatively, you can use ESXCLI to place the node into maintenance mode.</p>
+<p>esxcli system maintenanceMode set –enable true</p>
+<p>Obtain the image profile name of the offline zip file you downloaded.</p>
+<p>esxcli software sources profile list -d /vmfs/volumes/datastore1/ESXi7-bundle/VMware-ESXi-7.0U3k-21313628-depot.zip</p>
+<p>Run the update command to upgrade ESXi 6.7 to 7.0 Update 3:esxcli software profile update -p ESXi-7.0U3k-21313628-standard -d /vmfs/volumes/datastore1/ESXi7-bundle/VMware-ESXi-7.0U3k-21313628-depot.zip</p>
+<p>“Datastore1” is the name of the available datastore: Depending on the implementation, this name could be different.</p>
+<p>Offline package names could be different depending on the upgrade or custom image.</p>
+<p>VMware-ESXi-7.0.3-20842708-HPE-703.0.0.11.2.0.9-Jan2023-depot.zip</p>
+<p>Wait until you see the command output.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-09.png" alt="Upgrading ESXi Hosts screenshot 9">
+    <figcaption>Upgrading ESXi Hosts screenshot 9</figcaption>
+</figure>
+<p>After the successful execution of the command, you can see a list of updated packages (VIBs – VMware installation bundles) in the console output.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-10.png" alt="Upgrading ESXi Hosts screenshot 10">
+    <figcaption>Upgrading ESXi Hosts screenshot 10</figcaption>
+</figure>
+<p>Reboot the ESXi host to finish the ESXi upgrade:</p>
+<p>Reboot</p>
+<h3>Post Upgrade Tasks</h3>
+<p>You need to add the new license to VCSA and apply the new license to the upgraded host upon completion.  By default, you will have a evaluation license only applied.</p>
+<p>Perform the latest critical updates.</p>
+<p>Critical updates may have additional driver updates that have been released separately for the Update X package.</p>
+<p>The same methods outlined here for upgrading the hosts by CLI or VCSA can be used for these updates to be applied.  Again, if VCSA is on a single host then CLI method is the only option.</p>
+<p>NOTE: Product updates can be downloaded for depot ZIP files from the https://my.vmware.com customer care account.</p>
+<p>All VMs will need their VMTools upgraded.</p>
+<p>This can be done using the automatic method without any options via VCSA.</p>
+<p>NOTE: This will cause your VMs to reboot so you will want to complete this during your maintenance window.</p>
+<h3>Online method for ESXi upgrade via ESXCLI.</h3>
+<p>Again, make sure you have successful backups.</p>
+<p>Verify there are no VMs in the running state on this ESXi host before starting the ESXi upgrade process.</p>
+<p>If the Client has multiple hosts, use VMotion to migrate all VM’s off the host being updated.</p>
+<p>If the Client does not have multiple hosts, then gracefully shutdown each VM.</p>
+<p>Place the host in maintenance mode by right-clicking on the host and selecting maintenance mode.</p>
+<p>Alternatively, you can use ESXCLI to place the node into maintenance mode.</p>
+<p>esxcli system maintenanceMode set –enable true</p>
+<p>When using the online method, you should configure internet access for the ESXi host you want to upgrade and manually place the host in maintenance mode.</p>
+<p>List the current image profile and contained packages:</p>
+<p>esxcli software profile get.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-11.png" alt="Upgrading ESXi Hosts screenshot 11">
+    <figcaption>Upgrading ESXi Hosts screenshot 11</figcaption>
+</figure>
+<p>Enter ESXi into maintenance mode:</p>
+<p>esxcli system maintenanceMode set –enable true</p>
+<p>Allow HTTP traffic by editing the settings in the built-in firewall on the ESXi host:</p>
+<p>esxcli network firewall ruleset set -e true -r httpClient</p>
+<p>List profiles provided by VMware for ESXi 7.0 Update 3 in VMware repositories:</p>
+<p>esxcli software sources profile list -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml | grep ESXi-7.0U3</p>
+<p>A software depot is a collection of VIBs and image profiles. It has a hierarchy of files and directories accessed via HTTPS.</p>
+<p>Let’s use this profile as an exampleESXi-7.0U3k-21313628-standard</p>
+<p>Here is an online site to find the latest image profiles and patches:</p>
+<p>You can check which packages will be installed before running the ESXi upgrade command: with –dry-run at the end.</p>
+<p>esxcli software profile update -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml -p ESXi-7.0U3k-21313628-standard --dry-run</p>
+<p>Run the update process:</p>
+<p>esxcli software profile update -d https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml -p ESXi-7.0U3k-21313628-standard</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-12.png" alt="Upgrading ESXi Hosts screenshot 12">
+    <figcaption>Upgrading ESXi Hosts screenshot 12</figcaption>
+</figure>
+<p>Wait for a few minutes until the upgrade process is finished.</p>
+<p>Choose&#160;esxcli software profile update&#160;instead of&#160;esxcli software profile install&#160;to prevent overwriting existing packages, drivers, and configuration.</p>
+<p>Note: If you see the error message:</p>
+<p>Got no data from process: LANG=en_US.UTF-8 /usr/lib/vmware/esxcli-software profile.update&#160; -d  https://hostupdate.vmware.com/software/VUM/PRODUCTION/main/vmw-depot-index.xml&quot; -p &quot;ESXi-7.0.0-15843807-standard&quot;</p>
+<p>Check whether there is a persistent scratch partition. A persistent scratch partition may not exist if you run ESXi from a USB flash drive.</p>
+<p>If everything is correct, reboot the ESXi host for the changes to take effect.</p>
+<p>reboot</p>
+<p>Exit maintenance mode with the command:</p>
+<p>esxcli system maintenanceMode set --enable false</p>
+<h3>Post Upgrade Tasks</h3>
+<p>You need to add the new license to VCSA and apply the new license to the upgraded host upon completion.  By default, you will have a evaluation license only applied.</p>
+<p>Perform the latest critical updates.</p>
+<p>Critical updates may have additional driver updates that have been released separately for the Update X package.</p>
+<p>The same methods outlined here for upgrading the hosts by CLI or VCSA can be used for these updates to be applied.  Again, if VCSA is on a single host then CLI method is the only option.</p>
+<p>NOTE: Product updates can be downloaded for depot ZIP files from the https://my.vmware.com customer care account.</p>
+<p>All VMs will need their VMTools upgraded.</p>
+<p>This can be done using the automatic method without any options via VCSA.</p>
+<p>NOTE: This will cause your VMs to reboot so you will want to complete this during your maintenance window.</p>
+<h3>ESXi Host Upgrade in vCenter VCSA</h3>
+<p>Open VMware vSphere Client in your web browser to access vCenter.</p>
+<p>There are two ESXi 6.7 hosts in this example, managed by vCenter 7.0.3. Shut down virtual machines on the ESXi hosts that you want to upgrade or migrate those VMs to other ESXi hosts.</p>
+<p>Let’s upgrade the ESXi host with the IP address&#160;192.168.101.65.</p>
+<p>Select the needed ESXi host and check the current hypervisor version. As you can see in the screenshot below, the current version of our ESXi host before the upgrade is&#160;6.7.0, build 10302608. You can select a cluster and a data center to upgrade multiple ESXi hosts.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-13.png" alt="Upgrading ESXi Hosts screenshot 13">
+    <figcaption>Upgrading ESXi Hosts screenshot 13</figcaption>
+</figure>
+<p>Open&#160;Lifecycle Manager. You can do it by using different methods:</p>
+<p>Click&#160;Home, and in the left pane (navigation pane), click&#160;Lifecycle Manager OR</p>
+<p>Click&#160;Menu&#160;at the top of the vSphere Client window and hit&#160;Lifecycle Manager.</p>
+<p>Once you have opened VMware Lifecycle Manager in vSphere Client, select the&#160;Imported ISOs&#160;tab, and click&#160;Import ISO.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-14.png" alt="Upgrading ESXi Hosts screenshot 14">
+    <figcaption>Upgrading ESXi Hosts screenshot 14</figcaption>
+</figure>
+<p>Hit&#160;Browse&#160;and select the ESXi 7 Update 3 installation ISO image file. You can download the ESXi installation image from the VMware website.</p>
+<p>Find the Clients login information in IT Glue</p>
+<p>If using Custom Image, select the appropriate ISO.</p>
+<p>Example VMware-ESXi-7.0.3-20842708-HPE-703.0.0.11.2.0.9-Jan2023.iso</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-15.png" alt="Upgrading ESXi Hosts screenshot 15">
+    <figcaption>Upgrading ESXi Hosts screenshot 15</figcaption>
+</figure>
+<p>Once you have selected the ISO file, the importing process starts. In this example, the&#160;VMware-VMvisor-Installer-7.0U2-17630552.x86_64.iso&#160;file is used.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-16.png" alt="Upgrading ESXi Hosts screenshot 16">
+    <figcaption>Upgrading ESXi Hosts screenshot 16</figcaption>
+</figure>
+<p>After importing the ISO file, you can see the ESXi 7.0 Update 2 installation image in the&#160;Imported ISOs&#160;tab.</p>
+<p>Click&#160;New baseline&#160;to create a new baseline.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-17.png" alt="Upgrading ESXi Hosts screenshot 17">
+    <figcaption>Upgrading ESXi Hosts screenshot 17</figcaption>
+</figure>
+<p>Name and Description.&#160;Enter the baseline name and description, for example,&#160;ESXi 7.0 Update 2&#160;and&#160;ESXi 7.0 Update 2 baseline.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-18.png" alt="Upgrading ESXi Hosts screenshot 18">
+    <figcaption>Upgrading ESXi Hosts screenshot 18</figcaption>
+</figure>
+<p>Select ISO.&#160;Select the ESXi 7 ISO image you have uploaded before (VMware-VMvisor-Installer-7.0U2-17630552.x86_64.iso). The displayed name is based on the corresponding ESXi profile (ESXi-7.0.2-17630552-standard).</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-19.png" alt="Upgrading ESXi Hosts screenshot 19">
+    <figcaption>Upgrading ESXi Hosts screenshot 19</figcaption>
+</figure>
+<p>Summary.&#160;Review your selections before finishing creating the baseline.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-20.png" alt="Upgrading ESXi Hosts screenshot 20">
+    <figcaption>Upgrading ESXi Hosts screenshot 20</figcaption>
+</figure>
+<p>A baseline has now been created.</p>
+<p>Go back to the&#160;Hosts and clusters&#160;screen, select the ESXi host that must be updated (192.168.101.65&#160;in our case), and click the Updates tab in the top right corner of the interface.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-21.png" alt="Upgrading ESXi Hosts screenshot 21">
+    <figcaption>Upgrading ESXi Hosts screenshot 21</figcaption>
+</figure>
+<p>When the baseline has been created, you must attach that baseline to the ESXi hosts you want to update. Remember, we will update a single ESXi host in this walkthrough.</p>
+<p>Hit&#160;Baselines, scroll down, and find the&#160;Attached Baselines&#160;section, then click&#160;Attach&#160;and in the open menu, click&#160;Attach Baseline or Baseline Group.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-22.png" alt="Upgrading ESXi Hosts screenshot 22">
+    <figcaption>Upgrading ESXi Hosts screenshot 22</figcaption>
+</figure>
+<p>Select the&#160;ESXi7.0 Update 2&#160;baseline you have created before and click&#160;Attach. If any other baselines are attached, remove them by selecting them and clicking&#160;Detach.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-23.png" alt="Upgrading ESXi Hosts screenshot 23">
+    <figcaption>Upgrading ESXi Hosts screenshot 23</figcaption>
+</figure>
+<p>Now you must check compliance. This step is needed to check whether the ESXi host has installed the update. If you see the&#160;non-compliant&#160;status, the update is not installed on your ESXi host. Click&#160;Check Compliance.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-24.png" alt="Upgrading ESXi Hosts screenshot 24">
+    <figcaption>Upgrading ESXi Hosts screenshot 24</figcaption>
+</figure>
+<p>As you can see in the following screenshot, the ESXi status after checking is&#160;non-compliant, which means that you can install the needed update and upgrade ESXi 6.7 to ESXi 7.0 Update 2.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-25.png" alt="Upgrading ESXi Hosts screenshot 25">
+    <figcaption>Upgrading ESXi Hosts screenshot 25</figcaption>
+</figure>
+<p>Pre-check remediation checks for any compliance issues that may occur after installing updates and the ESXi upgrade.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-26.png" alt="Upgrading ESXi Hosts screenshot 26">
+    <figcaption>Upgrading ESXi Hosts screenshot 26</figcaption>
+</figure>
+<p>As you can see in the screenshot below, there are no issues after running the remediation pre-check. Hit&#160;Done&#160;and go to upgrade the ESXi host.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-27.png" alt="Upgrading ESXi Hosts screenshot 27">
+    <figcaption>Upgrading ESXi Hosts screenshot 27</figcaption>
+</figure>
+<p>In the&#160;Attached Baselines&#160;section, select your&#160;ESXi 7.0 Update 2&#160;baseline created before and click&#160;Remediate&#160;to start the ESXi 6.7 to 7.0 upgrade process.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-28.png" alt="Upgrading ESXi Hosts screenshot 28">
+    <figcaption>Upgrading ESXi Hosts screenshot 28</figcaption>
+</figure>
+<p>A pop-up screen appears. Read the End User License Agreement (EULA) and select the&#160;I accept the terms and license agreement&#160;checkbox. Hit&#160;OK&#160;to continue.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-29.png" alt="Upgrading ESXi Hosts screenshot 29">
+    <figcaption>Upgrading ESXi Hosts screenshot 29</figcaption>
+</figure>
+<p>Ensure your ESXi host is selected and hit&#160;Remediate&#160;to upgrade ESXi 6.7 to 7.0. Don’t forget that virtual machines must be powered off or migrated from the ESXi host that is being upgraded.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-30.png" alt="Upgrading ESXi Hosts screenshot 30">
+    <figcaption>Upgrading ESXi Hosts screenshot 30</figcaption>
+</figure>
+<p>You can see the ESXi upgrade progress in the&#160;Recent task&#160;toolbar, which can be expanded at the bottom of the VMware vSphere Client interface. The ESXi host is automatically entered into maintenance mode to install the upgrade.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-31.png" alt="Upgrading ESXi Hosts screenshot 31">
+    <figcaption>Upgrading ESXi Hosts screenshot 31</figcaption>
+</figure>
+<p>When the ESXi upgrade process is finished, maintenance mode is turned off for the host, and the upgraded ESXi host is ready to work. You can select the ESXi host in the&#160;Hosts and Clusters&#160;view and check the version after the ESXi upgrade. As you can see in the screenshot below, the version is now&#160;ESXi 7.0.2, 17630552.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/upgrading-esxi-hosts/image-32.png" alt="Upgrading ESXi Hosts screenshot 32">
+    <figcaption>Upgrading ESXi Hosts screenshot 32</figcaption>
+</figure>
+<p>If a license expires after an ESXi 6.7 to 7.0 upgrade on the upgraded host, you should apply a vSphere 7.0 license.</p>
+<p>If you need to upgrade an ESXi host on which a vCenter VM (a virtual appliance that is also known as VCSA) is running, you can use one of the following approaches:</p>
+<p>Migrate the vCenter VM to another ESXi host and upgrade the source ESXi host.</p>
+<p>Shut down the vCenter VM and other VMs running on the ESXi host and upgrade ESXi using ESXCLI, as explained in the first part of this blog post. Note that SSH access must be enabled, and the lockdown mode must be disabled (you must be able to manage an ESXi host directly without vCenter).</p>
+<p>Note:&#160;If none of the above ESXi upgrade methods is suitable for your case, you have another option:</p>
+<p>You can write the ESXi ISO installation image to a DVD or USB flash drive, boot from that medium, run the ESXi 7.0 or ESXi 7.0 Update 2 installer, and select the disk where ESXi 6.7 is installed as the destination disk. The upgrade is performed in the interactive mode&#160;in this case.</p>
+<h3>Post Upgrade Tasks</h3>
+<p>You need to add the new license to VCSA and apply the new license to the upgraded host upon completion.  By default, you will have a evaluation license only applied.</p>
+<p>Perform the latest critical updates.</p>
+<p>Critical updates may have additional driver updates that have been released separately for the Update X package.</p>
+<p>The same methods outlined here for upgrading the hosts by CLI or VCSA can be used for these updates to be applied.  Again, if VCSA is on a single host then CLI method is the only option.</p>
+<p>NOTE: Product updates can be downloaded for depot ZIP files from the https://my.vmware.com customer care account.</p>
+<p>All VMs will need their VMTools upgraded.</p>
+<p>This can be done using the automatic method without any options via VCSA.</p>
+<p>NOTE: This will cause your VMs to reboot so you will want to complete this during your maintenance window.</p>
+<section><h2>Conclusion</h2>
+<p>VMware ESXi upgrade in ESXCLI, a command-line interface, is a universal method that can be used to upgrade standalone ESXi hosts and ESXi hosts managed by vCenter if it is not restricted by vCenter configuration. If you use vCenter to manage many ESXi hosts, consider ESXi upgrade using vCenter Lifecycle Manager, a component of vCenter 7.0 and a successor of VMware Update Manager. Having the ESXi and VM backups would be best before starting an ESXi upgrade.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

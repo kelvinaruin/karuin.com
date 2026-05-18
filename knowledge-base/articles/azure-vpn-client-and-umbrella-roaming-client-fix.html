@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure VPN Client and Umbrella Roaming Client FIX | Karuin KB</title>
+    <meta name="description" content="Azure VPN Client and Umbrella Roaming Client FIX knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Azure VPN Client and Umbrella Roaming Client FIX</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 1</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <p>Fix Azure VPN Client Issues due to Umbrella</p>
+<p>If a user is unable to connect to Azure VPN via Azure VPN client, and the issue is hostname not resolved, it is more than likely that Umbrella is the culprit. There is a workaround that will fix this problem.</p>
+<ul><li>&#194;&#160;Steps to Resolve:</li></ul>
+<p>Check to see if the Umbrella Roaming client is installed.</p>
+<p>You can see this by checking services and seeing if a service called Umbrella_RC exists.</p>
+<p>If installed, uninstall Umbrella Roaming Client via the control panel or settings.</p>
+<p>NOTE: There is an AMP for uninstalling Umbrella, if you have a lot of machines and not working on just one. The AMP for uninstalling is Impact - Uninstall Umbrella AMP.  This can be run via a scheduled task in INC to address more than one machine.</p>
+<p>Confirm the client is uninstalled by checking services for Umbrella_RC service. It should now be gone.</p>
+<p>Delete the directory named OpenDNS located at &#226;€œC:\ProgramData\OpenDNS&#226;€ on the client machine.</p>
+<p>Make sure the OpenDNS folder is no longer visible in the &#226;€œC:\ProgramData&#226;€ folder.</p>
+<p>Open network adapter settings and check the TCP/IP configuration.</p>
+<p>Set the DNS to the correct IP if needed. Do not leave the 127.0.0.1 entry and update to the domain controller or public DNS.</p>
+<p>Validate you are now able to access DNS entries, such as the file server mapped drives with the Umbrella client removed and the correct DNS settings set on the client machine.</p>
+<p>If everything works as expected, continue to the next step. If not, you may need to perform additional troubleshooting.</p>
+<p>Once confirmed, create an Automation Task in INC4 and use the Impact - Deploy Cisco Secure Client - Umbrella AMP.</p>
+<p>The task will require the following settings:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/azure-vpn-client-and-umbrella-roaming-client-fix/image-01.png" alt="Azure VPN Client and Umbrella Roaming Client FIX screenshot 1">
+    <figcaption>Azure VPN Client and Umbrella Roaming Client FIX screenshot 1</figcaption>
+</figure>
+<ul><li>&#194;</li></ul>
+<p>Allow time for the installation to be completed.</p>
+<p>Check services for the CSC_UmbrellaAgent service and make sure it is running.</p>
+<p>Try to connect to the Azure Client VPN again.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

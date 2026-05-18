@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRS to DFSR | Karuin KB</title>
+    <meta name="description" content="FRS to DFSR knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>FRS to DFSR</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 6</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Overview</h2>
+<p>Older Server versions used FRS to replicate changes to the SYSVOL directory to all domain controllers. Server 2008 R2 deprecated FRS and instituted DFSR as the preferred method for keeping folders synchronized across multiple domain controllers.</p>
+<p>SYSVOL is a folder shared by the domain controller to hold its logon scripts, group policies and different items associated to AD. All the domain controllers in the network will replicate the content of the SYSVOL folder. The default path for SYSVOL folder is %SystemRoot%\SYSVOL.</p>
+<p>Windows Server 2003 and 2003 R2 make use of File Replication Service (FRS) to duplicate SYSVOL folder content to different domain controllers. However, Windows Server 2008 and later makes use of Distributed File System (DFSR) for the replication. DFRS is more efficient than FRS. Adding Windows 2008/R2 into an existing 2003 Domain DID not automatically migrate from FRS to DFSR, nor will migrating FSMO roles off legacy Servers migrate SYSVOL replication from FRS to DFS. This document will outline the steps necessary to migrate from FRS to DFSR using the Dfsrmig.exe utility.</p>
+<p>** Note should you try to add a Windows 2016 RS3 or Windows 2019 Server as a domain controller that is currently using FRS ** (it will not fully work until you migrate from FRS to DFSR)</p>
+<section><h2>Assumptions</h2>
+<p>You already deployed&#194;&#160;at least&#194;&#160;Windows Server 2008 to&#194;&#160;all&#194;&#160;domain controllers in the domain and there are&#194;&#160;no&#194;&#160;remaining Windows Server 2003 or Windows Server 2003 R2 domain controllers.</p>
+<p>You already raised the domain functional level to&#194;&#160;at least&#194;&#160;Windows Server 2008, using domain.msc or the Set-ADDomainmode in Windows PowerShell cmdlet.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/frs-to-dfsr/image-01.png" alt="FRS to DFSR screenshot 1">
+    <figcaption>FRS to DFSR screenshot 1</figcaption>
+</figure>
+<p>$PDC = Get-ADDomainController -Discover -Service PrimaryDC</p>
+<p>Set-ADDomainMode -Identity $PDC.Domain -Server $PDC.HostName[0] -DomainMode Windows2008Domain</p>
+<section><h2>Health Check</h2>
+<p>Best performed on the PDC (Primary Domain controller)</p>
+<p>Open a command prompt and type netdom query FSMO</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/frs-to-dfsr/image-02.png" alt="FRS to DFSR screenshot 2">
+    <figcaption>FRS to DFSR screenshot 2</figcaption>
+</figure>
+<p>Verify you are connected to the PDC emulator listed above:</p>
+<p>You can also use powershell as follows (replacing XXXXXX with the appropriate forest/Domain name)</p>
+<p>Get-ADForest XXXXXXX | Format-Table SchemaMaster,DomainNamingMaster</p>
+<p>Get-ADDomain XXXXXXXX | format-table PDCEmulator, RIDMaster,InfrastructureMaster</p>
+<p>Perform Replication and Verify</p>
+<p>Repadmin /syncall /force /APed</p>
+<p>Repadmin /showrepl</p>
+<p>Run dcdiag and verify all has passed.</p>
+<p>Dcdiag /e /c /v /fix</p>
+<p>Ensure All domain controllers have enough free disk space:</p>
+<p>The DFSR migration process copies the contents of SYSVOL to a parallel folder called SYSVOL_DFSR, and then shares out that copy during the Redirection phase. This means that on the volume where your SYSVOL exists on domain controllers - typically the C: drive - you need at least as much free space as the size of the current SYSVOL folder, plus a 10% fudge factor. For instance, if your current SYSVOL folder is 2GB (an unusually large SYSVOL), you should ensure that at least 2.2 GB disk space is free on the same volume. Most SYSVOL are only a few hundred MB or less.</p>
+<p>Get-WmiObject -Class win32_logicaldisk -ComputerName&#194;&#160;srv01,srv02,srv03&#194;&#160;| FT systemname,deviceid,freespace -auto</p>
+<p>Make sure all replication issues are resolved before moving onto FRS to DFSR migration.</p>
+<p>Do not attempt a DFSR migration unless all your domain controllers are passing the connectivity, SYSVOL, and advertising tests with no errors.</p>
+<p>Dcdiag /e /test:sysvolcheck /test:advertising</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/frs-to-dfsr/image-03.png" alt="FRS to DFSR screenshot 3">
+    <figcaption>FRS to DFSR screenshot 3</figcaption>
+</figure>
+<section><h2>FRS to DFSR</h2>
+<p>Overview</p>
+<p>Before moving into the configurations, we must investigate the migration levels.</p>
+<p>There are 4 stable states going together with the 4 migration phases.</p>
+<p>1) State 0 &#226;€“ Start</p>
+<p>2) State 1 &#226;€“ Prepared</p>
+<p>3) State 2 &#226;€“ Redirected</p>
+<p>4) State 3 &#226;€“ Eliminated</p>
+<p>State 0 &#226;€“ Start</p>
+<p>Initiating this state, FRS will replicate SYSVOL folder among the many domain controllers. It is especially important to have an updated copy of SYSVOL before the migration process begins to keep away from any conflicts.</p>
+<p>State 1 &#226;€“ Prepared</p>
+<p>On this state, while FRS continues replicating SYSVOL folder, DFSR will replicate a replica of SYSVOL folder. It will be positioned in %SystemRoot%\SYSVOL_DFRS by default. However, this SYSVOL will not respond to some other domain controller service requests.</p>
+<p>State 2 &#226;€“ Redirected</p>
+<p>In this state, the DFSR copy of SYSVOL begins to respond to SYSVOL service requests. FRS will proceed with the replication of its own SYSVOL copy, however, it will not be involved with the SYSVOL replication.</p>
+<p>State 3 &#226;€“ Eliminated</p>
+<p>In this state, DFS Replication will continue its replication and servicing SYSVOL requests. Windows will delete original SYSVOL folder users by FRS replication and cease the FRS replication.</p>
+<p>To migrate from FRS to DFSR you must go from State 1 to State 3. This step cannot be reversed. And each stage may take some time to complete.</p>
+<p>Migration Steps:</p>
+<p>Prepared State</p>
+<p>Log in to domain controller as Domain admin or Enterprise Admin</p>
+<p>Launch PowerShell console.</p>
+<p>Type dfsrmig /setglobalstate 1 and press enter.</p>
+<p>Type dfsrmig /getmigrationstate to verify all domain controllers have reached a prepared state.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/frs-to-dfsr/image-04.png" alt="FRS to DFSR screenshot 4">
+    <figcaption>FRS to DFSR screenshot 4</figcaption>
+</figure>
+<p>Redirected State</p>
+<p>Log in to domain controller as Domain admin or Enterprise Admin</p>
+<p>Launch PowerShell console.</p>
+<p>Type dfsrmig /setglobalstate 2 and press enter.</p>
+<p>Type dfsrmig /getmigrationstate to verify all domain controllers have reached redirected state.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/frs-to-dfsr/image-05.png" alt="FRS to DFSR screenshot 5">
+    <figcaption>FRS to DFSR screenshot 5</figcaption>
+</figure>
+<p>Eliminated State</p>
+<p>Log in to domain controller as Domain admin or Enterprise Admin</p>
+<p>Launch PowerShell console.</p>
+<p>Type dfsrmig /setglobalstate 3 and press enter.</p>
+<p>Type dfsrmig /getmigrationstate to verify all domain controllers have reached eliminated state.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/frs-to-dfsr/image-06.png" alt="FRS to DFSR screenshot 6">
+    <figcaption>FRS to DFSR screenshot 6</figcaption>
+</figure>
+<p>Completion</p>
+<p>This completes the migration process and to verify the SYSVOL share.</p>
+<p>From command prompt type net share</p>
+<p>verify sysvol added sysvol_DFRS.</p>
+<p>reverify repadmin /ReplSum</p>
+<p>Verify on all the domain controllers the old FRS service is stopped and disabled.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

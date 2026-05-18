@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recovering (Migrating) Virtual Machines with VMWare Replication Appliance | Karuin KB</title>
+    <meta name="description" content="Recovering (Migrating) Virtual Machines with VMWare Replication Appliance knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Recovering (Migrating) Virtual Machines with VMWare Replication Appliance</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 1</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Technical Project Team</h2>
+<section><h2>Migrating Virtual Machines utilizing VMWare Replication Appliance</h2>
+<p>Standard Operating Procedure</p>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin &#226;€“ Senior Technical Project Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Migrating a VM to New VMWare Environment3</p>
+<p>Prerequisites3</p>
+<p>Procedure3</p>
+<p>Results4</p>
+<section><h2>Migrating a VM to New VMWare Environment</h2>
+<p>Prerequisites</p>
+<p>Verify that the virtual machine has been fully replicated and the status is &#226;€˜OK&#226;€™</p>
+<p>Verify that the virtual machine at the source site is powered off. If the virtual machine is powered on, an error message reminds you to power it off.</p>
+<p>Procedure</p>
+<p>Log in to the target site by using the&#194;&#160;vSphere Client.</p>
+<p>On the home page, click&#194;&#160;Site Recovery&#194;&#160;and click&#194;&#160;Open Site Recovery.</p>
+<p>On the Site Recovery home page, select a site pair and click&#194;&#160;View Details.</p>
+<p>Click the&#194;&#160;Replications&#194;&#160;tab and select a replication from&#194;&#160;Incoming.</p>
+<p>Make sure the status of the virtual machine is &#226;€˜OK&#226;€™. Any other status will not allow the process to run.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/recovering-migrating-virtual-machines-with-vmware-replication-appliance/image-01.png" alt="Recovering (Migrating) Virtual Machines with VMWare Replication Appliance screenshot 1">
+    <figcaption>Recovering (Migrating) Virtual Machines with VMWare Replication Appliance screenshot 1</figcaption>
+</figure>
+<p>Click the&#194;&#160;Recover&#194;&#160;icon.</p>
+<p>Logon to the source Vcenter or ESXI host and power down the machine you are migrating as you will not be able to continue otherwise.</p>
+<p>Select whether to recover the virtual machine with all the latest data, or to recover the virtual machine with the most recent data available on the target site.</p>
+<p>(Optional)&#194;&#160;Select the&#194;&#160;Power on the virtual machine after recovery&#194;&#160;check box.</p>
+<p>Click&#194;&#160;Next.</p>
+<p>Select the recovery folder and click&#194;&#160;Next.</p>
+<p>Select the target computer resource and click&#194;&#160;Next.</p>
+<p>(Optional)&#194;&#160;If the virtual machine contains hard disks for which you have not activated replication, select a target destination to attach an existing disk or detach the disk, and click&#194;&#160;Next.</p>
+<p>This page only appears if the virtual machine contains hard disks for which you have not activated replication.</p>
+<p>To select a target destination, click&#194;&#160;Browse&#194;&#160;and navigate to a folder on a datastore in which disk file is placed.</p>
+<p>To detach the disk and exclude disk files from the recovery, click&#194;&#160;Detach.</p>
+<p>Click&#194;&#160;Finish.</p>
+<p>Results</p>
+<p>vSphere Replication&#194;&#160;validates the provided input and recovers the virtual machine. If successful, the virtual machine status changes to&#194;&#160;Recovered. The virtual machine appears in the inventory of the target site.</p>
+<p>If you activated multiple point-in-time instances when you configured replication for the virtual machine,&#194;&#160;vSphere Replication&#194;&#160;presents the retained instances as standard snapshots after a successful recovery. You can select one of these snapshots to revert the virtual machine.&#194;&#160;vSphere Replication&#194;&#160;does not preserve the memory state when you revert to a snapshot.</p>
+<p>If the recovery fails, the replication of the virtual machines reverts to the replication state before the attempted recovery. For more information about the failed recovery attempt, check the last recovery error message in the replication details pane or check&#194;&#160;vCenter Server&#194;&#160;tasks.</p>
+<p>The recovery might also fail if you use the same name for the virtual machine in a scenario where you use&#194;&#160;vSphere Replication&#194;&#160;to replicate a virtual machine in a single&#194;&#160;vCenter Server&#194;&#160;and the&#194;&#160;vCenter Server&#194;&#160;instance has only one host in its inventory. See&#194;&#160;Error Recovering Virtual Machine in a Single vCenter Server Instance&#194;&#160;for more information.</p>
+<p>After a successful recovery,&#194;&#160;vSphere Replication&#194;&#160;deactivates the virtual machine for replication if the source site is still available. When the virtual machine is powered on again, it does not send replication data to the recovery site. To unconfigure the replication, click the&#194;&#160;Remove&#194;&#160;icon.</p>
+<p>When the source virtual machine is no longer in the&#194;&#160;vCenter Server&#194;&#160;inventory, the replication is removed from the&#194;&#160;Outgoing&#194;&#160;tab, but it can still be found in the&#194;&#160;Incoming&#194;&#160;tab on the target site.</p>
+<p>If a replicated virtual machine is attached to a distributed virtual switch and you attempt to perform a recovery in an automated DRS cluster, the recovery operation succeeds but the resulting virtual machine cannot be powered on. To attach it to the correct network, edit the recovered virtual machine settings.</p>
+<p>vSphere Replication&#194;&#160;disconnects virtual machine network adapters to prevent damage in the production network. After recovery, you must connect the virtual network adapters to the correct network. A target host or cluster might lose access to the DVS the virtual machine was configured with at the source site. In this case, manually connect the virtual machine to a network or other DVS to successfully power on the virtual machine.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

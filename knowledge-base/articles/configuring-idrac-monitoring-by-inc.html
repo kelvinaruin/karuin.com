@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuring iDRAC Monitoring by INC | Karuin KB</title>
+    <meta name="description" content="Configuring iDRAC Monitoring by INC knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Configuring iDRAC Monitoring by INC</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 3</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Configuring iDrac Monitoring By INC</h2>
+<p>The following steps outline the necessary configuration to iDRAC to allow monitoring by INC</p>
+<p>Verify the iDRAC templates are loaded to perform the monitoring.</p>
+<p>Log into INC</p>
+<p>Log into the client</p>
+<p>Expand Configuration/Monitoring and click on Service Templates</p>
+<p>Verify the template &#226;€œDell Servers using iDRAC&#226;€ is listed.</p>
+<p>Configure iDRAC on the Hardware</p>
+<p>Log into iDrac</p>
+<p>Expand iDRAC Settings.</p>
+<p>Click User Authentication</p>
+<p>Click a Disabled user ID</p>
+<p>Ensure Configure User is selected and click Next</p>
+<p>Click Enable User</p>
+<p>For Username enter Impact</p>
+<p>For the passwords enter a complex password</p>
+<p>Under IPMI User Privileges set both drop downs to Administrator and check Enable Serial Over LAN</p>
+<p>Under iDRAC User Privileges change Roles to Administrator</p>
+<p>Click Apply</p>
+<p>Log out</p>
+<p>Log in using the Impact account</p>
+<p>Expand iDRAC Settings.</p>
+<p>Click User Authentication</p>
+<p>Click the root user.</p>
+<p>Click Next</p>
+<p>Select Change Password and enter a complex password.</p>
+<p>Click Apply</p>
+<p>***Enter both passwords into IT GLUE</p>
+<p>Under iDrac Settings select Network</p>
+<p>Under the Options menu select Advanced Settings</p>
+<p>Click Services</p>
+<p>Scroll down to SNMP.</p>
+<p>Use the following settings.</p>
+<p>Enabled: Checked</p>
+<p>SNMP Community Name: Impact</p>
+<p>SNMP Protocol: All</p>
+<p>SNMP Discovery Port Number: 161</p>
+<p>Enable monitoring in INC</p>
+<p>Perform a discovery scan in INC for the iDRAC IP.</p>
+<p>Import the device. If the Device Class is Other, change to Servers &#226;€“ Management Interface</p>
+<p>Select the device and go to the Monitoring tab.</p>
+<p>Click Add</p>
+<p>Select the following:</p>
+<p>BIOS (Dell iDRAC) &#226;€“ Add 1</p>
+<p>CPU Status (Dell iDRAC) - Add 1 for each physical CPU.</p>
+<p>Memory Status (Dell iDRAC) - Add 1 for each memory stick installed.</p>
+<p>Physical Drive (Dell iDRAC) - Add 1 for each drive installed in the server.</p>
+<p>Power Supply (Dell iDRAC) - Add 1 for each power supply installed.</p>
+<p>Temperature Status (Dell iDRAC) - Add 1</p>
+<p>The devices will show in Monitoring. Services that had more than one added will be duplicated. For instance, if there are 2 CPUs then both will currently be listed as CPU Status (Dell iDRAC) &#226;€“ CPU.Socket.1</p>
+<p>The following will be for changing the second CPU Status service to point to the second CPU</p>
+<p>Click on the second CPU Status (Dell iDRAC) &#226;€“ CPU.Socket.1</p>
+<p>Click the Service Details tab</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-idrac-monitoring-by-inc/image-01.png" alt="Configuring iDRAC Monitoring by INC screenshot 1">
+    <figcaption>Configuring iDRAC Monitoring by INC screenshot 1</figcaption>
+</figure>
+<p>Under SNMP Value click the drop down for Select Discovered</p>
+<p>Select CPU.Socket.2</p>
+<p>Click OK</p>
+<p>The change should now be reflected in the monitoring section.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-idrac-monitoring-by-inc/image-02.png" alt="Configuring iDRAC Monitoring by INC screenshot 2">
+    <figcaption>Configuring iDRAC Monitoring by INC screenshot 2</figcaption>
+</figure>
+<p>Perform the changes for all of the other services.</p>
+<p>The Physical Drive monitor may need one more modification. The Used Space Percentage may always show at 100%, triggering a failure. Perform the following to turn off that threshold.</p>
+<p>Click on the drive.</p>
+<p>Click the thresholds tab.</p>
+<p>Under USED SPACE PERCENTAGE change Monitoring to Off</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-idrac-monitoring-by-inc/image-03.png" alt="Configuring iDRAC Monitoring by INC screenshot 3">
+    <figcaption>Configuring iDRAC Monitoring by INC screenshot 3</figcaption>
+</figure>
+<p>Click OK</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

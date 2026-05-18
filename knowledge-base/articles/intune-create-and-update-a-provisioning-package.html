@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intune - Create and Update a Provisioning Package | Karuin KB</title>
+    <meta name="description" content="Intune - Create and Update a Provisioning Package knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Intune - Create and Update a Provisioning Package</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 21</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>TPT - SOP</h2>
+<section><h2>Intune &#226;€“ Create/Update a Provisioning Package</h2>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin &#226;€“ Senior Technical Project Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Pre-Requisites3</p>
+<p>Install Windows Configuration Designer4</p>
+<p>Create a Provisioning Package5</p>
+<p>Update a Provisioning Package Bulk Certificate Date9</p>
+<p>Remove an Old Package to Install a new Package12</p>
+<section><h2>Pre-Requisites</h2>
+<p>Devices must be running Windows 11 or Windows 10 build 1709 or later.</p>
+<section><h2>Install Windows Configuration Designer</h2>
+<p>Download the Windows Configuration Designer and install the application on your machine:</p>
+<p>As of 09/01/2024 there is an issue with the MS Store version of Windows Configuration Designer so please use the Microsoft Windows ADK to install the application, and not the WCD from the Microsoft Store. ADK Offline Installation information and the application download are located here: https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-offline-install When installing, select Configuration Designer as the only feature:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-01.png" alt="Intune - Create and Update a Provisioning Package screenshot 1">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 1</figcaption>
+</figure>
+<p>Download and install Windows Configuration Designer</p>
+<p>https://www.microsoft.com/p/windows-configuration-designer/9nblggh4tx22 (08/2024 - this installation is not working properly, please use ADK install method above)</p>
+<section><h2>Create a Provisioning Package</h2>
+<p>Open the WCD application and click on &#226;€œProvision Desktop Devices&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-02.png" alt="Intune - Create and Update a Provisioning Package screenshot 2">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 2</figcaption>
+</figure>
+<p>Type in the project name and press Finish.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-03.png" alt="Intune - Create and Update a Provisioning Package screenshot 3">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 3</figcaption>
+</figure>
+<p>Enter a Device name and mask on the Set up device screen. For example, DEVICE-%RAND:X% will generate DEVICE hostnames and four random characters after the &#226;€˜Device-&#226;€˜. If you want to use more random characters, you can change the number after the : to whatever makes sense. If you want to use the serial number, you can use something like WKS-%SERIAL% which would generate a hostname of WKS-SERIALNUMBEROFDEVICE.</p>
+<p>If you have a product key to use for this, enter it in the product key field:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-04.png" alt="Intune - Create and Update a Provisioning Package screenshot 4">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 4</figcaption>
+</figure>
+<p>Turn on &#226;€œConfigure Devices for Shared Use&#226;€</p>
+<p>Turn on &#226;€œRemove pre-installed software&#226;€ to reset the workstation during the deployment.</p>
+<p>Press Next</p>
+<p>If you know the wireless SSID and password that the device will use, enter them on the Setup Network page. If you will be using a LAN, you can turn the &#226;€œConnect devices to a Wi-Fi network&#226;€ switch off.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-05.png" alt="Intune - Create and Update a Provisioning Package screenshot 5">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 5</figcaption>
+</figure>
+<p>Press Next</p>
+<p>On the Manage Organization/School Accounts page, you will want to select &#226;€œEnroll in Azure AD&#226;€ if you want the device to join Entra ID automatically.</p>
+<p>Move the &#226;€œRefresh AAD credentials&#226;€ switch to on and then press the &#226;€œGet Bulk Token&#226;€ button.</p>
+<p>If this is the first time you are authenticating for Intune, you may have to approve this action for the tenant. Press allow and continue to the next step.</p>
+<p>You will be prompted to log into Entra ID, enter the administrator credentials for this client, and press next.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-06.png" alt="Intune - Create and Update a Provisioning Package screenshot 6">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 6</figcaption>
+</figure>
+<p>Enter the password and press Next.</p>
+<p>Enter an MFA code if prompted and press Next.</p>
+<p>If all the information was entered correctly, you will see the message &#226;€œBulk Token Fetched Successfully&#226;€.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-07.png" alt="Intune - Create and Update a Provisioning Package screenshot 7">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 7</figcaption>
+</figure>
+<p>If you want to set up a local administrator account, you can enter the username and password, then press Next.</p>
+<p>You can add applications to the package; otherwise, press next on the &#226;€œAdd Applications&#226;€ screen.</p>
+<p>You can add certificates to the package as well and then press next. If no certificates are needed, press Next.</p>
+<p>On the Summary page, press the Create button. If the create process was successful, you will see that package save directory at the bottom of the screen:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-08.png" alt="Intune - Create and Update a Provisioning Package screenshot 8">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 8</figcaption>
+</figure>
+<p>You can simply click the link at the bottom to browse to that directory. All you have to do now is copy the project folder to a Windows machine or a USB and run the .ppkg application:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-09.png" alt="Intune - Create and Update a Provisioning Package screenshot 9">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 9</figcaption>
+</figure>
+<section><h2>Update a Provisioning Package Bulk Certificate Date</h2>
+<p>Open Windows Configuration Designer</p>
+<p>Press the Open button and locate the package you want to edit:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-10.png" alt="Intune - Create and Update a Provisioning Package screenshot 10">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 10</figcaption>
+</figure>
+<p>Click on Account Management under Steps:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-11.png" alt="Intune - Create and Update a Provisioning Package screenshot 11">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 11</figcaption>
+</figure>
+<p>Select a date 30 days out under &#226;€˜Bulk Token Expiry&#226;€™:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-12.png" alt="Intune - Create and Update a Provisioning Package screenshot 12">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 12</figcaption>
+</figure>
+<p>Press the &#226;€˜Get Bulk Token&#226;€™ button and authenticate with this client&#226;€™s Entra ID credentials</p>
+<p>Uncheck the &#226;€˜Allow my organization to manage my device&#226;€™ checkbox as that will add your machine to the client&#226;€™s Entra ID and click on the &#226;€˜No, sign into this app only&#226;€™ link instead of the OK button:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-13.png" alt="Intune - Create and Update a Provisioning Package screenshot 13">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 13</figcaption>
+</figure>
+<p>You will see a brief update screen:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-14.png" alt="Intune - Create and Update a Provisioning Package screenshot 14">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 14</figcaption>
+</figure>
+<p>Once the certificate date has been updated, you should see a &#226;€˜You&#226;€™re all set!&#226;€™ status:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-15.png" alt="Intune - Create and Update a Provisioning Package screenshot 15">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 15</figcaption>
+</figure>
+<p>Press &#226;€˜Done&#226;€™</p>
+<p>Press &#226;€˜Finish&#226;€™ under Steps on the left</p>
+<p>Click on the &#226;€˜Create&#226;€™ button under &#226;€˜You are ready to create the package!&#226;€™</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-16.png" alt="Intune - Create and Update a Provisioning Package screenshot 16">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 16</figcaption>
+</figure>
+<p>Exit WCD and you can now share the updated package with the client.  The location of the package on your machine is listed below the &#226;€˜Create&#226;€™ button upon completion of the above step:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-17.png" alt="Intune - Create and Update a Provisioning Package screenshot 17">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 17</figcaption>
+</figure>
+<section><h2>Remove an Old Package to Install a new Package</h2>
+<p>You will not be able to run a new or different package on a machine that has a package already installed.</p>
+<p>You can verify whether a package is installed by going to Windows Settings, Accounts, Access Work or School:</p>
+<p>Click on Add or Remove a provisioning package:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-18.png" alt="Intune - Create and Update a Provisioning Package screenshot 18">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 18</figcaption>
+</figure>
+<p>If a package is listed on the Packages page, you must first remove this package before running another:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-19.png" alt="Intune - Create and Update a Provisioning Package screenshot 19">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 19</figcaption>
+</figure>
+<p>In this case, a package exists and must be removed, if a package is not listed in the above screen, you can run a package without first having to remove the old one.</p>
+<p>To remove the old package, select the package in the list and press the &#226;€˜Remove&#226;€™ button:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-20.png" alt="Intune - Create and Update a Provisioning Package screenshot 20">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 20</figcaption>
+</figure>
+<p>Press &#226;€˜Yes&#226;€™ at the UAC prompt</p>
+<p>The machine will take a minute or so to remove the package</p>
+<p>You can then browse back to Windows Settings, Accounts, Access Work or School, Add or remove a provisioning package and you should see no packages listed:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/intune-create-and-update-a-provisioning-package/image-21.png" alt="Intune - Create and Update a Provisioning Package screenshot 21">
+    <figcaption>Intune - Create and Update a Provisioning Package screenshot 21</figcaption>
+</figure>
+<p>You are free to run the new package now without any issues</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

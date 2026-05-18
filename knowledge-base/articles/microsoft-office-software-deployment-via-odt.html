@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Office Software Deployment via ODT | Karuin KB</title>
+    <meta name="description" content="Microsoft Office Software Deployment via ODT knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Microsoft Office Software Deployment via ODT</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 14</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Technical Project Team</h2>
+<section><h2>Standard Operating Procedure</h2>
+<section><h2>Deployment of Microsoft Office Suite via ODT</h2>
+<p>PREPARED BY</p>
+<p>Kelvin Aruin &#226;€“ Senior Technical Project Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Info3</p>
+<p>Create Share3</p>
+<p>Obtain Office Deployment Tool3</p>
+<p>Generate Configuration XML3</p>
+<p>Modify XML for Office Removal10</p>
+<p>Download Office Software10</p>
+<p>Deploy Software Manually11</p>
+<p>Deploy Software to all Workstations via INC RMM12</p>
+<section><h2>Info</h2>
+<p>This document will cover the deployment of Microsoft Office 365 Suite Software to client workstations via the Office Deployment Toolkit.</p>
+<section><h2>Create Share</h2>
+<p>Create a file share on the client file server and call it &#226;€˜ODT&#226;€™.</p>
+<p>If no file server exists, you may use a NAS share. Be sure to set your NAS share permissions to allow everyone read/write.</p>
+<p>Set share permissions Principal to Everyone, and the Access to Read.</p>
+<p>Set security permissions for Domain Users to Read &amp; Execute.</p>
+<p>You should now be able to browse the share by going to \\SERVERFQDN.com\ODT\ as any domain user.  Verify you can create files/folders on the share.</p>
+<section><h2>Obtain Office Deployment Tool</h2>
+<p>Download the Office Deployment Tool executable from:</p>
+<p>https://www.microsoft.com/en-us/download/confirmation.aspx?id=49117</p>
+<p>Save the download to the ODT share created in the previous section.</p>
+<p>Run the downloaded EXE file and it will create a setup.exe and default XML files.</p>
+<p>You can delete the XML files as you are using your own.</p>
+<p>Rename setup.exe to ODT.exe.</p>
+<section><h2>Generate Configuration XML</h2>
+<p>Navigate to https://config.office.com/</p>
+<p>Scroll down to the bottom of the page and click on &#226;€˜Create&#226;€™ on the left side of the page.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-01.png" alt="Microsoft Office Software Deployment via ODT screenshot 1">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 1</figcaption>
+</figure>
+<p>Products and Releases</p>
+<p>The next steps will differ based on client software deployment; however, this document will cover the most common options.</p>
+<p>Select 64-bit architecture.</p>
+<p>Select Microsoft 365 Apps for business under Office Suites.</p>
+<p>Skip down to the Apps section.</p>
+<p>Select the following apps (however, your configuration may differ):</p>
+<p>Click Next.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-02.png" alt="Microsoft Office Software Deployment via ODT screenshot 2">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 2</figcaption>
+</figure>
+<p>Language</p>
+<p>Select &#226;€˜English (United States) under the primary language.</p>
+<p>Click Next.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-03.png" alt="Microsoft Office Software Deployment via ODT screenshot 3">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 3</figcaption>
+</figure>
+<p>Installation</p>
+<p>Under Installation Options, click on Local source:</p>
+<p>Enter the source path for the ODT share you created earlier and append \Office\ after it.</p>
+<p>Turn off &#226;€œShow installation to user&#226;€.</p>
+<p>Turn on &#226;€œShut down running applications&#226;€.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-04.png" alt="Microsoft Office Software Deployment via ODT screenshot 4">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 4</figcaption>
+</figure>
+<p>Update and Upgrade</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-05.png" alt="Microsoft Office Software Deployment via ODT screenshot 5">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 5</figcaption>
+</figure>
+<p>Set &#226;€˜Automatically upgrade to the selected architecture&#226;€™ to On.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-06.png" alt="Microsoft Office Software Deployment via ODT screenshot 6">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 6</figcaption>
+</figure>
+<p>Licensing and activation</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-07.png" alt="Microsoft Office Software Deployment via ODT screenshot 7">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 7</figcaption>
+</figure>
+<p>Select Automatically accept the EULA and leave the Product activation as user based.</p>
+<p>General</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-08.png" alt="Microsoft Office Software Deployment via ODT screenshot 8">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 8</figcaption>
+</figure>
+<p>Enter the organization/company name.</p>
+<p>Application preferences</p>
+<p>Leave Application preferences as defaults (unless needed).</p>
+<p>Review the configurated settings on the right-hand side:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-09.png" alt="Microsoft Office Software Deployment via ODT screenshot 9">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 9</figcaption>
+</figure>
+<p>Click Export on the top right-hand side of the screen.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-10.png" alt="Microsoft Office Software Deployment via ODT screenshot 10">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 10</figcaption>
+</figure>
+<p>Select Keep Current Settings.</p>
+<p>Click OK.</p>
+<p>Export Configuration to XML.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-11.png" alt="Microsoft Office Software Deployment via ODT screenshot 11">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 11</figcaption>
+</figure>
+<p>Check the &#226;€˜I accept the terms in the license agreement.</p>
+<p>Enter the File Name ClientConfig.</p>
+<p>Click Export.</p>
+<p>Go back to the Installation section and change the delivery method to Office Content Delivery Network.</p>
+<p>Enter the File Name ClientConfigCDN.</p>
+<p>Click Export.</p>
+<p>Copy the ClientConfig.XML and the ClientConfigCDN.XML files to the ODT share you created.</p>
+<section><h2>Modify XML file for Office Removal</h2>
+<p>Newer versions of Office (Office 2019 and above) cannot be removed through the same method that is created from the ODT configuration as they are not installed using the MSI method. The area below needs to be added to the XML to remove the newer versions of Office. See full XML example at the end of the document. This link does have the list of all of the Product IDs</p>
+<p>https://learn.microsoft.com/en-us/microsoft-365/troubleshoot/installation/product-ids-supported-office-deployment-click-to-run</p>
+<p>What needs to be added:</p>
+<p>&lt;Remove All=&quot;FALSE&quot;&gt;</p>
+<p>&lt;Product ID=&quot;ProPlus2019Volume&quot; &gt;</p>
+<p>&lt;/Product&gt;</p>
+<p>&lt;/Remove&gt;</p>
+<section><h2>Download Office Software</h2>
+<p>Open an elevated Command Prompt or PowerShell console window.</p>
+<p>Navigate to the ODT share you created earlier or update the command in 3a to point directly to your share path.</p>
+<p>Run the following command.</p>
+<p>Command Prompt:</p>
+<p>ODT.EXE /download ClientConifgCDN.xml  or</p>
+<p>\\UNCsharepath\odt.exe /download ClientConfigCDN.xml</p>
+<p>PowerShell:</p>
+<p>.\ODT.exe /download .\ClientConfigCDN.xml or</p>
+<p>\\UNCsharepath\.\odt.exe /download ClientConfigCDN.xml</p>
+<p>NOTE: If running ODT.exe from a NAS or UNC path with option 2 of the command, the Office folder will be created, and files downloaded to the default path displayed in your command prompt.  Ex. C:\Users\username.  You will need to then copy the downloaded files to the NAS or UNC path.</p>
+<p>It will take a bit of time to download the software, this depends on the WAN bandwidth.</p>
+<p>Once finished, a folder called Office will be created in the ODT share.</p>
+<p>You are ready to deploy the software.</p>
+<section><h2>Deploy Software Manually</h2>
+<p>You can manually deploy the software on a user workstation by browsing to the \\SERVERFQDN.COM\ODT share via CMD or PowerShell console.</p>
+<p>You will then want to run the following command to uninstall any old versions of office and install the Office 365 current version with the settings specified in the XML created earlier.</p>
+<p>Run the following command.</p>
+<p>Command Prompt:</p>
+<p>ODT.EXE /configure ClientConifg.xml</p>
+<p>\\UNCsharepath\odt.exe /configure ClientConfig.xml</p>
+<p>PowerShell:</p>
+<p>.\ODT.exe /configure .\ClientConfig.xml</p>
+<p>\\UNCsharepath\.\odt.exe /configure ClientConfig.xml</p>
+<p>Office will silently install within 10 minutes or so.</p>
+<section><h2>Deploy Software to all Workstations via INC RMM</h2>
+<p>Create a domain service account that is a member of the Domain Administrators group.</p>
+<p>Open the appropriate INC instance and navigate to the appropriate client.</p>
+<p>Under Actions, select Push Third Party Software.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-12.png" alt="Microsoft Office Software Deployment via ODT screenshot 12">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 12</figcaption>
+</figure>
+<p>Rename the Task Name at the top of the page to something that makes sense.</p>
+<p>Select Custom Credentials and enter the service account username and password you created in step 1.</p>
+<p>Select From My Computer under Location.</p>
+<p>Type ODT Office Deployment under Name.</p>
+<p>Fill in a description.</p>
+<p>Click Browse next to File Name and locate the ODT.EXE in the ODT share.</p>
+<p>Enter the following for Command Line Parameters:</p>
+<p>ODT.exe /configure \\SERVERFQDN.com\ODT\ClientConfig.XML</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-13.png" alt="Microsoft Office Software Deployment via ODT screenshot 13">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 13</figcaption>
+</figure>
+<p>Click on Targets and select all the workstations you would to deploy office to.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/microsoft-office-software-deployment-via-odt/image-14.png" alt="Microsoft Office Software Deployment via ODT screenshot 14">
+    <figcaption>Microsoft Office Software Deployment via ODT screenshot 14</figcaption>
+</figure>
+<p>Click Save.</p>
+<p>Your deployment is on its way to the workstations selected.</p>
+<p>XML Example</p>
+<p>&lt;Configuration ID=&quot;eb817742-00bf-43be-82fa-5ce0d5446483&quot;&gt;</p>
+<p>&lt;Add OfficeClientEdition=&quot;64&quot; Channel=&quot;Current&quot; SourcePath=&quot;\\GDH-FS01\ODT\Office&quot; AllowCdnFallback=&quot;TRUE&quot;&gt;</p>
+<p>&lt;Product ID=&quot;O365BusinessRetail&quot;&gt;</p>
+<p>&lt;Language ID=&quot;en-us&quot; /&gt;</p>
+<p>&lt;ExcludeApp ID=&quot;Access&quot; /&gt;</p>
+<p>&lt;ExcludeApp ID=&quot;Groove&quot; /&gt;</p>
+<p>&lt;ExcludeApp ID=&quot;Lync&quot; /&gt;</p>
+<p>&lt;ExcludeApp ID=&quot;Publisher&quot; /&gt;</p>
+<p>&lt;/Product&gt;</p>
+<p>&lt;/Add&gt;</p>
+<p>&lt;Remove&gt;</p>
+<p>&lt;Product ID=&quot;ProPlus2019Volume&quot;&gt;</p>
+<p>&lt;Language ID=&quot;en-us&quot; /&gt;</p>
+<p>&lt;/Product&gt;</p>
+<p>&lt;/Remove&gt;</p>
+<p>&lt;Updates Enabled=&quot;TRUE&quot; /&gt;</p>
+<p>&lt;RemoveMSI&gt;</p>
+<p>&lt;IgnoreProduct ID=&quot;PrjPro&quot; /&gt;</p>
+<p>&lt;IgnoreProduct ID=&quot;PrjStd&quot; /&gt;</p>
+<p>&lt;/RemoveMSI&gt;</p>
+<p>&lt;/Configuration&gt;</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

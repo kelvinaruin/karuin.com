@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Directory OU Standard Hybrid Environment | Karuin KB</title>
+    <meta name="description" content="Active Directory OU Standard Hybrid Environment knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Active Directory OU Standard Hybrid Environment</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 6</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Active Directory Standard</h2>
+<h3>Hybrid OU Structure</h3>
+<p>The following is a Hybrid environment OU structure meant to guide and standardize all clients&#226;€™ Active Directory OU structure to support Entra ID Connect and/or Entra ID Cloud Sync agents.</p>
+<p>This structure will also work for a non-hybrid environment while preparing the OU structure to be hybrid.</p>
+<p>By incorporating this OU structure, we can standardize the majority of onboarding and offboarding user accounts for hybrid environments.  We can also have every environment ready to be upgraded to Entra ID services.</p>
+<p>Fundamentals:</p>
+<p>Entra ID Connect or Entra ID Cloud Sync</p>
+<p>Best practicing standards is not to sync the entire forest and only target specific OU&#226;€™s</p>
+<p>M365/Entra ID Tenant</p>
+<p>Not required but is why this document exists</p>
+<p>Active Directory Domain Services server</p>
+<p>Overview:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-ou-standard-hybrid-environment/image-01.png" alt="Active Directory OU Standard Hybrid Environment screenshot 1">
+    <figcaption>Active Directory OU Standard Hybrid Environment screenshot 1</figcaption>
+</figure>
+<p>Top-Level OU Structure:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-ou-standard-hybrid-environment/image-02.png" alt="Active Directory OU Standard Hybrid Environment screenshot 2">
+    <figcaption>Active Directory OU Standard Hybrid Environment screenshot 2</figcaption>
+</figure>
+<p>The following top-level OU structure is mandatory for all environments.</p>
+<p>Create a new parent OU using a naming standard of your choice:</p>
+<p>Company Name</p>
+<p>Company Acronym</p>
+<p>Add a description of the OU as:</p>
+<p>Partially synchronized with Entra ID</p>
+<p>First-Level OU Structure:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-ou-standard-hybrid-environment/image-03.png" alt="Active Directory OU Standard Hybrid Environment screenshot 3">
+    <figcaption>Active Directory OU Standard Hybrid Environment screenshot 3</figcaption>
+</figure>
+<p>The following first-level OU structure is mandatory for all environments.</p>
+<p>Create the following first-level additional OUs</p>
+<p>OU=XXX, OU=AVD Hosts</p>
+<p>This will be used for AVD Hosts as the destination target for AVD Pools configured in ICM.</p>
+<p>This can also be used for RDS Farms instead</p>
+<p>Duplicate this if you have both AVD and RDS in your environment</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Contacts</p>
+<p>This will be used for all synchronized contacts</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Disabled Users</p>
+<p>This will be used for any domain user that gets offboarded and their account/data can be deleted from the M365/Entra ID tenant.</p>
+<p>This description will incorporate</p>
+<p>Not synchronized with Entra ID all objects will be deleted from Entra ID automatically</p>
+<p>OU=XXX, OU=Domain Users</p>
+<p>This will be used for all active domain user accounts that also have M365 services</p>
+<p>More information will be provided below under the Second-Level OU Structure</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Workstations</p>
+<p>This will be used for all active domain workstations</p>
+<p>More information will be provided below under the Second-Level OU Structure</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Global Security Groups</p>
+<p>This will be used for any Entra ID group that enables or disables a feature or service by membership</p>
+<p>More information will be provided below under the Second-Level OU Structure</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Servers</p>
+<p>This will be used for all servers except domain controllers, AVD hosts, and/or RDS Farms</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Service Accounts</p>
+<p>This will be used for all local service accounts that do not require any services or functions in M365/Entra ID</p>
+<p>More information will be provided below under the Second-Level OU Structure</p>
+<p>This description will incorporate</p>
+<p>Partially synchronized with Entra ID</p>
+<p>OU=XXX, OU=Shared Mailboxes</p>
+<p>This will be used for all shared mailboxes</p>
+<p>More information will be provided below under the Second-Level OU Structure</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>Second-Level OU Structure:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-ou-standard-hybrid-environment/image-04.png" alt="Active Directory OU Standard Hybrid Environment screenshot 4">
+    <figcaption>Active Directory OU Standard Hybrid Environment screenshot 4</figcaption>
+</figure>
+<p>The following second-level OU structure is mandatory for all environments.</p>
+<p>OU=XXX, OU=Domain Users</p>
+<p>OU=XXX, OU=Domain Users, OU=Locations, General, Vendor, Guest OUs, Domain Trust OUs</p>
+<p>You can create as many OUs as you need here as shown in the overview above, we used locations.</p>
+<p>This will also include any Generic, Remote, Vendor, or Guest Accounts titled as you wish</p>
+<p>The overview shows we have two for these types of accounts</p>
+<p>General Users</p>
+<p>Used for shared or general accounts</p>
+<p>Franciscan Employees</p>
+<p>Used for vendors or partners that need access to the environment in a limited fashion</p>
+<p>This description for all of them will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Users, OU=Security Groups</p>
+<p>This is to be used for all user-specific security groups</p>
+<p>More information will be provided below under the Third-Level OU Structure</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Workstations</p>
+<p>OU=XXX, OU=Domain Workstations, OU=Desktops</p>
+<p>This is to be used for all desktop workstations</p>
+<p>More information will be provided below under the Third-Level OU Structure</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Workstations, OU=Laptops</p>
+<p>This is to be used for all laptop workstations</p>
+<p>More information will be provided below under the Third-Level OU Structure</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Workstations, OU=Security Groups</p>
+<p>This is for all workstation security groups</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Global Security Groups</p>
+<p>OU=XXX, OU= Global Security Groups, OU=Azure or Entra ID</p>
+<p>This is to be used for all Azure/Entra ID specific security groups that will be managed by Active Directory for membership and used in Azure/Entra ID.</p>
+<p>Examples:</p>
+<p>Azure Files SMB Contributor Roles</p>
+<p>AVD Pool Assignments</p>
+<p>M365 Licensing</p>
+<p>OU=XXX, OU= Global Security Groups, OU=M365 Licensing</p>
+<p>This is to be used for all security groups that will be assigned to the M365 license being managed from Active Directory security groups membership.</p>
+<p>Examples:</p>
+<p>M365 Business Premium</p>
+<p>M365 E3</p>
+<p>M365 Entra ID Premium P1/P2</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Service Accounts</p>
+<p>OU=XXX, OU= Service Accounts, OU=Azure Files</p>
+<p>This is to be used for the Azure Files service account that is created automatically when the Azure Files is domain-joined.</p>
+<p>Account name will be the storage account name and you will need to move the account to this OU</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU= Service Accounts, OU=Mail-Enabled Service Accounts</p>
+<p>This is to be used for any service accounts that require an active mailbox</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Shared Mailboxes</p>
+<p>OU=XXX, OU= Shared Mailboxes, OU=Offboarded Users</p>
+<p>This is to be used for any offboarded user that needs to have their mailbox converted to a shared mailbox.</p>
+<p>Moving offboarded users to this OU will NOT delete in M365/Entra ID</p>
+<p>A manual action of converting the user mailbox to a shared mailbox will need to occur after moving the user&#226;€™s AD account to this OU</p>
+<p>Third-Level OU Structure:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-ou-standard-hybrid-environment/image-05.png" alt="Active Directory OU Standard Hybrid Environment screenshot 5">
+    <figcaption>Active Directory OU Standard Hybrid Environment screenshot 5</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/active-directory-ou-standard-hybrid-environment/image-06.png" alt="Active Directory OU Standard Hybrid Environment screenshot 6">
+    <figcaption>Active Directory OU Standard Hybrid Environment screenshot 6</figcaption>
+</figure>
+<p>The following third-level OUs are mandatory for all environments.</p>
+<p>OU=XXX, OU=OU=Domain Users, OU=Security Groups</p>
+<p>OU=XXX, OU=Domain Users, OU=Security Groups, OU=Application Security Groups</p>
+<p>This is to be used for all application security groups that AD members would need to gain access to on-premises hosted environment applications</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Users, OU=Security Groups, OU=Folder Security</p>
+<p>This is to be used for all NTFS permission security groups accessing any file shares</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Users, OU=Security Groups, OU=Group Policies</p>
+<p>This is to be used for any Group Policy security groups used for security filtering of &#226;€œitem-level targeting&#226;€ and/or with Group Policy scope targeting</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Users, OU=Security Groups, OU=Printer Access</p>
+<p>This is to be used for any Printer security groups used for restricting access to specific printers</p>
+<p>May be needed for Printer Cloud solution as well</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Workstations, OU=Desktops</p>
+<p>OU=XXX, OU=Domain Workstations, OU=Desktops, OU=Locations</p>
+<p>Each location should have its own OU for Desktops</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<p>OU=XXX, OU=Domain Workstations, OU=Laptops</p>
+<p>OU=XXX, OU=Domain Workstations, OU=Laptops, OU=Locations</p>
+<p>Each location should have its own OU for Desktops</p>
+<p>This description will incorporate</p>
+<p>Synchronized with Entra ID</p>
+<section><h2>Naming Standards</h2>
+<h3>Security Group Naming Standards:</h3>
+<p>The following security group OUs will require a naming standard to easily identify what their intention is for use within the hybrid environment.</p>
+<p>Global Security Groups</p>
+<p>A global security group is any group that is managed in Active Directory for membership and used to assign permission for access to Entra ID services or functions.</p>
+<p>Naming standard</p>
+<p>XXX-G-ServiceName</p>
+<p>XXX = the three-letter custom company acronym</p>
+<p>G = Global</p>
+<p>ServiceName</p>
+<p>Any service that is hosted in Entra ID and requires association for permission to use this service.</p>
+<p>The same naming standard is applied to the third-level OUs as well under the Global Security OU</p>
+<p>Azure</p>
+<p>M365 Licensing</p>
+<p>Add a description identifying the service that is being applied in Entra ID using the group</p>
+<p>Application Security Groups</p>
+<p>An application security group is any line of business application that is hosted on-premises and requires membership to access the LoB application.</p>
+<p>Naming standard</p>
+<p>XXX-APP-ApplicationName</p>
+<p>XXX = the three-letter custom company acronym</p>
+<p>APP = Application</p>
+<p>ApplicationName</p>
+<p>Add a description identifying the application and server resources using this group</p>
+<p>Folder Security Groups</p>
+<p>A folder security group is any folder within any file share that requires NTFS security permissions for accessing the files beneath it.</p>
+<p>Naming standard</p>
+<p>XXX-FS-FolderName</p>
+<p>XXX = the three-letter custom company acronym</p>
+<p>FS = File Security</p>
+<p>FolderName</p>
+<p>Add a description and include the path to the folder this group is applied to</p>
+<p>Printer Access Security Groups</p>
+<p>A printer security group is used for any printer that requires NTFS permissions to enable access for the privilege to use the printer.</p>
+<p>Naming standard</p>
+<p>XXX-MFP-PrinterName</p>
+<p>XXX = the three-letter custom company acronym</p>
+<p>MFP = Mulit-Function Printer</p>
+<p>PrinterName</p>
+<p>Add a description and include the printer&#226;€™s name and port this group is applied to</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

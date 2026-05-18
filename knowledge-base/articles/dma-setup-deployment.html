@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMA Setup & Deployment | Karuin KB</title>
+    <meta name="description" content="DMA Setup & Deployment knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>DMA Setup & Deployment</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 16</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <p>DeploymentPro Setup Guide</p>
+<p>BitTitan DeploymentPro is a module of Device Management and the Device Management Agent (DMA) that remotely configures Outlook email profiles after you perform a mailbox migration to Office 365.</p>
+<p>DeploymentPro configures Outlook email profiles to the new Destination server and moves users&#226;€™ AutoComplete, email signatures, and PST (personal storage table) files to the reconfigured email profile. However, DeploymentPro does not set the users&#226;€™ default email signatures for new messages, replies, and forwards.</p>
+<p>Important</p>
+<p>Migration of AutoComplete entries is not guaranteed on every single device and are not automatically migrated with the default DeploymentPro settings. Migration of Autocomplete entries may be manually enabled at the user&#226;€™s own risk by disabling the advanced option &#226;€œDisable Autocomplete entries migration&#226;€ in MSPComplete, on the DeploymentPro settings page.</p>
+<p>DeploymentPro does the following:</p>
+<p>Creates a new mail profile</p>
+<p>Configures the new profile to send and receive e-mail from Microsoft 365</p>
+<p>Sets the new profile as the default mail profile</p>
+<p>Attaches any existing locally-stored PSTs from the current default mail profile</p>
+<p>Copies over the signatures from the current default mail profile</p>
+<p>Copies over auto-completes from the current default mail profile&#226;€‹ if the source is Exchange</p>
+<p>Sets Cached Mode to 1 year (12 months) for downloading mail for the new OST file in the new Outlook profile. Auto-completes were previously &#226;€‹copied from the user&#39;s NK2 file but are now copied from MAPI.</p>
+<p>DeploymentPro does not:</p>
+<p>Install a new copy of Microsoft or Outlook</p>
+<p>Install service pack updates for Microsoft Office or Outlook</p>
+<p>Install the Microsoft 365 desktop setup utility</p>
+<p>Import existing PSTs into the Microsoft 365 mailbox</p>
+<p>Set the &#226;€‹New Messages or Replies/Forwards default signatures. These need to be set manually DeploymentPro does, however, copy over the signatures from the current default profile. They need to be chosen and set to be used for new messages and replies/forwards</p>
+<p>Attach existing network-stored or externally-stored PSTs from the previous default mail profile. These will be logged as errors in the DeploymentPro log files</p>
+<p>Force Outlook to use a default profile if the user has previously configured Outlook to prompt which profile they would like to use</p>
+<p>Maintain shared calendars or &#226;€‹mailboxes</p>
+<p>Reattach any secondary accounts that were included in the originating profile</p>
+<p>Migrate any content from .nk2 files. This includes autocomplete information</p>
+<p>Migrate client-side rules. Server side rules are migrated using MigrationWiz, depending on endpoints (Exchange 2010+, including Exchange Online)&#194;</p>
+<p>Reattach, import, modify, or delete the User&#39;s OST associated with the previous profile</p>
+<p>Support multiple devices in tenant-to-tenant migrations. DeploymentPro only supports one end-user device or one Outlook configuration per user.&#194;</p>
+<section><h2>Supported Systems &amp; System Requirements</h2>
+<h3>System Requirements</h3>
+<p>For DeploymentPro to configure Outlook to connect to Microsoft 365, each device must meet these system requirements:</p>
+<p>Microsoft Windows 8 or later (with the latest Windows updates). Windows 7 is no longer supported</p>
+<p>.NET Framework version&#194;&#160;4.5 or later</p>
+<p>TLS 1.2 is enabled with the following registry (refer to Microsoft&#39;s&#194;&#160;TLS1.2 documentation&#194;&#160;for more information):</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v4.0.30319]&quot;SystemDefaultTlsVersions&quot;=dword:00000001</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\.NETFramework\v4.0.30319]&quot;SchUseStrongCrypto&quot;=dword:00000001</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319]&quot;SchUseStrongCrypto&quot;=dword:00000001</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\v4.0.30319]&quot;SystemDefaultTlsVersions&quot;=dword:00000001</p>
+<p>These versions of Outlook:</p>
+<p>Microsoft Outlook 2019 (Deploymentpro cannot reattach PST or migrate Autocomplete)&#194;</p>
+<p>Microsoft Outlook 2016 (with March 2016 PU)</p>
+<p>Linux and Mac operating systems are not supported.</p>
+<p>Microsoft Outlook 2007 is not supported.</p>
+<p>Microsoft Outlook 2010 is not officially supported.&#194;</p>
+<p>Microsoft Store (UWP) Version of Outlook is not supported.</p>
+<p>Outlook 2019 has an issue with the command ExcludeExplicitO365Endpoint being set to 1 after the cutover. If this was set to keep an instance of on-premises Outlook from connecting to Microsoft 365 ahead of the cut over, you may be required to set it back to 0 for Outlook to successfully connect to the Microsoft 365 mailbox after using DeploymentPro.&#194;</p>
+<p>Exchange environments can have complex AutoDiscover settings, along with UPN and SMTP address mismatches, which can require troubleshooting and reconfiguration before DeploymentPro can be made to work against such environments.</p>
+<p>Prerequisites</p>
+<p>This process does not support projects utilizing Multi-factor Authentication or 2-Factor Authentication. For directions on projects with MFA or 2FA, use the menu to the left to navigate down to the appropriate section.</p>
+<p>DMA will install to the following locations: &quot;C:\Program Files (x86)\BitTitan&quot;&#194;&#160;and&#194;&#160;&quot;%LOCALAPPDATA%\BitTitan&quot;.&#194;&#160;It is important there are no policies, antivirus programs, or limitations in place that can block operations in these locations, such as AppLocker.</p>
+<p>Complete these prerequisites before you get started with DeploymentPro:</p>
+<p>Follow the Create the Customer and Create the Endpoint directions in the migration guide for your scenario before beginning the DMA installment process.&#194;</p>
+<p>Review the system requirements for DMA and for DeploymentPro. These are listed above.</p>
+<p>Install DMA&#194;&#160;on the customer&#226;€™s computers for users needing their Outlook email profiles reconfigured.</p>
+<p>Deploying the Device Management Agent (DMA) through email</p>
+<p>Easiest deployment option but requires a &#226;€œWhat to Expect&#226;€ document, user participation and POC buy in</p>
+<p>Deploying the Device Management Agent through the Impact Network Control (INC) portal</p>
+<p>Next easiest option. The application is deployed from your computer to any defined targets in task</p>
+<p>Source for DMA installer needs to be online and available for success</p>
+<p>Deploy the Device Management Agent with a Group Policy Object (GPO)</p>
+<p>Requires Active Directory and machines to be on prem</p>
+<p>Not as reliable as the first two options</p>
+<p>Create a Windows Installer Package (MSI) to deploy the Device Management Agent</p>
+<p>Third Party application required to build MSI</p>
+<p>GPO and INC deployments supported</p>
+<p>Deploying the Device Management Agent (DMA) through email</p>
+<p>To deploy the BitTitan Device Management Agent (DMA) through email, you ask users to manually install the agent. This will require a What To Expect email explaining the process and users tasks.</p>
+<p>To deploy DMA through email:</p>
+<p>Click&#194;&#160;Customers&#194;&#160;on the navigation sidebar from the MSPComplete portal.</p>
+<p>Click the customer&#226;€™s name for which you wish to deploy DMA.</p>
+<p>Click&#194;&#160;Users.</p>
+<p>Add a checkmark next to the user(s) that should receive the email.</p>
+<p>Click the&#194;&#160;Enable Device Management Through Email&#194;&#160;button.</p>
+<p>In the Enable Device Management via Email panel, enter the client DL email address in the&#194;&#160;Reply-To Address&#194;&#160;field.</p>
+<p>Confirm that all the users you chose are listed in the&#194;&#160;To&#194;&#160;field.</p>
+<p>To personalize the email message that the customer&#39;s users will receive,&#194;&#160;type your changes into the message body text box.&#194;&#160;If the customer&#39;s computers use a proxy,&#194;&#160;you must add&#194;&#160;instructions to run the&#194;&#160;DMA installer with&#194;&#160;command line&#194;&#160;parameters&#194;&#160;that ensure DMA is able to transmit data through the proxy. Read the&#194;&#160;How do I deploy the Device Management Agent on computers that use a proxy?&#226;€‹&#226;€‹&#194;&#160;article for more information.&#194;</p>
+<p>Click&#194;&#160;Send Agent&#194;&#160;Email.</p>
+<p>Deploying the Device Management Agent through the Impact Management Platform (INC)</p>
+<p>To deploy the BitTitan Device Management Agent (DMA) through INC, you must download the DMA agent and &#226;€œPush Third Party Software&#226;€ from the Clients INC portal.</p>
+<p>To deploy DMA through INC:</p>
+<p>Download the DMA setup file from MSPComplete.</p>
+<p>In MSPComplete, click on All Customers from the navigation sidebar.</p>
+<p>Click on the customer&#226;€™s name for which you wish to deploy DMA.</p>
+<p>On the horizontal menu bar, click Users.</p>
+<p>Click Add Users, and then click Add Users via Device Management Agent.</p>
+<p>On the Add Users via Device Management panel, click the Device Management setup file to download the DMA setup file to your local drive.  Please note that this file should NOT be renamed or altered in any way or it could cause issues when DMA is installed.</p>
+<p>Create in Jobs in INC to execute the DMA installer on computers/laptops. This will take several runs.</p>
+<p>Select your target computers on the INC All Devices page. Filtering will make selections easier.</p>
+<p>Click the &#226;€œADD TASK&#226;€ button at the top of the page to view options and select &#226;€œPush Third Party Software&#226;€</p>
+<p>The window below will open. Please fill out as illustrated. The &#226;€œTask Handler&#226;€ tab will be left untouched generally. Review the &#226;€œTargets&#226;€ tab to make sure you have the correct subjects. The &#226;€œScheduling&#226;€ tab can be adjusted as needed. The &#226;€œNotifications&#226;€ tab can be set up to send you alerts.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-01.png" alt="DMA Setup & Deployment screenshot 1">
+    <figcaption>DMA Setup & Deployment screenshot 1</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-02.png" alt="DMA Setup & Deployment screenshot 2">
+    <figcaption>DMA Setup & Deployment screenshot 2</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-03.png" alt="DMA Setup & Deployment screenshot 3">
+    <figcaption>DMA Setup & Deployment screenshot 3</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-04.png" alt="DMA Setup & Deployment screenshot 4">
+    <figcaption>DMA Setup & Deployment screenshot 4</figcaption>
+</figure>
+<p>Once you are satisfied with the Task setup, click &#226;€œSAVE&#226;€. This will execute the job according to the schedule set.</p>
+<p>Now you can monitor the status within INC and the Job Status page.</p>
+<p>Add a checkmark next to the user(s) that should receive the email.</p>
+<p>Click the&#194;&#160;Enable Device Management Through Email&#194;&#160;button.</p>
+<p>In the Enable Device Management via Email panel, enter the client DL email address in the&#194;&#160;Reply-To Address&#194;&#160;field.</p>
+<p>Confirm that all the users you chose are listed in the&#194;&#160;To&#194;&#160;field.</p>
+<p>To personalize the email message that the customer&#39;s users will receive,&#194;&#160;type your changes into the message body text box.&#194;&#160;If the customer&#39;s computers use a proxy,&#194;&#160;you must add&#194;&#160;instructions to run the&#194;&#160;DMA installer with&#194;&#160;command line&#194;&#160;parameters&#194;&#160;that ensure DMA is able to transmit data through the proxy. Read the&#194;&#160;How do I deploy the Device Management Agent on computers that use a proxy?&#226;€‹&#226;€‹&#194;&#160;article for more information.&#194;</p>
+<p>Click&#194;&#160;Send Agent&#194;&#160;Email.</p>
+<p>Deploy the Device Management Agent with a Group Policy Object (GPO)</p>
+<p>To deploy the BitTitan Device Management Agent (DMA) using a Group Policy Object (GPO), complete these steps:</p>
+<p>Download the DMA setup file from MSPComplete. Do NOT change the name of the setup file.</p>
+<p>Create a network share that is accessible to all your customer&#226;€™s computers and put the DMA&#194;&#160;setup file in the shared folder.</p>
+<p>Create a Group Policy Object that forces the domain-joined computers in a security filter to execute the DMA&#194;&#160;setup file through a scheduled task. To assist with control over deployment, use a security group and item side targeting.</p>
+<p>These three steps are explained in greater detail below.&#194;</p>
+<p>NOTE:&#194;&#160;Some environments have settings which can prevent the successful creation of GPO or the running of scheduled tasks. If you are unable to install DMA with a GPO, our recommendation would be to share the install file from step 1 below with your users either via a Shared Drive or via email to allow them to run it themselves.&#194;&#160; Alternately, you can create an MSI package which can be used to install DMA using your preferred&#194;&#160;software deployment tool, such as SCCM.</p>
+<p>Step 1: Download the DMA setup file from MSPComplete.</p>
+<p>In MSPComplete, click on&#194;&#160;All Customers&#194;&#160;from the navigation sidebar.&#194;</p>
+<p>Click on the customer&#226;€™s name for which you wish to deploy DMA.</p>
+<p>On the horizontal menu bar, click&#194;&#160;Users.</p>
+<p>Click&#194;&#160;Add Users, and then click&#194;&#160;Add Users via Device Management Agent.&#194;</p>
+<p>On the Add Users via Device Management panel, click&#194;&#160;Device Management setup file&#194;&#160;to download the DMA setup file to your local drive.&#194;&#160; Please note that this file should NOT be renamed or altered in any way or it could cause issues when DMA is installed.</p>
+<p>Step 2:&#194;&#160;Create a network share that is accessible to all your customer&#226;€™s computers and put the DMA&#194;&#160;setup file in the share folder.</p>
+<p>Log on&#194;&#160;to the file server as an administrator.</p>
+<p>Click Start&#194;&#160;and search for Server Manager.</p>
+<p>Click&#194;&#160;Server Manager&#194;&#160;from the search results.</p>
+<p>Click&#194;&#160;File and Storage Services.&#194;</p>
+<p>Click&#194;&#160;Shares.&#194;</p>
+<p>Next to Shares, click&#194;&#160;Tasks.&#194;</p>
+<p>Click&#194;&#160;New Share.&#194;</p>
+<p>Continue through the New Share Wizard prompts until finished,&#194;&#160;then click&#194;&#160;Create.&#194;</p>
+<p>Right-click on the new share in Server Manager and click&#194;&#160;Open Share.&#194;</p>
+<p>Put the DMA setup file in the share.</p>
+<p>Write down the share&#39;s network path. This will be&#194;&#160;needed when creating the scheduled task.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-05.png" alt="DMA Setup & Deployment screenshot 5">
+    <figcaption>DMA Setup & Deployment screenshot 5</figcaption>
+</figure>
+<p>Step 3:&#194;&#160;Create a Group Policy Object that forces the domain joined computers in a security filter to execute the DMA&#194;&#160;setup file through a scheduled task.</p>
+<p>Log on to the Active Directory Domain Controller as an administrator.</p>
+<p>Click&#194;&#160;Start&#194;&#160;and search for Group Policy Management.</p>
+<p>Click&#194;&#160;Group Policy Management.&#194;</p>
+<p>Right-click on the desired Active Directory domain, and then click&#194;&#160;Create a GPO in this domain, and link it here.</p>
+<p>Enter a name for the GPO, and then click&#194;&#160;Ok.Note:&#194;&#160;By default, the GPO will apply to all users and computers that successfully authenticate to the Active Directory domain.</p>
+<p>To narrow the scope of computers that install DMA, select&#194;&#160;Authenticated Users,&#194;&#160;and click&#194;&#160;Remove.&#194;</p>
+<p>This will require that the Authenticated Users be added to the Delegation tab.</p>
+<p>To confirm the removal, click&#194;&#160;Ok.</p>
+<p>To add a new security filter, click&#194;&#160;Add.</p>
+<p>Type the name of the security group that the target computers are a member of and click&#194;&#160;Check names.&#194;</p>
+<p>Click&#194;&#160;Ok.</p>
+<p>Right-click on the new GPO, and then click&#194;&#160;Edit.&#194;</p>
+<p>In the console tree, under&#194;&#160;Computer Configuration, click&#194;&#160;Preferences&#194;&#160;&gt;&#194;&#160;Control Panel&#194;&#160;&gt;&#194;&#160;Scheduled Tasks.</p>
+<p>Right-click&#194;&#160;Scheduled Tasks&#194;&#160;and click on&#194;&#160;New, and then click on&#194;&#160;Immediate Task&#194;&#160;(At least Windows 7).</p>
+<p>Enter a name and a description for the Scheduled Task.</p>
+<p>Click&#194;&#160;Change User or Group.&#194;</p>
+<p>Type &quot;system&quot; in the&#194;&#160;Object name&#194;&#160;text box.</p>
+<p>Click&#194;&#160;Check Names.&#194;&#160;Note:&#194;&#160;Make sure that the system object name resolves to NT Authority\System.</p>
+<p>Under&#194;&#160;Security options, click&#194;&#160;Run whether a user is logged on or not&#194;&#160;and add a check next to&#194;&#160;Run with highest privileges.</p>
+<p>In the&#194;&#160;Configure for&#194;&#160;drop-down menu, select&#194;&#160;Windows 7, Windows Server 2008 R2.&#194;</p>
+<p>Click the&#194;&#160;Actions&#194;&#160;tab</p>
+<p>Click on&#194;&#160;New.</p>
+<p>In the Action drop-down menu, select&#194;&#160;Start a program.&#194;</p>
+<p>In the&#194;&#160;Programs/script&#194;&#160;text box, enter the network path for the DMA setup file.Note:&#194;&#160;If you use the&#194;&#160;Browse button to find the location of the script, then it will add the path as c:\xxxx. This is incorrect since the script needs to include the UNC path and not the local path. Be sure to replace the c:\ format with the \\servername\sharename\ format.&#226;€‹</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-06.png" alt="DMA Setup & Deployment screenshot 6">
+    <figcaption>DMA Setup & Deployment screenshot 6</figcaption>
+</figure>
+<p>If the customer&#39;s computers use a proxy,&#194;&#160;you must add a command line&#194;&#160;parameter&#194;&#160;into the&#194;&#160;Add arguments&#194;&#160;field to ensure that DMA is able to transmit data through the proxy. Read the&#194;&#160;How do I deploy the Device Management Agent on computers that use a proxy?&#226;€‹&#226;€‹&#194;&#160;article for more information.&#226;€‹</p>
+<p>Click&#194;&#160;Ok.</p>
+<p>Click the&#194;&#160;Conditions&#194;&#160;tab.</p>
+<p>Add a checkmark next to&#194;&#160;Start only if the following network connection is available, and then select&#194;&#160;Any connection.</p>
+<p>Click&#194;&#160;Ok.&#194;</p>
+<p>Close Group Policy Management Editor, and then close Group Policy Management.</p>
+<p>The DMA setup file will execute on user computers at the next Group Policy refresh, typically every 90 minutes, with a random offset of 0 to 30 minutes. Or you can run &#226;€œGPUpdate /force&#226;€ using am AMP in Inc.</p>
+<p>Create a Windows Installer Package (MSI) to deploy the Device Management Agent</p>
+<p>You can create an MSI package for DMA by following the steps below but it will require 3rd party software. This can then be deployed via a Group Policy Object (GPO), or via a software deployment tool, such as SCCM.&#194;</p>
+<p>Prerequisites</p>
+<p>Download the DMA setup file from MSPComplete.</p>
+<p>In MSPComplete, click on&#194;&#160;All Customers&#194;&#160;from the navigation sidebar.&#194;</p>
+<p>Click on the customer&#226;€™s name for which you wish to deploy DMA.</p>
+<p>On the horizontal menu bar, click&#194;&#160;Users.</p>
+<p>Click&#194;&#160;Add Users, and then click&#194;&#160;Add Users via Device Management Agent.&#194;</p>
+<p>On the Add Users via Device Management panel, click&#194;&#160;Device Management setup file&#194;&#160;to download the DMA setup file to your local drive.&#194;&#160; Please note that this file should NOT be renamed or altered in any way or it could cause issues when DMA is installed.&#194;</p>
+<p>Step 1:&#194;&#160;Download MSI Wrapper</p>
+<p>Choose a tool that allows you to convert an executable setup program into an MSI package. In the example below, we guide you through the steps when using the freeware software from Exemsi.com.</p>
+<p>Important:&#194;&#160;This is a&#194;&#160;third-party utility that is not owned or supported by BitTitan.</p>
+<p>Download and install the free version of MSI Wrapper from&#194;&#160;http://www.exemsi.com/&#194;</p>
+<p>Step 2:&#194;&#160;Run MSI Wrapper</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-07.png" alt="DMA Setup & Deployment screenshot 7">
+    <figcaption>DMA Setup & Deployment screenshot 7</figcaption>
+</figure>
+<ul><li>&#194;&#160;Step 3:&#194;&#160; Select the&#194;&#160;BitTitanDMASetup_xxxxxxxxxxx_.exe&#194;&#160;installer file.</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-08.png" alt="DMA Setup & Deployment screenshot 8">
+    <figcaption>DMA Setup & Deployment screenshot 8</figcaption>
+</figure>
+<p>Step 4:&#194;&#160; Get a GUID for the MSI application.</p>
+<p>Get a GUID from&#194;&#160;https://www.guidgenerator.com/online-guid-generator.aspx</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-09.png" alt="DMA Setup & Deployment screenshot 9">
+    <figcaption>DMA Setup & Deployment screenshot 9</figcaption>
+</figure>
+<p>Copy and paste&#194;&#160;the GUID into the&#194;&#160;Application ID&#194;&#160;field (in MSI Wrapper application) and Click&#194;&#160;Create New for&#194;&#160;Upgrade Code.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-10.png" alt="DMA Setup & Deployment screenshot 10">
+    <figcaption>DMA Setup & Deployment screenshot 10</figcaption>
+</figure>
+<ul><li>&#194;&#160;Step 5:&#194;&#160; Accept default information for the Properties and More Properties screens.</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-11.png" alt="DMA Setup & Deployment screenshot 11">
+    <figcaption>DMA Setup & Deployment screenshot 11</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-12.png" alt="DMA Setup & Deployment screenshot 12">
+    <figcaption>DMA Setup & Deployment screenshot 12</figcaption>
+</figure>
+<p>Step 6:&#194;&#160; Proxy Information (if needed).</p>
+<p>If DMA needs to use a proxy, enter the command line&#194;&#160;as described in&#194;&#160;the KB article here&#194;&#160;to the&#194;&#160;Install Arguments&#194;&#160;field.&#194;&#160; Otherwise, leave the field blank.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-13.png" alt="DMA Setup & Deployment screenshot 13">
+    <figcaption>DMA Setup & Deployment screenshot 13</figcaption>
+</figure>
+<p>Enter&#194;&#160;-uninstall&#194;&#160;for the Uninstall Arguments.</p>
+<ul><li>&#194;&#160;Step 7:&#194;&#160; Verify and Build.</li></ul>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-14.png" alt="DMA Setup & Deployment screenshot 14">
+    <figcaption>DMA Setup & Deployment screenshot 14</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-15.png" alt="DMA Setup & Deployment screenshot 15">
+    <figcaption>DMA Setup & Deployment screenshot 15</figcaption>
+</figure>
+<p>Once you have built&#194;&#160;the MSI package, it can be deployed via a GPO, or via a software deployment tool, such as SCCM.</p>
+<p>Confirm that the user&#226;€™s computers are successfully running DMA</p>
+<p>After DMA is installed on the users&#39; computers, ensure that the users who will need their Outlook email profiles configured by DeploymentPro are listed in MSPComplete with a successful (Success or Timed Out) agent status.</p>
+<p>Complete these steps to confirm the users running DMA:</p>
+<p>Select the appropriate workgroup, then click&#194;&#160;All Customers&#194;&#160;in the left navigation pane.</p>
+<p>Click the name of the customer for which you want to view users.</p>
+<p>Click the&#194;&#160;Users&#194;&#160;tab.</p>
+<p>Scroll through the list of users to identify users listed with a successful, unknown, or failed agent status, or with a .local, .corp, .internal, or other private network address.</p>
+<p>Success&#194;&#160;means the user is logged in and the DMA is communicating with our servers.</p>
+<p>Timed Out&#194;&#160;means that the user has been logged in and DMA was communicating with our servers, but the user has been logged off for more than 4 hours.</p>
+<p>Failed&#194;&#160;means that the DMA was not able to be installed. Usually, there is a security program or policy blocking the agent installation.</p>
+<p>Not Installed&#194;&#160;or&#194;&#160;Email Sent&#194;&#160;means the DMA installer has not been installed or ran yet on the end user machine or this is a duplicate user entry.&#194;&#160; Duplicates happen when the agent is installed but is not able to match the user profile with the email address in the Users List.</p>
+<p>Users with a status of&#194;&#160;Failed&#194;&#160;or&#194;&#160;Not Installed&#194;&#160;will not have their Outlook email profiles reconfigured by DeploymentPro.</p>
+<p>If these users need to have their Outlook email profiles reconfigured by DeploymentPro, then you need to install DMA to those users&#39; computers. If you have already tried to install DMA to those users&#39; computers, then try to reinstall it using an alternate method. For example, if you previously tried to install DMA using a Group Policy Object (GPO), you can try re-installing it with an email instead, in case those users are not using domain-joined computers. You can also try performing a few troubleshooting steps as outlined in&#194;&#160;Troubleshoot connectivity between DMA and MSPComplete.</p>
+<p>When you go to the DeploymentPro page you will only see the users that have DMA installed successfully (Success or Timed Out status). These are the only users that will have their profiles configured.&#194;</p>
+<p>If you notice that the users showing up in DeploymentPro are under a different email address than what you have licensed, this is because DMA determines the email address for the user when it checks in.&#194;&#160; When this occurs, you will sometimes see that the users are not licensed in DeploymentPro even though they are showing as having a UMB license applied when you look at the users in MSPComplete or in your project.&#194;&#160; If this happens, please reach out to our Support team with the name of the Customer and a list of the affected users. Our support team will assist with getting the licenses set up so that you can schedule the users.</p>
+<p>Launch DeploymentPro</p>
+<p>The DeploymentPro page is refreshed to list the email addresses for the customer&#226;€™s users who are successfully running DMA and who are ready to run the DeploymentPro module. If the DeploymentPro module has not yet been set up, the set-up screen will load for configuration of the module.</p>
+<p>Configuring DeploymentPro&#194;</p>
+<p>Select the appropriate workgroup, and then click the products icon () in the top navigation bar.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/dma-setup-deployment/image-16.png" alt="DMA Setup & Deployment screenshot 16">
+    <figcaption>DMA Setup & Deployment screenshot 16</figcaption>
+</figure>
+<p>Go to&#194;&#160;DeploymentPro. This will launch DeploymentPro.</p>
+<p>Select a customer from the list by clicking on the customer&#226;€™s name. The status column will show enabled when a customer account has had DMA deployed.</p>
+<p>Enter the customer&#226;€™s email domain.</p>
+<p>Select Destination Endpoint:&#194;&#160;Select the Microsoft 365 Destination endpoint. This endpoint must have Admin credentials entered.</p>
+<p>Expired or Temporary Password Settings:&#194;&#160;Choose the password setting that applies to your customer&#226;€™s environment: &#226;€‹</p>
+<p>Choose&#194;&#160;Enable users with temporary or expired passwords to set their own passwords.&#194;&#160;If your customer uses Microsoft 365 to manage user accounts and password policies. With this setting selected, the DeploymentPro wizard that runs on the customer&#226;€™s computers will prompt users to enter a new password when their password is expired or set to temporary. DeploymentPro automatically updates Microsoft 365 with the password that users enter.Important:&#194;&#160;Users must know their currently expired or temporary password.</p>
+<p>Choose&#194;&#160;Do not allow users to set their own passwords&#194;&#160;if your customer manages their user accounts and password policies using ADFS. With this option selected, all user password resets are managed by the company&#226;€™s IT department.</p>
+<p>Upload Logo:&#194;&#160;Click&#194;&#160;Upload Logo&#194;&#160;to upload your company&#226;€™s logo for use in the DeploymentPro wizard that runs on users&#226;€™ computers. In the Personalized DeploymentPro Client Interface section, upload your company logo and add supporting text. We strongly recommend doing this, because this is the logo and text that end users will see in a desktop pop-up when they are prompted to reconfigure their Outlook profiles. If you do not upload your own logo, the default BitTitan logo will be included instead.</p>
+<p>Message:&#194;&#160;Enter a message to display a customized note in the DeploymentPro wizard that runs on users&#226;€™ computers.</p>
+<p>Schedule Users</p>
+<p>After the DeploymentPro project is configured, IT IS recommended that you schedule the users as soon as possible even if the email cutover (MX record cutover) won&#39;t happen immediately. Read the&#194;&#160;Troubleshoot DeploymentPro&#194;&#160;article for more information.</p>
+<p>Complete these steps to schedule the DeploymentPro module:</p>
+<p>Select the appropriate workgroup, and then click&#194;&#160;All Customers&#194;&#160;in the left navigation pane.</p>
+<p>Click the name of the customer you wish to schedule.</p>
+<p>Click the&#194;&#160;Manage&#194;&#160;button in the top right corner of the page, then select&#194;&#160;Device Management.</p>
+<p>Click&#194;&#160;DeploymentPro&#194;&#160;in the left navigation pane.</p>
+<p>Add a checkmark next to the email addresses for which you want to run the DeploymentPro module, then click&#194;&#160;Schedule Cutover.</p>
+<p>We recommend running a proof of concept on a few test accounts. The steps for this are found in the DeploymentPro FAQ.</p>
+<p>In the&#194;&#160;Select a Date&#194;&#160;field, select a date and time for the DeploymentPro wizard to run on user computers. This date and time should happen soon after the email cutover (MX record cutover) date and time. If you haven&#226;€™t identified the email cutover date, select a date far in the future (i.e., a few months later than the expected cutover date). When you do this, also set a reminder to return to the DeploymentPro page and reschedule the date and time for the DeploymentPro wizard once you&#39;ve identified the exact date and time for the email cutover. Scheduled time is based on the local time of the machine that is scheduling the request.</p>
+<p>Click&#194;&#160;Schedule Cutover. To run the DeploymentPro module, you must either have DeploymentPro licenses available on your account or have applied User Migration Bundle licenses to each user.&#194;&#160;Standalone DeploymentPro licenses are consumed automatically when an unlicensed user is scheduled.</p>
+<p>After DeploymentPro is scheduled, and before the scheduled start date/time, the email addresses should be in the &quot;Scheduled&quot; phase on the DeploymentPro page. When the scheduled start date/time is reached, the email addresses will be in the &quot;Running&quot; phase.&#194;&#160;If some of the email addresses listed don&#39;t progress to the &quot;Running&quot; phase, you may need to perform some troubleshooting actions to get them to the appropriate phase.&#194;</p>
+<p>Next steps</p>
+<p>Perform the mailbox migration. Follow the steps in the appropriate migration guide for your customer&#226;€™s Source and Destination.</p>
+<p>Soon after the email cutover date and time, the DeploymentPro wizard will guide the customer&#226;€™s users through the configuration of their Outlook email profiles. As users complete the DeploymentPro wizard, their email addresses will progress to the &#226;€œCompleted&#226;€ phase on the DeploymentPro page.&#194;</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

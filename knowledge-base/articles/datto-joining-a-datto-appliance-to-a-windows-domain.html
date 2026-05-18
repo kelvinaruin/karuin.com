@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datto - Joining a Datto Appliance to a Windows Domain | Karuin KB</title>
+    <meta name="description" content="Datto - Joining a Datto Appliance to a Windows Domain knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Datto - Joining a Datto Appliance to a Windows Domain</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 6</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>Join a Datto NAS to a Windows Domain</h2>
+<p>Login to the Datto BCDR Status Dashboard</p>
+<p>Locate your Datto appliance and click on the Device Web Arrow:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/datto-joining-a-datto-appliance-to-a-windows-domain/image-01.png" alt="Datto - Joining a Datto Appliance to a Windows Domain screenshot 1">
+    <figcaption>Datto - Joining a Datto Appliance to a Windows Domain screenshot 1</figcaption>
+</figure>
+<p>At the top menu, click on Configure and then select Networking:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/datto-joining-a-datto-appliance-to-a-windows-domain/image-02.png" alt="Datto - Joining a Datto Appliance to a Windows Domain screenshot 2">
+    <figcaption>Datto - Joining a Datto Appliance to a Windows Domain screenshot 2</figcaption>
+</figure>
+<p>Under the Settings menu on the left, click on the Windows Networking option:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/datto-joining-a-datto-appliance-to-a-windows-domain/image-03.png" alt="Datto - Joining a Datto Appliance to a Windows Domain screenshot 3">
+    <figcaption>Datto - Joining a Datto Appliance to a Windows Domain screenshot 3</figcaption>
+</figure>
+<p>Scroll down to the DNS Overrides section and fill out all 4 fields as follows:</p>
+<p>SERVER 1: Primary domain controller IP</p>
+<p>SERVER 2: Secondary domain controller IP</p>
+<p>SERVER 3: Public DNS such as Cloudflare (1.1.1.1)</p>
+<p>DNS Search Domains: Enter your domain including the .local, such as domainname.local</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/datto-joining-a-datto-appliance-to-a-windows-domain/image-04.png" alt="Datto - Joining a Datto Appliance to a Windows Domain screenshot 4">
+    <figcaption>Datto - Joining a Datto Appliance to a Windows Domain screenshot 4</figcaption>
+</figure>
+<p>Click on the Apply button</p>
+<p>Next, scroll down to the Windows Networking &#226;€“ Workgroup section</p>
+<p>Click on Join a Domain button</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/datto-joining-a-datto-appliance-to-a-windows-domain/image-05.png" alt="Datto - Joining a Datto Appliance to a Windows Domain screenshot 5">
+    <figcaption>Datto - Joining a Datto Appliance to a Windows Domain screenshot 5</figcaption>
+</figure>
+<p>Fill out the Windows Networking - Workgroup section as follows:</p>
+<p>DOMAIN: domainname.local</p>
+<p>Username: impactadmin (your domain admin username)</p>
+<p>Password: your domain admin user name</p>
+<p>Password Server: PDC IP address (this step is critical)</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/datto-joining-a-datto-appliance-to-a-windows-domain/image-06.png" alt="Datto - Joining a Datto Appliance to a Windows Domain screenshot 6">
+    <figcaption>Datto - Joining a Datto Appliance to a Windows Domain screenshot 6</figcaption>
+</figure>
+<p>Lastly, click on Join Domain.  If you followed the above instructions correctly, your appliance will now be part of your Windows domain.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

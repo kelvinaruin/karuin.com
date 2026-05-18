@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutanix Setup for Protection Groups and Analysis | Karuin KB</title>
+    <meta name="description" content="Nutanix Setup for Protection Groups and Analysis knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Nutanix Setup for Protection Groups and Analysis</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 11</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>TPT - SOP</h2>
+<section><h2>Nutanix  &#226;€“ Setup for Protection Groups and Analysis</h2>
+<p>PREPARED BY</p>
+<p>TABLE OF CONTENTS</p>
+<p>Summary3</p>
+<p>Create the Protection Groups4</p>
+<p>Update Protection Groups (add/remove servers, modify schedules)6</p>
+<p>Restore from Snapshot8</p>
+<p>Create Analysis charts8</p>
+<section><h2>Summary</h2>
+<p>Protection Groups are configured on Nutanix to create local snapshots of the servers themselves. These are not long term snapshots and do not replace having backups to a device like a Datto, but these are nice and handy to have.</p>
+<section><h2>Create the Protection Groups</h2>
+<p>Log into Prism Element</p>
+<p>From the drop down select Data Protection</p>
+<p>Click + Protection Domain in the top right (1)</p>
+<p>Select Async DR (2)</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-01.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 1">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 1</figcaption>
+</figure>
+<p>Enter a name and click Create</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-02.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 2">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 2</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-03.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 3">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 3</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-04.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 4">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 4</figcaption>
+</figure>
+<section><h2>Update Protection Groups (add/remove servers, modify schedules)</h2>
+<p>Log into Prism Element</p>
+<p>From the drop down select Data Protection</p>
+<p>Right Click on RKE-Server-Snapshot</p>
+<p>Select Update</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-05.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 5">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 5</figcaption>
+</figure>
+<p>Select the server from the Unprotected Entities on the left</p>
+<p>Click Protect Selected Entities at the bottom</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-06.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 6">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 6</figcaption>
+</figure>
+<p>The new entity will show up on the right. Click Next</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-07.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 7">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 7</figcaption>
+</figure>
+<p>Click Close</p>
+<section><h2>Restore from Snapshot</h2>
+<p>Log into Prism Element</p>
+<p>From the drop down select Data Protection</p>
+<p>To the right of the snapshot you would like to restore from click Restore</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-08.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 8">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 8</figcaption>
+</figure>
+<p>Choose the method for the Restore (Overwrite Existing entity or Create a new one), select the server, and click OK</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-09.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 9">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 9</figcaption>
+</figure>
+<section><h2>Create Analysis charts</h2>
+<p>Log into Prism Element</p>
+<p>From the drop down select Analysis</p>
+<p>Create a new Metric chart for the Metrics Memory Usage, Network Rx, and Network Tx. Memory Usage will have all VMs. The Network Rx and Network Tx will also include the CVMs</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-10.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 10">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 10</figcaption>
+</figure>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/nutanix-setup-for-protection-groups-and-analysis/image-11.png" alt="Nutanix Setup for Protection Groups and Analysis screenshot 11">
+    <figcaption>Nutanix Setup for Protection Groups and Analysis screenshot 11</figcaption>
+</figure>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

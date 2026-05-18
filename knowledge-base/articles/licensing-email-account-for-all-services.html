@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Licensing Email Account for All Services | Karuin KB</title>
+    <meta name="description" content="Licensing Email Account for All Services knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Licensing Email Account for All Services</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 23</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <section><h2>TechOps</h2>
+<section><h2>Standardizing Client Licensing Mailbox Notifications</h2>
+<section><h2>Standard Operating Procedure</h2>
+<p>PREPARED BY</p>
+<p>Greg McCullough &#226;€“ Senior Project Implementation Engineer</p>
+<p>TABLE OF CONTENTS</p>
+<p>Overview3</p>
+<p>Assumptions4</p>
+<p>Licensing Account Creation4</p>
+<p>Add Impact Client Distribution Group as Contact4</p>
+<p>Create New IT Management Distribution Group4</p>
+<p>Enable Automatic External Forwarding for Individual Mailboxes5</p>
+<p>Configure Email Forwarding on Licensing Shared Mailbox8</p>
+<p>Point All Existing Vendor Licensing Notifications to the New Licensing Customer Email Address9</p>
+<p>ProofPoint Relay Access Denied Solution10</p>
+<p>M365 Connector Creation10</p>
+<p>Create the Mail Transport Rule13</p>
+<section><h2>Overview</h2>
+<p>ISSUE: Licensing for various vendors and MS VLSC for customers is tied to old IT employees or individual accounts.</p>
+<p>STANDARDIZATION: Several clients are not consistent within their organizations for licensing emails, access to MS open licensing agreements, server licensing, and software licensing time-sensitive email notifications for renewals not landing into the hands that need them.</p>
+<p>Impact FNEs use the Impact client distribution groups for some of these licensing areas.  This makes it challenging to manage and handoff in the event of a client offboarding when Impact client distribution groups are no longer active email addresses.</p>
+<p>This also creates reactive rather than proactive support when licenses expire or renewal periods are missed.</p>
+<p>RESOLUTION: Use a single account across the board hosted within the client&#226;€™s email server.</p>
+<p>Create a standard user account for all clients to redirect licensing renewals and vendor application contracts to use a client-shared mailbox within their email server.</p>
+<p>Enable mail forwarding on this account to go to a new internal IT Management distribution group on the client&#226;€™s email server, with members being the Impact client distribution group and executive officers for the client company.</p>
+<p>BACKGROUND: Microsoft VLSC now leverages integration with existing O365 accounts.  The account needs to be an actual user account.  To address this, instead of creating a shared mailbox directly on the email server, we create a user account, assign a license, convert it to a shared mailbox, and remove the license.</p>
+<section><h2>Assumptions</h2>
+<p>You have already migrated email to O365 or have an existing O365 email server.</p>
+<p>You have access to an existing MS VLSC account for customer open licensing.</p>
+<p>You have access to all vendor licensing for the existing line of business applications.</p>
+<p>The Impact client distribution group can receive external emails.</p>
+<p>You have O365 Global admin rights.</p>
+<p>You have an available license for the initial account/mailbox creation.</p>
+<p>You can steal the impactadmin account license temporarily if no spares exist.</p>
+<section><h2>Licensing Account Creation</h2>
+<p>Create a new user service account in AD if AAD Connect is configured or a cloud-only account with the password set never to expire.  Be sure to use a randomly generated complex password.</p>
+<p>Licensing@clientdomain.com</p>
+<p>Document credentials for the account in IT Glue.</p>
+<p>Assign an O365 or M365 license with Exchange Online Plan for regular user mailbox creation on the email server.</p>
+<p>Convert the mailbox to a shared mailbox in Exchange Admin Center.</p>
+<p>Remove license from user account.</p>
+<section><h2>Add Impact Client Distribution Group as Contact</h2>
+<p>Create a new contact in AD if AAD Connect is configured or a cloud-only account without AAD Connect.</p>
+<p>Name: Client Name Impact DL</p>
+<p>Hide the contact from the Global Address List</p>
+<p>Email: Use the MIT Client distribution group name and email address.</p>
+<section><h2>Create New IT Management Distribution Group</h2>
+<p>Create a new distribution group as a cloud-only account.</p>
+<p>Name = IT Management</p>
+<p>Email Address = itmanagement@clientdomain.com</p>
+<p>Assign members and include stakeholders.</p>
+<p>Use the new Impact Client Distribution Group contact and the key stakeholders. This could also include the CEO, President, CIOs, and other executives who wish to be included in licensing emails.</p>
+<p>Be sure all C Level executives want to be apart of these notifications.</p>
+<p>Ensure the distribution group is set to allow external senders.</p>
+<section><h2>Enable Automatic External Forwarding for Individual Mailboxes</h2>
+<p>NOTE: Microsoft blocks all internal mailboxes, user and shared, from forwarding to any external email accounts.  This includes members of any internal DL that has external contacts.</p>
+<p>Therefore, you must create an &#226;€œAnti-Spam&#226;€ policy to allow the licensing mailbox the ability to forward to external contacts.  (Even though you are configuring the shared mailbox forwarding to point to the new internal IT Management distribution group)</p>
+<p>Log in to your Office 365 Security &amp; Compliance portal for Microsoft 365 and navigate to Email &amp; collaboration &gt; Policies &amp; rules.  You will then choose the &#226;€œThreat policies&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-01.png" alt="Licensing Email Account for All Services screenshot 1">
+    <figcaption>Licensing Email Account for All Services screenshot 1</figcaption>
+</figure>
+<p>Choose the &#226;€œAnti-spam&#226;€ located under &#226;€œPolicies&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-02.png" alt="Licensing Email Account for All Services screenshot 2">
+    <figcaption>Licensing Email Account for All Services screenshot 2</figcaption>
+</figure>
+<p>Click + Create policy.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-03.png" alt="Licensing Email Account for All Services screenshot 3">
+    <figcaption>Licensing Email Account for All Services screenshot 3</figcaption>
+</figure>
+<p>Give your new outbound spam filter policy a Name and Description.</p>
+<p>Name = &#226;€œExternal Forwarding Allowed&#226;€</p>
+<p>Description:</p>
+<p>Initially created for the licensing mailbox to forward all emails to the Impact internal client DL. Any other individual accounts that require this feature can be added to this rule.</p>
+<p>Add the licensing@domain.com user to the Users scope under the Users, Groups, and Domains section.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-04.png" alt="Licensing Email Account for All Services screenshot 4">
+    <figcaption>Licensing Email Account for All Services screenshot 4</figcaption>
+</figure>
+<p>NOTE: We are targeting only the licensing mailbox to be able to forward externally, however, any other user or service account most likely, can be added on an individual basis to this existing policy.</p>
+<p>Under the &#226;€œProtection settings&#226;€ define the following only:</p>
+<p>6a. Message limits</p>
+<ul><li>&#226;€œRestriction placed on users who reach the message limit&#226;€</li></ul>
+<p>No action, alert only</p>
+<p>6b. Forwarding rules</p>
+<ul><li>&#226;€œAutomatic forwarding rules&#226;€</li></ul>
+<p>On &#226;€“ Forwarding is enabled</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-05.png" alt="Licensing Email Account for All Services screenshot 5">
+    <figcaption>Licensing Email Account for All Services screenshot 5</figcaption>
+</figure>
+<p>Save the new policy.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-06.png" alt="Licensing Email Account for All Services screenshot 6">
+    <figcaption>Licensing Email Account for All Services screenshot 6</figcaption>
+</figure>
+<p>NOTE:&#194;&#160;You may have other transport rules or spam policies at Microsoft 365 that block external forwarding in addition to the outbound spam filtering we&#39;ve covered here. Review all existing MTRs to ensure they do not conflict with this MTR.</p>
+<section><h2>Configure Email Forwarding on Licensing Shared Mailbox</h2>
+<p>Go to the Licensing shared mailbox in Exchange Admin Center and configure the email forwarding to point to the new internal IT Management DL.</p>
+<p>Choose the &#226;€œMailbox&#226;€ properties and then choose the &#226;€œManage email forwarding&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-07.png" alt="Licensing Email Account for All Services screenshot 7">
+    <figcaption>Licensing Email Account for All Services screenshot 7</figcaption>
+</figure>
+<p>Turn On the &#226;€œForward all emails sent to this mailbox&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-08.png" alt="Licensing Email Account for All Services screenshot 8">
+    <figcaption>Licensing Email Account for All Services screenshot 8</figcaption>
+</figure>
+<p>Choose the &#226;€œForward to an internal email address&#226;€ and click the &#226;€œSearch email&#226;€ button to find and select the new IT Management distribution group.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-09.png" alt="Licensing Email Account for All Services screenshot 9">
+    <figcaption>Licensing Email Account for All Services screenshot 9</figcaption>
+</figure>
+<p>Ensure to add the checkmark into the checkbox for &#226;€œDeliver message to both forwarding address and mailbox&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-10.png" alt="Licensing Email Account for All Services screenshot 10">
+    <figcaption>Licensing Email Account for All Services screenshot 10</figcaption>
+</figure>
+<p>Search and add the internal DL as the recipient</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-11.png" alt="Licensing Email Account for All Services screenshot 11">
+    <figcaption>Licensing Email Account for All Services screenshot 11</figcaption>
+</figure>
+<p>Save the changes</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-12.png" alt="Licensing Email Account for All Services screenshot 12">
+    <figcaption>Licensing Email Account for All Services screenshot 12</figcaption>
+</figure>
+<section><h2>Point All Existing Vendor Licensing Notifications to the New Licensing Customer Email Address</h2>
+<p>The final step is to point all email notifications for licensing renewals of vendors to go to the new licensing@customerdomain.com</p>
+<p>You will also want to grant the licensing user access to the MSVL center if you have volume licensing that was merged into the O365 Admin Center.</p>
+<p>Enable email notifications to point to the licensing account for all Server hardware HP/Dell or VMWare accounts.</p>
+<p>You should not be using the Impact internal client DL for these type of admin accounts as this creates an issue when/if the client leaves Impact for another MSP service.</p>
+<p>This is because the Impact internal DL would be deleted after a client offboarding.</p>
+<section><h2>ProofPoint Relay Access Denied Solution</h2>
+<p>If ProofPoint is enabled on your Microsoft Tenant, then you will face an issue when testing the mail flow and receive an NDR stating that &#226;€œrelay access denied&#226;€.  To resolve this issue, you will need to create a new connector and a Mail Transport Rule on the email server to bypass ProofPoint on all forwarded messages.</p>
+<p>The reason for this is that the forward rule will forward the original senders email address through the ProofPoint smarthost for outbound email and due to the external sender not being an active account in the client&#226;€™s ProofPoint tenant, ProofPoint will deny the message from being sent.</p>
+<h3>M365 Connector Creation</h3>
+<p>Log into EAC and open the Exchange management console</p>
+<p>Navigate to Mail Flow &gt; Connectors</p>
+<p>Choose &#226;€œAdd a connector&#226;€</p>
+<p>3a. Choose &#226;€œOffice 365&#226;€ for the &#226;€œConnection from&#226;€ and choose &#226;€œPartner Organization&#226;€ for the &#226;€œConnection to&#226;€ and click &#226;€œNext&#226;€.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-13.png" alt="Licensing Email Account for All Services screenshot 13">
+    <figcaption>Licensing Email Account for All Services screenshot 13</figcaption>
+</figure>
+<p>3b. Name your connector and be sure to remove the checkmark for &#226;€œTurn it on&#226;€ (we will turn it on later) and click &#226;€œNext&#226;€:ProofPoint By-Pass Connector for External Forwarding</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-14.png" alt="Licensing Email Account for All Services screenshot 14">
+    <figcaption>Licensing Email Account for All Services screenshot 14</figcaption>
+</figure>
+<p>3c. Choose &#226;€œOnly when I have a transport rule set up that redirects messages to this connector&#226;€ and click &#226;€œNext&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-15.png" alt="Licensing Email Account for All Services screenshot 15">
+    <figcaption>Licensing Email Account for All Services screenshot 15</figcaption>
+</figure>
+<p>3d. Choose the &#226;€œUse the MX record associated with the partner&#226;€™s domain&#226;€ in the &#226;€œRouting&#226;€ section and click &#226;€œNext&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-16.png" alt="Licensing Email Account for All Services screenshot 16">
+    <figcaption>Licensing Email Account for All Services screenshot 16</figcaption>
+</figure>
+<p>3e. Leave the default selections as shown in the &#226;€œSecurity restrictions&#226;€ section and click &#226;€œNext&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-17.png" alt="Licensing Email Account for All Services screenshot 17">
+    <figcaption>Licensing Email Account for All Services screenshot 17</figcaption>
+</figure>
+<p>3f. Enter your Impact email for the &#226;€œValidation email&#226;€ section click the &#226;€œ+&#226;€ sign and then click &#226;€œValidate&#226;€</p>
+<p>NOTE:  The validation email may state that it failed, however, you should receive the validation email without issue in your Inbox.  Impact&#226;€™s spam filter Mimecast may delay the delivery for a few minutes.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-18.png" alt="Licensing Email Account for All Services screenshot 18">
+    <figcaption>Licensing Email Account for All Services screenshot 18</figcaption>
+</figure>
+<p>Due to the failure of the validation test you will be prompted to confirm that you want to proceed, click the &#226;€œYes, proceed&#226;€ option.</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-19.png" alt="Licensing Email Account for All Services screenshot 19">
+    <figcaption>Licensing Email Account for All Services screenshot 19</figcaption>
+</figure>
+<p>3g. Review the options and then choose &#226;€œCreate connector&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-20.png" alt="Licensing Email Account for All Services screenshot 20">
+    <figcaption>Licensing Email Account for All Services screenshot 20</figcaption>
+</figure>
+<p>3h. Turn On the connector</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-21.png" alt="Licensing Email Account for All Services screenshot 21">
+    <figcaption>Licensing Email Account for All Services screenshot 21</figcaption>
+</figure>
+<h3>Create the Mail Transport Rule</h3>
+<p>The Mail Transport Rule needs to be created to point to the new connector you just created.</p>
+<p>Navigate to &#226;€œMail Flow &gt; Rules&#226;€ choose &#226;€œAdd a rule&#226;€ and &#226;€œCreate a new rule&#226;€</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-22.png" alt="Licensing Email Account for All Services screenshot 22">
+    <figcaption>Licensing Email Account for All Services screenshot 22</figcaption>
+</figure>
+<p>Name your rule:</p>
+<p>Bypass ProofPoint for External Email Delivery Forwarded Messages</p>
+<p>At the &#226;€œApply this rule if&#226;€ choose &#226;€œThe recipient&#226;€ in the first drop-down menu and then choose &#226;€œis external/internal&#226;€ in the second drop-down menu</p>
+<p>The summary will state &#226;€œThe recipient is located &#226;€˜NotInOrganization&#226;€™&#226;€</p>
+<p>Click the &#226;€œ+&#226;€ sign to add a &#226;€œAnd&#226;€ statement and choose &#226;€œThe sender&#226;€ in the first drop-down menu and then choose &#226;€œis external/internal&#226;€ in the second drop-down menu</p>
+<p>The summary will state &#226;€œThe sender is located &#226;€˜NotInOrganization&#226;€™&#226;€</p>
+<p>At the &#226;€œDo the following&#226;€ setting choose &#226;€œRedirect the message to&#226;€ in the first drop-down menu and then choose &#226;€œthe following connector&#226;€ in the second drop-down menu and choose your new connector name you created above, &#226;€˜ProofPoint By-Pass Connector for External Forwarding&#226;€™</p>
+<p>Choose &#226;€œStop processing more rules&#226;€</p>
+<p>Save your new Mail Transport Rule</p>
+<p>Move your new Mail Transport Rule up in your Mail Transport rule list to the top priority and ensure it is &#226;€œEnabled&#226;€</p>
+<p>Summary of settings:</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/licensing-email-account-for-all-services/image-23.png" alt="Licensing Email Account for All Services screenshot 23">
+    <figcaption>Licensing Email Account for All Services screenshot 23</figcaption>
+</figure>
+<p>You may now send a test email to the licensing account from your Impact email account and verify it is forwarded successfully without receiving the NDR for &#226;€œrelay access denied&#226;€</p>
+<p>You may also use the Connector and MTR for any other mailboxes as needed, providing the accounts are added to the &#226;€œAnti-spam&#226;€ policy created above.</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

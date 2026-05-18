@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuring Mimecast with O365 | Karuin KB</title>
+    <meta name="description" content="Configuring Mimecast with O365 knowledge base article.">
+    <link rel="stylesheet" href="/knowledge-base/css/article.css">
+</head>
+<body>
+    <main class="wrapper">
+        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+
+        <div class="article-layout">
+            <aside class="sidebar">
+                <h3>Article Sections</h3>
+                <a href="#article">Article</a>
+                <a href="/knowledge-base/">Knowledge Base</a>
+            </aside>
+
+            <article class="article" id="article">
+                <span class="status">Imported KB Article</span>
+
+                <h1>Configuring Mimecast with O365</h1>
+
+                <div class="meta">
+                    <span class="pill">Status: Imported</span>
+                    <span class="pill">Source: DOCX</span>
+                    <span class="pill">Images: 19</span>
+                    <span class="pill">Last Updated: 2026</span>
+                </div>
+
+                <p>Mimecast Domain Setup</p>
+<p>Access the Mimecast Administration Console via https://login-us.mimecast.com/administration/</p>
+<p>Add all domains that will be utilized for email, including TENANT.onmicrosoft.com to Mimecast</p>
+<p>To add domains, navigate to Administration &gt; Directories &gt; Internal Directories</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-01.png" alt="Configuring Mimecast with O365 screenshot 1">
+    <figcaption>Configuring Mimecast with O365 screenshot 1</figcaption>
+</figure>
+<p>Click on the Register New Domain button</p>
+<p>Enter the domain name at the bottom of the page to complete step 1</p>
+<p>Press the Get Verification Code button</p>
+<p>Add the required TXT record to the domain via the public DNS registrar such as Cloudflare or GoDaddy</p>
+<p>Once the TXT record exists in the public DNS, click the Validate button at the bottom of the page</p>
+<p>Point Mimecast to 365 MX record</p>
+<p>If all information was entered correctly, the domain will be successfully validated as displayed on the Summary page</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-02.png" alt="Configuring Mimecast with O365 screenshot 2">
+    <figcaption>Configuring Mimecast with O365 screenshot 2</figcaption>
+</figure>
+<p>Keep this page open as it will be needed after the Azure configuration in the next section</p>
+<section><h2>Setup Directory Synchronization in Azure</h2>
+<p>Login to the client Azure Active Directory portal</p>
+<p>Click on App Registrations &gt; New Registration</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-03.png" alt="Configuring Mimecast with O365 screenshot 3">
+    <figcaption>Configuring Mimecast with O365 screenshot 3</figcaption>
+</figure>
+<p>Enter Mimecast AD Sync for the application name</p>
+<p>Select the &#226;€œAccounts in this organizational directory only&#226;€ radio button</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-04.png" alt="Configuring Mimecast with O365 screenshot 4">
+    <figcaption>Configuring Mimecast with O365 screenshot 4</figcaption>
+</figure>
+<p>Press the blue Register button</p>
+<p>Gather the Application (Client) ID for the Mimecast console and save it</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-05.png" alt="Configuring Mimecast with O365 screenshot 5">
+    <figcaption>Configuring Mimecast with O365 screenshot 5</figcaption>
+</figure>
+<p>Click on Certificates and Secrets</p>
+<p>Click on New client secret</p>
+<p>Enter Mimecast to O365 for the description</p>
+<p>Choose 24 months for the expiration date</p>
+<p>IMPORTANT: Copy and save the Client Secret Value, it will not be available after you leave this page. It will be needed later</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-06.png" alt="Configuring Mimecast with O365 screenshot 6">
+    <figcaption>Configuring Mimecast with O365 screenshot 6</figcaption>
+</figure>
+<p>Navigate to Enterprise Applications &gt; Mimecast AD sync &gt; API Permissions</p>
+<p>Click on + Add a permission, then click on Microsoft Graph</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-07.png" alt="Configuring Mimecast with O365 screenshot 7">
+    <figcaption>Configuring Mimecast with O365 screenshot 7</figcaption>
+</figure>
+<p>Add Application permission: Directory &gt; Directory.Read.All and User &gt; User.Read.All</p>
+<p>Add Delegated permission: User &gt; User.Read.All</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-08.png" alt="Configuring Mimecast with O365 screenshot 8">
+    <figcaption>Configuring Mimecast with O365 screenshot 8</figcaption>
+</figure>
+<p>You will want to wait 10 &#226;€“ 15 minutes before proceeding.</p>
+<section><h2>Setup Mimecast Directory Synchronization</h2>
+<p>Go back to Mimecast Administrator portal and go to Services &gt; Directory Synchronization &gt; Create Directory Integration</p>
+<p>Enter Azure Directory Synchronization in the Name field</p>
+<p>Enter a description</p>
+<p>Select Type Microsoft Azure &#226;€“ Standard</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-09.png" alt="Configuring Mimecast with O365 screenshot 9">
+    <figcaption>Configuring Mimecast with O365 screenshot 9</figcaption>
+</figure>
+<p>Enter the Application ID, Key, and Tenant Domain, then press Next</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-10.png" alt="Configuring Mimecast with O365 screenshot 10">
+    <figcaption>Configuring Mimecast with O365 screenshot 10</figcaption>
+</figure>
+<p>Select Acknowledge Disabled Accounts, Include Contacts, Delete Users and press Next</p>
+<p>Synchronization is now configured</p>
+<p>Review the entered data, toggle Status if you&#226;€™re not ready to use this feature yet, press Next</p>
+<p>If all checks pass, select Create Integration, press Finish</p>
+<section><h2>Office 365 Connection Filter Configuration</h2>
+<p>Log on to the Microsoft 365 Admin Center</p>
+<p>Click on the Security menu item</p>
+<p>Click on the Policies &amp; rules menu item</p>
+<p>Select Threat policies</p>
+<p>Select Anti-spam</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-11.png" alt="Configuring Mimecast with O365 screenshot 11">
+    <figcaption>Configuring Mimecast with O365 screenshot 11</figcaption>
+</figure>
+<p>Select the Connection filter policy, then select Edit connection filter policy</p>
+<p>Give the filter a Description</p>
+<p>Click on Edit connection filter policy</p>
+<p>On the Always allow messages from the following IP addresses or address range, add the Inbound Mimecast IP Ranges</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-12.png" alt="Configuring Mimecast with O365 screenshot 12">
+    <figcaption>Configuring Mimecast with O365 screenshot 12</figcaption>
+</figure>
+<p>The updated Mimecast IP information can be found at the following link: https://community.mimecast.com/s/article/Adding-Network-Ranges-to-Office-365</p>
+<section><h2>Exchange 365 Outbound Connector Configuration</h2>
+<p>Login to the 365 Exchange Admin Center</p>
+<p>Go to Mail Flow &gt; Connectors and click on the Add a connector</p>
+<p>Select Connection from Office 365 and connection to Partner Organization</p>
+<p>Name the connector O365 Outbound to Mimecast, then choose Next</p>
+<p>Select Only when I have a transport rule set up that redirects messages to this connector, then press Next</p>
+<p>Select Route email through these smart hosts, then enter the two entries for Mimecast</p>
+<p>us-smtp-o365-outbound-1.mimecast.com</p>
+<p>us-smtp-o365-outbound-2.mimecast.com</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-13.png" alt="Configuring Mimecast with O365 screenshot 13">
+    <figcaption>Configuring Mimecast with O365 screenshot 13</figcaption>
+</figure>
+<p>Make sure Always use Transport Layer Security (TLS) to secure the connection (recommended) and Issued by a trusted certificate authority (CA) are selected, then press Next</p>
+<p>Enter a validation email account</p>
+<p>Press Validate</p>
+<p>Press Next</p>
+<p>Press Save</p>
+<section><h2>Exchange 365 Transport Rule Configuration</h2>
+<p>Login to the Exchange 365 Administrator portal</p>
+<p>Go to Mail Flow &gt; Rules, click Add Rule, select New rule</p>
+<p>Name transport rule Outbound to Mimecast</p>
+<p>Apply this rule if the recipient is located Outside the organization, press Save</p>
+<p>Press the + to add another condition</p>
+<p>Add an and condition to apply this rule, If the sender domain is the tenant primary domain (microsoft.com, etc.)</p>
+<p>Select Do the following, and select Redirect the message to&#226;€&#166; and select the Outbound to Mimecast connector you created</p>
+<p>Press Next, then Next, then Finish</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-14.png" alt="Configuring Mimecast with O365 screenshot 14">
+    <figcaption>Configuring Mimecast with O365 screenshot 14</figcaption>
+</figure>
+<section><h2>Exchange 365 Inbound Connector Configuration</h2>
+<p>Login to the 365 Exchange Admin Center</p>
+<p>Go to Mail Flow &gt; Connectors and click on the Add a connector</p>
+<p>Select Connection from Partner organization, select Connection to Office 365, press Next</p>
+<p>Name connector Mimecast to O365, press Next</p>
+<p>Select By verifying that the sender domain matches&#226;€&#166;, enter * and press the +</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-15.png" alt="Configuring Mimecast with O365 screenshot 15">
+    <figcaption>Configuring Mimecast with O365 screenshot 15</figcaption>
+</figure>
+<p>Select &#226;€˜Reject email messages if they aren&#226;€™t sent over TLS&#226;€™</p>
+<p>Select &#226;€˜Reject email messages if they aren&#226;€™t sent from within this IP range</p>
+<p>Add the Mimecast subnets: https://community.mimecast.com/s/article/Adding-Network-Ranges-to-Office-365#us</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-16.png" alt="Configuring Mimecast with O365 screenshot 16">
+    <figcaption>Configuring Mimecast with O365 screenshot 16</figcaption>
+</figure>
+<p>Press Next</p>
+<p>Press Create connector</p>
+<p>Press Done</p>
+<section><h2>Office 365 Journaling with Mimecast Configuration</h2>
+<h3>Create an Office 365 Journaling Contact</h3>
+<p>Logon to Exchange 365 Administrator portal</p>
+<p>Go to Recipients &gt; Contacts</p>
+<p>Click Add a mail contact</p>
+<p>Fill out the basic information</p>
+<p>First Name: Journaling</p>
+<p>Last Name: Mimecast</p>
+<p>Display Name: Journaling for Mimecast</p>
+<p>Alias: Journaling</p>
+<p>External Email Address: journaling@journal.domain.com</p>
+<p>Press Next again</p>
+<p>Review the information entered and press Create</p>
+<h3>Create an Office 365 Journaling Send Connector</h3>
+<p>Logon to Exchange 365 Administrator portal</p>
+<p>Go to Mail Flow &gt; Connectors</p>
+<p>Click Add a connector</p>
+<p>Select From Office 365</p>
+<p>Select To Partner Organization</p>
+<p>Press Next</p>
+<p>Name connector Office 365 to Mimecast Journaling</p>
+<p>If you are ready to enable the connector, leave the Turn it On box checked, if not uncheck it</p>
+<p>Click Next</p>
+<p>Select Only When Email Messages are Sent to These Domains, type the domain *.journaling.DOMAIN.com and click the + button</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-17.png" alt="Configuring Mimecast with O365 screenshot 17">
+    <figcaption>Configuring Mimecast with O365 screenshot 17</figcaption>
+</figure>
+<p>Press Next</p>
+<p>Select Route email through these smart hosts and enter the below Mimecast hostnames</p>
+<p>us-smtp-journal-1.mimecast.com</p>
+<p>us-smtp-journal-2.mimecast.com</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-18.png" alt="Configuring Mimecast with O365 screenshot 18">
+    <figcaption>Configuring Mimecast with O365 screenshot 18</figcaption>
+</figure>
+<p>Press Next</p>
+<p>Select the following security restrictions</p>
+<p>Always use Transport Layer Security (TLS) to secure the connection</p>
+<p>Issued by a trusted certificate authority (CA)</p>
+<p>Press Next</p>
+<p>Enter the journaling email used to create the journaling contact</p>
+<p>journaling@journal.domain.com</p>
+<p>Press Validate</p>
+<p>Press Save</p>
+<h3>Create an Office 365 Journaling Rule</h3>
+<p>Login to the Compliance 365 Administrator Portal (compliance.microsoft.com)</p>
+<p>Go to Data lifecycle management &gt; Exchange (legacy) &gt; Journal rules</p>
+<p>Click New rule</p>
+<p>Enter your journal contact email into the Send journal reports to field</p>
+<p>journaling@journal.domain.com</p>
+<p>Name rule O365 Journal Rule</p>
+<p>Select Journal messages sent or received from Everyone</p>
+<p>Select All messages for Type of message to journal</p>
+<p>Press Next, then review the information entered</p>
+<p>Press Submit if correct</p>
+<h3>Configuring a Journal Definition in Mimecast</h3>
+<p>Login to the Mimecast Administration Console</p>
+<p>Navigate to Administration &gt; Services &gt; Journaling</p>
+<p>Click New Journal Service Definition</p>
+<p>Enter a name in the description</p>
+<p>Select SMTP for Transport type</p>
+<p>Complete the Connection Properties Service Email Address with the contact email created in O365</p>
+<p>journaling@journal.domain.com</p>
+<p>IP Ranges can be left blank. If you need to add O365 IP ranges here, you will have to contact Mimecast support</p>
+<p>Select Use SMTP Authentication</p>
+<p>Enter password</p>
+<p>Leave the default value in Initial Process Delay and Delivery Wait Attempts</p>
+<p>Period of Inactivity Allowed: Default is 180 mins</p>
+<p>Journal Type: Exchange</p>
+<p>Encrypted: leave enabled</p>
+<p>Rest can be left alone</p>
+<p>Save and exit</p>
+<h3>Configuring Journaling Subdomain in Mimecast</h3>
+<p>Login to the Mimecast Administration Console</p>
+<p>Navigate to Administration &gt; Directories &gt; Internal Directories</p>
+<p>Select Add Subdomain button</p>
+<p>Domain: journal.domain.com</p>
+<p>Accept all inbounds for this domain</p>
+<p>Leave anti-spoofing unselected</p>
+<h3>Verifying Microsoft 365 Premium Journaling</h3>
+<p>Once your journaling configuration is complete, verify that the connections are working:</p>
+<p>Log on to the&#194;&#160;Mimecast Administration Console.</p>
+<p>Navigate to&#194;&#160;Administration&#194;&#160;&gt;&#194;&#160;Services &gt; Journaling&#194;</p>
+<p>Click on the&#194;&#160;Queue Details&#194;&#160;button&#194;&#160;to list the journaling items.</p>
+<p>If the connector configuration isn&#39;t successful, see the Troubleshooting Journaling page:</p>
+<p>https://community.mimecast.com/s/article/Troubleshooting-Journaling-874318225?r=46&amp;ui-knowledge-components-aura-actions.KnowledgeArticleVersionCreateDraftFromOnlineAction.createDraftFromOnlineArticle=1</p>
+<figure>
+    <img class="article-image" src="/knowledge-base/assets/images/configuring-mimecast-with-o365/image-19.jpeg" alt="Configuring Mimecast with O365 screenshot 19">
+    <figcaption>Configuring Mimecast with O365 screenshot 19</figcaption>
+</figure>
+<section><h2>Conclusion</h2>
+<p>Before mail will route through Mimecast, the following needs to be configured:</p>
+<p>Public DNS MX record should point to Mimecast</p>
+<p>Records can be obtained from: https://community.mimecast.com/s/article/Office-365-Configuring-Outbound-Delivery-Routing-1430192975</p>
+<p>Use the following:</p>
+<p>us-smtp-inbound-1.mimecast.com</p>
+<p>us-smtp-inbound-2.mimecast.com</p>
+<p>All O365 connectors created will need to be turned on</p>
+<p>Azure AD Sync will need to be enabled in Mimecast</p>
+<p>Public DNS domain SPF record will need to be updated to include Mimecast</p>
+
+
+                <p class="footer-note">
+                    Karuin.com Knowledge Base Â· Imported from source documentation.
+                </p>
+            </article>
+        </div>
+    </main>
+</body>
+</html>
