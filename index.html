@@ -495,7 +495,123 @@
       .card {
         min-height: 205px;
       }
+    .featured-videos {
+    padding: 80px 0;
+}
+
+.section-heading {
+    margin-bottom: 42px;
+    max-width: 760px;
+}
+
+.section-label {
+    display: inline-flex;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(102,227,255,0.08);
+    border: 1px solid rgba(102,227,255,0.18);
+    color: #9cecff;
+    font-size: 0.78rem;
+    margin-bottom: 18px;
+}
+
+.section-heading h2 {
+    margin: 0 0 18px;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.section-heading p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 1.02rem;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.video-card {
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 28px;
+    overflow: hidden;
+    backdrop-filter: blur(14px);
+    transition: transform 180ms ease,
+                border-color 180ms ease,
+                background 180ms ease;
+}
+
+.video-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(102,227,255,0.28);
+    background: rgba(255,255,255,0.06);
+}
+
+.video-frame {
+    position: relative;
+    padding-top: 56.25%;
+}
+
+.video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.video-content {
+    padding: 24px;
+}
+
+.video-tag {
+    display: inline-flex;
+    margin-bottom: 16px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(102,227,255,0.08);
+    border: 1px solid rgba(102,227,255,0.18);
+    color: #9cecff;
+    font-size: 0.75rem;
+}
+
+.video-content h3 {
+    margin: 0 0 14px;
+    font-size: 1.45rem;
+    letter-spacing: -0.04em;
+}
+
+.video-content p {
+    margin: 0 0 20px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.video-link {
+    color: #9cecff;
+    font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    .video-grid {
+        grid-template-columns: 1fr;
     }
+}
+	
+	
+	
+	
+	
+	
+	}
+	
+	
+	
   </style>
 </head>
 <body>
@@ -505,6 +621,81 @@
         <span class="mark" aria-hidden="true"></span>
         <span>Karuin</span>
       </a>
+
+
+
+<section class="featured-videos" id="videos">
+  <div class="shell">
+    <div class="section-heading">
+      <span class="section-label">Featured Content</span>
+      <h2>Infrastructure walkthroughs & implementation videos</h2>
+      <p>
+        Long-form technical walkthroughs covering infrastructure deployment,
+        migrations, cluster architecture, troubleshooting, and operational guidance.
+      </p>
+    </div>
+
+    <div class="video-grid">
+
+      <article class="video-card">
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/ZBJAS9PGP8I?si=u58tav4Fn30cRsDg"
+            title="Infrastructure Video 1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="video-content">
+          <span class="video-tag">Infrastructure</span>
+          <h3>Technical Deployment Walkthrough</h3>
+
+          <p>
+            Step-by-step infrastructure implementation and engineering walkthrough
+            focused on operational deployment methodology and platform validation.
+          </p>
+
+          <a class="video-link" href="https://youtu.be/ZBJAS9PGP8I" target="_blank">
+            Watch on YouTube →
+          </a>
+        </div>
+      </article>
+
+												  <article class="video-card">
+													<div class="video-frame">
+													  <iframe
+														src="https://www.youtube.com/embed/TcxiAxXa3jQ?si=5Jg_PeoCiBwP_nrH"
+														title="Infrastructure Video 2"
+														allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+														referrerpolicy="strict-origin-when-cross-origin"
+														allowfullscreen>
+													  </iframe>
+													</div>
+
+													<div class="video-content">
+													  <span class="video-tag">Labs & Systems</span>
+													  <h3>Engineering Systems Demonstration</h3>
+
+													  <p>
+														Companion implementation video covering systems engineering concepts,
+														deployment considerations, and operational infrastructure guidance.
+													  </p>
+
+													  <a class="video-link" href="https://youtu.be/TcxiAxXa3jQ" target="_blank">
+														Watch on YouTube →
+													  </a>
+													</div>
+												  </article>
+
+												</div>
+											  </div>
+											</section>
+
+
+
+
 
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#platform">Platform</a>
