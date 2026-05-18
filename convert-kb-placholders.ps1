@@ -1,15 +1,29 @@
-﻿<!DOCTYPE html>
+$articles = @(
+    @{ File="proxmox-cluster-build.html"; Title="Proxmox Cluster Build Notes"; Category="Labs & Infrastructure"; Summary="Placeholder article for Proxmox cluster build documentation, including nodes, networking, storage, quorum, validation, and video companion notes." },
+    @{ File="local-dns-server.html"; Title="Linux Local DNS Server Build"; Category="Infrastructure"; Summary="Placeholder article for building and validating a local Linux-based DNS server in a lab or production-support environment." },
+    @{ File="powershell-automation-template.html"; Title="PowerShell Automation Article Template"; Category="Automation"; Summary="Reusable article structure for documenting PowerShell scripts, remediation workflows, parameters, execution notes, validation, and rollback." },
+    @{ File="exchange-online-hybrid-notes.html"; Title="Exchange Online Hybrid Notes"; Category="Cloud & Identity"; Summary="Placeholder article for Exchange Online, hybrid mail flow, connector validation, aliases, and Microsoft 365 operational notes." },
+    @{ File="ad-dns-cleanup.html"; Title="AD/DNS Cleanup After Server Changes"; Category="Infrastructure"; Summary="Placeholder article for Active Directory and DNS cleanup after domain controller, server, DHCP, or infrastructure changes." },
+    @{ File="youtube-guide-template.html"; Title="YouTube Companion Guide Template"; Category="Video Support"; Summary="Reusable structure for pairing YouTube walkthroughs with commands, diagrams, scripts, references, and article corrections." },
+    @{ File="kb-article-standard.html"; Title="KB Article Standard"; Category="Template"; Summary="The baseline Karuin KB article standard for consistent summaries, prerequisites, scope, implementation, validation, rollback, troubleshooting, and references." }
+)
+
+foreach ($article in $articles) {
+    $path = ".\knowledge-base\articles\$($article.File)"
+
+$content = @"
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proxmox Cluster Build Notes | Karuin KB</title>
-    <meta name="description" content="Placeholder article for Proxmox cluster build documentation, including nodes, networking, storage, quorum, validation, and video companion notes.">
+    <title>$($article.Title) | Karuin KB</title>
+    <meta name="description" content="$($article.Summary)">
     <link rel="stylesheet" href="/knowledge-base/css/article.css">
 </head>
 <body>
     <main class="wrapper">
-        <a class="back" href="/knowledge-base/">â† Back to Knowledge Base</a>
+        <a class="back" href="/knowledge-base/">← Back to Knowledge Base</a>
 
         <div class="article-layout">
             <aside class="sidebar">
@@ -27,14 +41,14 @@
             <article class="article">
                 <span class="status">Article Template v1</span>
 
-                <h1>Proxmox Cluster Build Notes</h1>
+                <h1>$($article.Title)</h1>
 
                 <p class="summary" id="summary">
-                    Placeholder article for Proxmox cluster build documentation, including nodes, networking, storage, quorum, validation, and video companion notes.
+                    $($article.Summary)
                 </p>
 
                 <div class="meta">
-                    <span class="pill">Category: Labs & Infrastructure</span>
+                    <span class="pill">Category: $($article.Category)</span>
                     <span class="pill">Status: In Development</span>
                     <span class="pill">Last Updated: 2026</span>
                     <span class="pill">Estimated Read: TBD</span>
@@ -64,16 +78,16 @@
                 <section id="steps">
                     <h2>Implementation Steps</h2>
 
-                    <h3>Step 1 â€” Prepare</h3>
+                    <h3>Step 1 — Prepare</h3>
                     <p>Document prerequisites, source files, access requirements, and implementation timing.</p>
 
-                    <h3>Step 2 â€” Execute</h3>
+                    <h3>Step 2 — Execute</h3>
                     <p>Document the commands, configuration changes, screenshots, or workflow steps.</p>
 
                     <pre><code># Example command block
 Write-Host "Replace this with real commands or scripts"</code></pre>
 
-                    <h3>Step 3 â€” Document results</h3>
+                    <h3>Step 3 — Document results</h3>
                     <p>Capture successful outputs, screenshots, logs, and any environmental notes.</p>
                 </section>
 
@@ -110,10 +124,14 @@ Write-Host "Replace this with real commands or scripts"</code></pre>
                 </section>
 
                 <p class="footer-note">
-                    Karuin.com Knowledge Base Â· This article is maintained as part of the Karuin technical documentation platform.
+                    Karuin.com Knowledge Base · This article is maintained as part of the Karuin technical documentation platform.
                 </p>
             </article>
         </div>
     </main>
 </body>
 </html>
+"@
+
+    Set-Content -Path $path -Value $content -Encoding UTF8
+}
