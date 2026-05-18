@@ -344,11 +344,58 @@
     .roadmap-item strong { display: block; margin-bottom: 5px; }
     .roadmap-item span { color: var(--muted); line-height: 1.5; font-size: 0.94rem; }
 
-    .footer { border-top: 1px solid rgba(255,255,255,0.08); padding: 34px 0; color: var(--muted-2); font-size: 0.92rem; }
-    .footer-inner { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+   .footer {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 34px 0;
+  color: var(--muted-2);
+  font-size: 0.92rem;
+}
 
-    @media (max-width: 920px) {
-      .hero-grid, .feature-row { grid-template-columns: 1fr; }
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-right {
+  color: var(--muted-2);
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  text-align: right;
+}
+
+.footer-email {
+  color: var(--muted);
+  transition: color 160ms ease;
+}
+
+.footer-email:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 680px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-right {
+    text-align: left;
+  }
+}
+
+@media (max-width: 920px) {
+    
+    .hero-grid, .feature-row { grid-template-columns: 1fr; }
       .cards { grid-template-columns: 1fr 1fr; }
       .terminal-card { max-width: 620px; }
       .video-grid { grid-template-columns: 1fr; }
@@ -637,11 +684,21 @@
     </section>
   </main>
 
-  <footer class="footer">
+<footer>
     <div class="shell footer-inner">
-      <span>© 2026 Karuin. Technical knowledge platform.</span>
-      <span>Infrastructure · Automation · Labs · Documentation</span>
+
+        <div class="footer-left">
+            © 2026 Kelvin Aruin.
+            <a class="footer-email" href="mailto:kelvinaruin@gmail.com">
+                kelvinaruin@gmail.com
+            </a>
+        </div>
+
+        <div class="footer-right">
+            Infrastructure · Automation · Labs · KnowledgeBase
+        </div>
+
     </div>
-  </footer>
+</footer>
 </body>
 </html>
