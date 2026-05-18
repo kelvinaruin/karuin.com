@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -22,13 +22,8 @@
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -64,15 +59,8 @@
       z-index: -1;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .shell {
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto;
-    }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
 
     .nav {
       position: sticky;
@@ -104,8 +92,7 @@
       width: 34px;
       height: 34px;
       border-radius: 12px;
-      background:
-        linear-gradient(135deg, rgba(102,227,255,0.95), rgba(139,92,246,0.9));
+      background: linear-gradient(135deg, rgba(102,227,255,0.95), rgba(139,92,246,0.9));
       box-shadow: 0 0 34px rgba(102, 227, 255, 0.32);
       position: relative;
     }
@@ -126,9 +113,7 @@
       font-size: 0.94rem;
     }
 
-    .nav-links a:hover {
-      color: var(--text);
-    }
+    .nav-links a:hover { color: var(--text); }
 
     .nav-cta {
       padding: 10px 15px;
@@ -138,9 +123,7 @@
       background: rgba(255,255,255,0.06);
     }
 
-    .hero {
-      padding: 92px 0 64px;
-    }
+    .hero { padding: 92px 0 64px; }
 
     .hero-grid {
       display: grid;
@@ -193,12 +176,7 @@
       max-width: 690px;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 34px;
-    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
 
     .button {
       display: inline-flex;
@@ -213,21 +191,9 @@
       transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
     }
 
-    .button:hover {
-      transform: translateY(-2px);
-      border-color: rgba(102, 227, 255, 0.5);
-    }
-
-    .button.primary {
-      color: #031018;
-      background: linear-gradient(135deg, #66e3ff, #b4f2ff);
-      border-color: transparent;
-    }
-
-    .button.secondary {
-      color: var(--text);
-      background: rgba(255,255,255,0.06);
-    }
+    .button:hover { transform: translateY(-2px); border-color: rgba(102, 227, 255, 0.5); }
+    .button.primary { color: #031018; background: linear-gradient(135deg, #66e3ff, #b4f2ff); border-color: transparent; }
+    .button.secondary { color: var(--text); background: rgba(255,255,255,0.06); }
 
     .terminal-card {
       border: 1px solid var(--card-border);
@@ -247,17 +213,8 @@
       font-size: 0.85rem;
     }
 
-    .dots {
-      display: flex;
-      gap: 7px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.18);
-    }
+    .dots { display: flex; gap: 7px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.18); }
 
     .terminal-body {
       padding: 22px;
@@ -267,17 +224,10 @@
       line-height: 1.75;
     }
 
-    .terminal-body .muted {
-      color: #7c8797;
-    }
+    .terminal-body .muted { color: #7c8797; }
+    .terminal-body .ok { color: #a7f3d0; }
 
-    .terminal-body .ok {
-      color: #a7f3d0;
-    }
-
-    .section {
-      padding: 62px 0;
-    }
+    .section { padding: 62px 0; }
 
     .section-heading {
       display: flex;
@@ -287,25 +237,10 @@
       margin-bottom: 24px;
     }
 
-    .section-heading h2 {
-      margin: 0;
-      font-size: clamp(2rem, 4vw, 3.1rem);
-      line-height: 1;
-      letter-spacing: -0.055em;
-    }
+    .section-heading h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1; letter-spacing: -0.055em; }
+    .section-heading p { margin: 0; color: var(--muted); max-width: 470px; line-height: 1.6; }
 
-    .section-heading p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 470px;
-      line-height: 1.6;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 
     .card {
       min-height: 220px;
@@ -329,15 +264,8 @@
       pointer-events: none;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(102, 227, 255, 0.32);
-      background: rgba(255,255,255,0.073);
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(102, 227, 255, 0.32); background: rgba(255,255,255,0.073); }
+    .card:hover::before { opacity: 1; }
 
     .card .icon {
       width: 42px;
@@ -351,267 +279,90 @@
       font-size: 1.25rem;
     }
 
-    .card h3 {
-      margin: 0 0 10px;
-      font-size: 1.22rem;
-      letter-spacing: -0.025em;
+    .card h3 { margin: 0 0 10px; font-size: 1.22rem; letter-spacing: -0.025em; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.62; }
+    .card .tag { position: absolute; left: 24px; bottom: 22px; color: var(--muted-2); font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    .featured-videos { padding: 80px 0; }
+    .featured-videos .section-heading { display: block; max-width: 760px; margin-bottom: 42px; }
+
+    .section-label {
+      display: inline-flex;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(102,227,255,0.08);
+      border: 1px solid rgba(102,227,255,0.18);
+      color: #9cecff;
+      font-size: 0.78rem;
+      margin-bottom: 18px;
     }
 
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.62;
+    .featured-videos .section-heading h2 { margin: 0 0 18px; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1; letter-spacing: -0.05em; }
+    .featured-videos .section-heading p { margin: 0; color: var(--muted); line-height: 1.7; font-size: 1.02rem; max-width: 760px; }
+
+    .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+    .video-card {
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      overflow: hidden;
+      backdrop-filter: blur(14px);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
     }
 
-    .card .tag {
-      position: absolute;
-      left: 24px;
-      bottom: 22px;
-      color: var(--muted-2);
-      font-size: 0.82rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .video-card:hover { transform: translateY(-4px); border-color: rgba(102,227,255,0.28); background: rgba(255,255,255,0.06); }
+
+    .video-frame { position: relative; padding-top: 56.25%; }
+    .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .video-content { padding: 24px; }
+
+    .video-tag {
+      display: inline-flex;
+      margin-bottom: 16px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(102,227,255,0.08);
+      border: 1px solid rgba(102,227,255,0.18);
+      color: #9cecff;
+      font-size: 0.75rem;
     }
 
-    .feature-row {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 18px;
-    }
+    .video-content h3 { margin: 0 0 14px; font-size: 1.45rem; letter-spacing: -0.04em; }
+    .video-content p { margin: 0 0 20px; color: var(--muted); line-height: 1.7; }
+    .video-link { color: #9cecff; font-weight: 600; }
 
-    .panel {
-      border: 1px solid var(--card-border);
-      background: rgba(255,255,255,0.05);
-      border-radius: var(--radius);
-      padding: 26px;
-    }
+    .feature-row { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 18px; }
 
-    .panel h3 {
-      margin: 0 0 12px;
-      font-size: 1.35rem;
-      letter-spacing: -0.035em;
-    }
+    .panel { border: 1px solid var(--card-border); background: rgba(255,255,255,0.05); border-radius: var(--radius); padding: 26px; }
+    .panel h3 { margin: 0 0 12px; font-size: 1.35rem; letter-spacing: -0.035em; }
+    .panel p { margin: 0; color: var(--muted); line-height: 1.65; }
 
-    .panel p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.65;
-    }
+    .roadmap { display: grid; gap: 12px; }
+    .roadmap-item { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; padding: 16px; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; background: rgba(0,0,0,0.14); }
+    .number { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; color: #061016; background: var(--accent); font-weight: 800; font-size: 0.85rem; }
+    .roadmap-item strong { display: block; margin-bottom: 5px; }
+    .roadmap-item span { color: var(--muted); line-height: 1.5; font-size: 0.94rem; }
 
-    .roadmap {
-      display: grid;
-      gap: 12px;
-    }
-
-    .roadmap-item {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 14px;
-      align-items: start;
-      padding: 16px;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      background: rgba(0,0,0,0.14);
-    }
-
-    .number {
-      width: 30px;
-      height: 30px;
-      display: grid;
-      place-items: center;
-      border-radius: 10px;
-      color: #061016;
-      background: var(--accent);
-      font-weight: 800;
-      font-size: 0.85rem;
-    }
-
-    .roadmap-item strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .roadmap-item span {
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 0.94rem;
-    }
-
-    .footer {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 34px 0;
-      color: var(--muted-2);
-      font-size: 0.92rem;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+    .footer { border-top: 1px solid rgba(255,255,255,0.08); padding: 34px 0; color: var(--muted-2); font-size: 0.92rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 
     @media (max-width: 920px) {
-      .hero-grid,
-      .feature-row {
-        grid-template-columns: 1fr;
-      }
-
-      .cards {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .terminal-card {
-        max-width: 620px;
-      }
+      .hero-grid, .feature-row { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr 1fr; }
+      .terminal-card { max-width: 620px; }
+      .video-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 680px) {
-      .shell {
-        width: min(100% - 28px, 1180px);
-      }
-
-      .nav-inner {
-        min-height: 64px;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .hero {
-        padding: 62px 0 42px;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .section-heading {
-        align-items: start;
-        flex-direction: column;
-      }
-
-      .card {
-        min-height: 205px;
-      }
-    .featured-videos {
-    padding: 80px 0;
-}
-
-.section-heading {
-    margin-bottom: 42px;
-    max-width: 760px;
-}
-
-.section-label {
-    display: inline-flex;
-    padding: 6px 14px;
-    border-radius: 999px;
-    background: rgba(102,227,255,0.08);
-    border: 1px solid rgba(102,227,255,0.18);
-    color: #9cecff;
-    font-size: 0.78rem;
-    margin-bottom: 18px;
-}
-
-.section-heading h2 {
-    margin: 0 0 18px;
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    line-height: 1;
-    letter-spacing: -0.05em;
-}
-
-.section-heading p {
-    margin: 0;
-    color: var(--muted);
-    line-height: 1.7;
-    font-size: 1.02rem;
-}
-
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-}
-
-.video-card {
-    background: rgba(255,255,255,0.045);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 28px;
-    overflow: hidden;
-    backdrop-filter: blur(14px);
-    transition: transform 180ms ease,
-                border-color 180ms ease,
-                background 180ms ease;
-}
-
-.video-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(102,227,255,0.28);
-    background: rgba(255,255,255,0.06);
-}
-
-.video-frame {
-    position: relative;
-    padding-top: 56.25%;
-}
-
-.video-frame iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-.video-content {
-    padding: 24px;
-}
-
-.video-tag {
-    display: inline-flex;
-    margin-bottom: 16px;
-    padding: 6px 12px;
-    border-radius: 999px;
-    background: rgba(102,227,255,0.08);
-    border: 1px solid rgba(102,227,255,0.18);
-    color: #9cecff;
-    font-size: 0.75rem;
-}
-
-.video-content h3 {
-    margin: 0 0 14px;
-    font-size: 1.45rem;
-    letter-spacing: -0.04em;
-}
-
-.video-content p {
-    margin: 0 0 20px;
-    color: var(--muted);
-    line-height: 1.7;
-}
-
-.video-link {
-    color: #9cecff;
-    font-weight: 600;
-}
-
-@media (max-width: 900px) {
-    .video-grid {
-        grid-template-columns: 1fr;
+      .shell { width: min(100% - 28px, 1180px); }
+      .nav-inner { min-height: 64px; }
+      .nav-links { display: none; }
+      .hero { padding: 62px 0 42px; }
+      .cards { grid-template-columns: 1fr; }
+      .section-heading { align-items: start; flex-direction: column; }
+      .card { min-height: 205px; }
     }
-}
-	
-	
-	
-	
-	
-	
-	}
-	
-	
-	
   </style>
 </head>
 <body>
@@ -622,84 +373,10 @@
         <span>Karuin</span>
       </a>
 
-
-
-<section class="featured-videos" id="videos">
-  <div class="shell">
-    <div class="section-heading">
-      <span class="section-label">Featured Content</span>
-      <h2>Infrastructure walkthroughs & implementation videos</h2>
-      <p>
-        Long-form technical walkthroughs covering infrastructure deployment,
-        migrations, cluster architecture, troubleshooting, and operational guidance.
-      </p>
-    </div>
-
-    <div class="video-grid">
-
-      <article class="video-card">
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/ZBJAS9PGP8I?si=u58tav4Fn30cRsDg"
-            title="Infrastructure Video 1"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-          </iframe>
-        </div>
-
-        <div class="video-content">
-          <span class="video-tag">Infrastructure</span>
-          <h3>Technical Deployment Walkthrough</h3>
-
-          <p>
-            Step-by-step infrastructure implementation and engineering walkthrough
-            focused on operational deployment methodology and platform validation.
-          </p>
-
-          <a class="video-link" href="https://youtu.be/ZBJAS9PGP8I" target="_blank">
-            Watch on YouTube →
-          </a>
-        </div>
-      </article>
-
-												  <article class="video-card">
-													<div class="video-frame">
-													  <iframe
-														src="https://www.youtube.com/embed/TcxiAxXa3jQ?si=5Jg_PeoCiBwP_nrH"
-														title="Infrastructure Video 2"
-														allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-														referrerpolicy="strict-origin-when-cross-origin"
-														allowfullscreen>
-													  </iframe>
-													</div>
-
-													<div class="video-content">
-													  <span class="video-tag">Labs & Systems</span>
-													  <h3>Engineering Systems Demonstration</h3>
-
-													  <p>
-														Companion implementation video covering systems engineering concepts,
-														deployment considerations, and operational infrastructure guidance.
-													  </p>
-
-													  <a class="video-link" href="https://youtu.be/TcxiAxXa3jQ" target="_blank">
-														Watch on YouTube →
-													  </a>
-													</div>
-												  </article>
-
-												</div>
-											  </div>
-											</section>
-
-
-
-
-
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#platform">Platform</a>
         <a href="/knowledge-base/">Knowledge Base</a>
+        <a href="#videos">Videos</a>
         <a href="#roadmap">Roadmap</a>
         <a class="nav-cta" href="/knowledge-base/">Open KB</a>
       </nav>
@@ -712,9 +389,7 @@
         <div>
           <div class="eyebrow"><span class="pulse"></span> Infrastructure knowledge platform</div>
           <h1>Engineering notes for real-world <span class="gradient-text">systems.</span></h1>
-          <p class="hero-copy">
-            Karuin is being rebuilt as a sanitized technical hub for infrastructure guides, knowledge-base articles, lab builds, automation references, and video walkthroughs.
-          </p>
+          <p class="hero-copy">Karuin is being rebuilt as a sanitized technical hub for infrastructure guides, knowledge-base articles, lab builds, automation references, and video walkthroughs.</p>
           <div class="hero-actions">
             <a class="button primary" href="/knowledge-base/">Launch Knowledge Base</a>
             <a class="button secondary" href="#platform">View Platform Direction</a>
@@ -728,10 +403,10 @@
           </div>
           <div class="terminal-body">
             <div><span class="muted">$</span> initialize karuin.com</div>
-            <div><span class="ok">âœ“</span> GitHub Pages online</div>
-            <div><span class="ok">âœ“</span> Cloudflare DNS active</div>
-            <div><span class="ok">âœ“</span> Phase 1 landing page</div>
-            <div><span class="muted">â†’</span> Next: knowledge-base launch</div>
+            <div><span class="ok">✓</span> GitHub Pages online</div>
+            <div><span class="ok">✓</span> Cloudflare DNS active</div>
+            <div><span class="ok">✓</span> Knowledge base index generated</div>
+            <div><span class="muted">→</span> Next: article cleanup and video integration</div>
             <br />
             <div><span class="muted">content types:</span></div>
             <div>kb / labs / videos / scripts / projects</div>
@@ -749,23 +424,23 @@
 
         <div class="cards">
           <a class="card" href="/knowledge-base/">
-            <div class="icon">â–¦</div>
+            <div class="icon">▦</div>
             <h3>Knowledge Base</h3>
             <p>Structured articles, SOPs, migration guides, deployment notes, troubleshooting references, and repeatable engineering processes.</p>
-            <span class="tag">Phase 2</span>
+            <span class="tag">Live</span>
+          </a>
+
+          <a class="card" href="#videos">
+            <div class="icon">▶</div>
+            <h3>Video Guides</h3>
+            <p>Embedded YouTube walkthroughs with supporting commands, diagrams, article links, and supporting documentation.</p>
+            <span class="tag">Featured</span>
           </a>
 
           <a class="card" href="/labs/">
-            <div class="icon">âŒ¬</div>
+            <div class="icon">⌬</div>
             <h3>Labs</h3>
             <p>Cluster builds, Proxmox systems, networking experiments, DNS, automation, monitoring, and architecture walkthroughs.</p>
-            <span class="tag">Planned</span>
-          </a>
-
-          <a class="card" href="/videos/">
-            <div class="icon">â–¶</div>
-            <h3>Video Guides</h3>
-            <p>Embedded YouTube walkthroughs with supporting commands, diagrams, article links, and supporting documentation.</p>
             <span class="tag">Planned</span>
           </a>
 
@@ -777,14 +452,14 @@
           </a>
 
           <a class="card" href="/projects/">
-            <div class="icon">â—‡</div>
+            <div class="icon">◇</div>
             <h3>Projects</h3>
             <p>Long-form build documentation for infrastructure initiatives, lab environments, migrations, and platform improvements.</p>
             <span class="tag">Planned</span>
           </a>
 
           <a class="card" href="/research/">
-            <div class="icon">â—Ž</div>
+            <div class="icon">◎</div>
             <h3>Research</h3>
             <p>Notes on emerging tools, AI-assisted operations, local LLM infrastructure, observability, and engineering patterns.</p>
             <span class="tag">Planned</span>
@@ -793,31 +468,65 @@
       </div>
     </section>
 
+    <section class="featured-videos" id="videos">
+      <div class="shell">
+        <div class="section-heading">
+          <span class="section-label">Featured Content</span>
+          <h2>Infrastructure walkthroughs & implementation videos</h2>
+          <p>Long-form technical walkthroughs covering infrastructure deployment, migrations, cluster architecture, troubleshooting, and operational guidance.</p>
+        </div>
+
+        <div class="video-grid">
+          <article class="video-card">
+            <div class="video-frame">
+              <iframe src="https://www.youtube.com/embed/ZBJAS9PGP8I?si=u58tav4Fn30cRsDg" title="Infrastructure Video 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="video-content">
+              <span class="video-tag">Infrastructure</span>
+              <h3>Technical Deployment Walkthrough</h3>
+              <p>Step-by-step infrastructure implementation and engineering walkthrough focused on operational deployment methodology and platform validation.</p>
+              <a class="video-link" href="https://youtu.be/ZBJAS9PGP8I" target="_blank" rel="noopener">Watch on YouTube →</a>
+            </div>
+          </article>
+
+          <article class="video-card">
+            <div class="video-frame">
+              <iframe src="https://www.youtube.com/embed/TcxiAxXa3jQ?si=5Jg_PeoCiBwP_nrH" title="Infrastructure Video 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="video-content">
+              <span class="video-tag">Labs & Systems</span>
+              <h3>Engineering Systems Demonstration</h3>
+              <p>Companion implementation video covering systems engineering concepts, deployment considerations, and operational infrastructure guidance.</p>
+              <a class="video-link" href="https://youtu.be/TcxiAxXa3jQ" target="_blank" rel="noopener">Watch on YouTube →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="knowledge">
       <div class="shell feature-row">
         <div class="panel">
-          <h3>First production target: the KB</h3>
-          <p>
-            The landing page is only the front door. The next build should create a clean `/knowledge-base/` section with categories, article cards, search-ready metadata, and a repeatable article template.
-          </p>
+          <h3>Knowledge base is live</h3>
+          <p>The Karuin knowledge base now indexes converted technical articles from the documentation library and provides a searchable entry point for infrastructure procedures.</p>
         </div>
 
         <div class="panel roadmap" id="roadmap">
           <div class="roadmap-item">
             <div class="number">1</div>
-            <div><strong>Launch homepage</strong><span>Replace the temporary index page with this modern platform landing page.</span></div>
+            <div><strong>KB Article Cleanup</strong><span>Review imported articles for formatting, titles, summaries, categories, and image placement.</span></div>
           </div>
           <div class="roadmap-item">
             <div class="number">2</div>
-            <div><strong>Create KB shell</strong><span>Add `/knowledge-base/index.html` with categories, article cards, and navigation.</span></div>
+            <div><strong>Video Companion Pages</strong><span>Pair video walkthroughs with commands, diagrams, references, and related KB links.</span></div>
           </div>
           <div class="roadmap-item">
             <div class="number">3</div>
-            <div><strong>Add article template</strong><span>Standardize title, summary, tags, prerequisites, steps, validation, rollback, and print styling.</span></div>
+            <div><strong>Labs Section</strong><span>Add Proxmox, DNS, cluster, automation, and networking lab build documentation.</span></div>
           </div>
           <div class="roadmap-item">
             <div class="number">4</div>
-            <div><strong>Import content</strong><span>Move existing sanitized articles into the KB and connect videos where relevant.</span></div>
+            <div><strong>Automation Refinement</strong><span>Improve the DOCX conversion pipeline, metadata handling, and category generation.</span></div>
           </div>
         </div>
       </div>
@@ -826,10 +535,9 @@
 
   <footer class="footer">
     <div class="shell footer-inner">
-      <span>Â© 2026 Karuin. Technical knowledge platform.</span>
-      <span>Infrastructure Â· Automation Â· Labs Â· Documentation</span>
+      <span>© 2026 Karuin. Technical knowledge platform.</span>
+      <span>Infrastructure · Automation · Labs · Documentation</span>
     </div>
   </footer>
 </body>
 </html>
-
